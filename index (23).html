@@ -1,0 +1,1024 @@
+<html lang="pt-BR">
+ <head>
+  <meta charset="utf-8"/>
+  <meta content="width=device-width, initial-scale=1" name="viewport"/>
+  <title>
+   Rancho do Bira - Nova Lima
+  </title>
+  <script src="https://cdn.tailwindcss.com">
+  </script>
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" rel="stylesheet"/>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&amp;display=swap" rel="stylesheet"/>
+  <script src="cardapio.js"></script>
+  <style>
+   body {
+      font-family: "Inter", sans-serif;
+      transition: background-color 0.3s ease;
+      padding-bottom: 6rem;
+      background-color: #f8fafc;
+    }
+    #search-send-btn i {
+      font-size: 1.25rem;
+    }
+    .header-title-cart {
+      background-color: #000000;
+    }
+    #splash-art {
+      position: fixed;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%) scale(0);
+      background: rgba(255, 255, 255, 0.95);
+      border-radius: 1rem;
+      padding: 2rem;
+      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+      z-index: 50;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      pointer-events: none;
+      opacity: 0;
+      transition: opacity 0.3s ease, transform 0.3s ease;
+    }
+    #splash-art.show {
+      opacity: 1;
+      transform: translate(-50%, -50%) scale(1);
+      pointer-events: auto;
+    }
+    #splash-art img {
+      width: 100px;
+      height: 100px;
+      object-fit: contain;
+      margin-bottom: 1rem;
+      animation: spin 2s linear infinite;
+      border-radius: 0.5rem;
+      box-shadow: 0 0 15px rgba(74, 124, 89, 0.7);
+      background: white;
+    }
+    #splash-art p {
+      font-weight: 600;
+      color: #3e6b45;
+      font-size: 1.25rem;
+      text-align: center;
+    }
+    @keyframes spin {
+      0% {
+        transform: rotate(0deg);
+      }
+      100% {
+        transform: rotate(360deg);
+      }
+    }
+    #cart-panel {
+      background-color: #ffffff;
+    }
+    #cart-panel header h3,
+    #cart-panel footer span,
+    #cart-panel footer button,
+    #cart-panel label {
+      color: #4a7c59;
+    }
+    #cart-panel ul li {
+      border-color: rgba(74 124 89 / 0.3);
+    }
+    #cart-panel ul li h4,
+    #cart-panel ul li p {
+      color: #4a7c59;
+    }
+    #cart-panel ul li button {
+      color: #4a7c59;
+    }
+    #cart-panel ul li button:hover {
+      color: #7ca17a;
+    }
+    #address-container {
+      padding: 1rem 1rem 0 1rem;
+      border-top: 1px solid rgba(74 124 89 / 0.3);
+      color: #4a7c59;
+      font-weight: 600;
+      display: flex;
+      flex-direction: column;
+      gap: 0.75rem;
+    }
+    #address-container label {
+      font-weight: 600;
+      color: #4a7c59;
+    }
+    #address-container input {
+      width: 100%;
+      padding: 0.5rem 0.75rem;
+      border: 1px solid #4a7c59;
+      border-radius: 0.375rem;
+      color: #4a7c59;
+      font-size: 1rem;
+      font-family: inherit;
+    }
+    #address-container input:focus {
+      outline: none;
+      border-color: #2563eb;
+      box-shadow: 0 0 0 2px rgba(37, 99, 235, 0.5);
+    }
+    .bg-color-selector {
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      background: white;
+      box-shadow: 0 -2px 8px rgba(0, 0, 0, 0.1);
+      padding: 0.5rem 1rem;
+      display: flex;
+      justify-content: center;
+      gap: 0.5rem;
+      z-index: 30;
+      flex-wrap: wrap;
+      max-width: 100vw;
+      overflow-x: auto;
+    }
+    .bg-color-selector button {
+      border-color: #d1d5db;
+      box-shadow: none;
+      opacity: 0.6;
+      transition: opacity 0.3s ease, border-color 0.3s ease;
+      width: 1.5rem;
+      height: 1.5rem;
+      flex-shrink: 0;
+    }
+    .bg-color-selector button:hover,
+    .bg-color-selector button:focus-visible {
+      opacity: 1;
+      border-color: #6b7280;
+      box-shadow: 0 0 0 2px rgba(107, 114, 128, 0.5);
+      outline: none;
+    }
+    .bg-color-selector button.ring-2 {
+      opacity: 1;
+      border-color: #2563eb;
+      box-shadow: 0 0 0 2px rgba(37, 99, 235, 0.7);
+    }
+    #promo-timer {
+      font-weight: 700;
+      color: #dc2626;
+      font-size: 1rem;
+      margin-left: auto;
+      user-select: none;
+      min-width: 90px;
+      text-align: right;
+    }
+    #cart-buy-btn {
+      background-color: #2563eb;
+      color: #ffeb3b;
+    }
+    #cart-buy-btn:hover:not(:disabled) {
+      background-color: #1e40af;
+      color: #fdd835;
+    }
+    #cart-buy-btn:disabled {
+      background-color: #93c5fd;
+      color: #dbeafe;
+      cursor: not-allowed;
+    }
+    #cart-preview {
+      position: fixed;
+      bottom: 3.75rem;
+      left: 0;
+      right: 0;
+      background: #4a7c59;
+      color: white;
+      padding: 0.5rem 1rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-weight: 600;
+      font-size: 1rem;
+      z-index: 35;
+      box-shadow: 0 -2px 8px rgba(0, 0, 0, 0.15);
+      border-top-left-radius: 0.5rem;
+      border-top-right-radius: 0.5rem;
+    }
+    #cart-preview button {
+      background: #d6336c;
+      color: white;
+      padding: 0.375rem 1rem;
+      border-radius: 0.375rem;
+      font-weight: 700;
+      font-size: 0.875rem;
+      cursor: pointer;
+      border: none;
+      transition: background-color 0.3s ease;
+    }
+    #cart-preview button:hover {
+      background-color: #b02a5a;
+    }
+    #acompanhamentos-warning {
+      background-color: #fef3c7;
+      border: 1px solid #fde68a;
+      color: #92400e;
+      padding: 0.75rem 1rem;
+      border-radius: 0.5rem;
+      font-weight: 600;
+      text-align: center;
+      margin: 0.5rem 1rem 1rem 1rem;
+      user-select: none;
+    }
+    #sending-overlay {
+      position: fixed;
+      inset: 0;
+      background: rgba(0, 0, 0, 0.5);
+      z-index: 60;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      color: white;
+      font-weight: 700;
+      font-size: 1.5rem;
+      border-radius: 1rem;
+      pointer-events: none;
+      opacity: 0;
+      transition: opacity 0.3s ease;
+    }
+    #sending-overlay.show {
+      opacity: 1;
+      pointer-events: auto;
+    }
+    #sending-overlay img {
+      width: 80px;
+      height: 80px;
+      margin-bottom: 1rem;
+      animation: spin 2s linear infinite;
+      border-radius: 0.5rem;
+      background: white;
+      box-shadow: 0 0 15px rgba(255, 255, 255, 0.7);
+    }
+  </style>
+  <script>
+   document.addEventListener("DOMContentLoaded", function () {
+      const categories = cardapio;
+
+      const bairros = [
+        { name: "Jardim Pres.", feeText: "Taxa Grátis", feeValue: 0 },
+        { name: "Mata do Segredo", feeText: "R$ 3", feeValue: 3 },
+        { name: "Trevisso", feeText: "R$ 3", feeValue: 3 },
+        { name: "JD. Das Cerejeiras", feeText: "R$ 4", feeValue: 4 },
+        { name: "Morada Verde", feeText: "R$ 4", feeValue: 4 },
+        { name: "Gabura", feeText: "R$ 5", feeValue: 5 },
+        { name: "Estrela do Sul", feeText: "R$ 5", feeValue: 5 },
+        { name: "Center Park", feeText: "R$ 5", feeValue: 5 },
+        { name: "Nova Lima", feeText: "R$ 4", feeValue: 4 },
+        { name: "Jardim Anache", feeText: "R$ 5", feeValue: 5 },
+        { name: "Oscar Salazar", feeText: "R$ 5", feeValue: 5 },
+        { name: "Tarsila do Amaral", feeText: "R$ 5", feeValue: 5 },
+        { name: "Vida Nova", feeText: "R$ 5", feeValue: 5 },
+        { name: "Jardim Columbia", feeText: "R$ 6", feeValue: 6 },
+        { name: "Hospital São Julião", feeText: "R$ 6", feeValue: 6 },
+        { name: "Jardim Montevidéu", feeText: "R$ 6", feeValue: 6 },
+        { name: "Alphaville", feeText: "R$ 8", feeValue: 8 },
+        { name: "PQ. Novos Estados", feeText: "R$ 6", feeValue: 6 },
+        { name: "Estrela Dalva", feeText: "R$ 6", feeValue: 6 },
+        { name: "Danúbio Azul", feeText: "R$ 6", feeValue: 6 },
+        { name: "Taquaral Bosque", feeText: "R$ 6", feeValue: 6 },
+        { name: "Mata do Jacinto", feeText: "R$ 6", feeValue: 6 },
+        { name: "Carandá Bosque", feeText: "R$ 7", feeValue: 7 },
+        { name: "Vila Margarida", feeText: "R$ 7", feeValue: 7 },
+        { name: "Vila do Polonês", feeText: "R$ 8", feeValue: 8 },
+        { name: "Jardim Autonomista", feeText: "R$ 8", feeValue: 8 },
+        { name: "Monte Castelo", feeText: "R$ 8", feeValue: 8 },
+        { name: "Vila Rica", feeText: "R$ 8", feeValue: 8 },
+      ];
+
+      const categoryButtons = document.querySelectorAll("#category-buttons button");
+      const discountIcon = document.getElementById("discount-icon");
+      const discountText = document.getElementById("discount-text");
+      const productList = document.getElementById("product-list");
+      const body = document.body;
+      const colorButtons = document.querySelectorAll("div.bg-color-selector button[data-color]");
+      const searchInput = document.getElementById("header-search");
+      const searchSendBtn = document.getElementById("search-send-btn");
+      const cartButton = document.getElementById("cart-button");
+      const cartPanel = document.getElementById("cart-panel");
+      const cartList = document.getElementById("cart-list");
+      const cartTotal = document.getElementById("cart-total");
+      const cartBuyBtn = document.getElementById("cart-buy-btn");
+      const cartCountBadge = document.getElementById("cart-count-badge");
+      const cartPreview = document.createElement("div");
+
+      let cart = [];
+      let paymentMethod = "Dinheiro";
+      let deliveryFeeItem = null;
+
+      function saveCart() {
+        localStorage.setItem("ranchoDoBiraCart", JSON.stringify(cart));
+        localStorage.setItem("ranchoDoBiraPaymentMethod", paymentMethod);
+        updateCartCount();
+      }
+
+      function loadCart() {
+        const saved = localStorage.getItem("ranchoDoBiraCart");
+        if (saved) {
+          try {
+            cart = JSON.parse(saved);
+          } catch {
+            cart = [];
+          }
+        }
+        const savedPayment = localStorage.getItem("ranchoDoBiraPaymentMethod");
+        if (savedPayment) paymentMethod = savedPayment;
+        updateCartCount();
+      }
+
+      function updateCartCount() {
+        const totalQty = cart.reduce((acc, cur) => acc + cur.quantity, 0);
+        if (totalQty > 0) {
+          cartCountBadge.textContent = totalQty;
+          cartCountBadge.classList.remove("hidden");
+        } else {
+          cartCountBadge.classList.add("hidden");
+        }
+        updateCartPreview();
+      }
+
+      function formatPrice(price) {
+        return `R$ ${price.toFixed(2).replace(".", ",")}`;
+      }
+
+      function renderCategory(categoryId) {
+        const category = categories.find((c) => c.id === categoryId);
+        if (!category) return;
+
+        discountText.textContent = category.discount;
+        discountIcon.className = `fas fa-box ${category.discountColor} text-xl`;
+
+        productList.innerHTML = "";
+
+        if (categoryId === "acompanhamentos") {
+          const warning = document.createElement("div");
+          warning.id = "acompanhamentos-warning";
+          warning.textContent =
+            "Somente ilustrativo, não pode ser pedido separadamente.";
+          productList.appendChild(warning);
+        }
+
+        category.items.forEach((item) => {
+          const card = document.createElement("article");
+          card.className =
+            "bg-white rounded-xl shadow p-4 flex items-center space-x-4 cursor-default";
+          card.setAttribute("role", "listitem");
+          card.tabIndex = 0;
+
+          const imgContainer = document.createElement("div");
+          imgContainer.className =
+            "w-28 h-28 rounded-lg border-4 border-gray-200 overflow-hidden flex-shrink-0 flex items-center justify-center bg-white";
+
+          const img = document.createElement("img");
+          img.className = "object-cover w-full h-full";
+          img.src = item.img;
+          img.alt = item.alt;
+          img.width = 112;
+          img.height = 112;
+
+          imgContainer.appendChild(img);
+
+          const textButtonDiv = document.createElement("div");
+          textButtonDiv.className =
+            "flex flex-1 flex-col sm:flex-row sm:items-center sm:justify-between";
+
+          const textDiv = document.createElement("div");
+          textDiv.className = "text-center sm:text-left";
+
+          const name = document.createElement("h3");
+          name.className = "text-gray-900 font-semibold text-lg";
+          name.textContent = item.name;
+
+          const desc = document.createElement("p");
+          desc.className = "text-gray-600 text-sm whitespace-pre-line mt-1";
+          desc.textContent = item.description;
+
+          const price = document.createElement("p");
+          price.className =
+            category.id === "acompanhamentos"
+              ? "text-gray-500 italic mt-1"
+              : "text-green-700 font-semibold text-lg mt-1";
+          price.textContent = item.priceText || "";
+
+          textDiv.appendChild(name);
+          if (item.description) textDiv.appendChild(desc);
+          textDiv.appendChild(price);
+
+          if (category.id !== "acompanhamentos") {
+            const addButton = document.createElement("button");
+            addButton.type = "button";
+            addButton.className =
+              "mt-3 sm:mt-0 bg-green-700 hover:bg-green-800 text-white font-semibold px-4 py-2 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-600 focus:ring-offset-1";
+            addButton.textContent = "Adicionar";
+            addButton.setAttribute(
+              "aria-label",
+              `Adicionar ${item.name} ao carrinho`
+            );
+
+            addButton.addEventListener("click", () => {
+              showSplashAnimation(() => {
+                addToCart({ ...item });
+              });
+            });
+
+            textButtonDiv.appendChild(textDiv);
+            textButtonDiv.appendChild(addButton);
+          } else {
+            textButtonDiv.appendChild(textDiv);
+          }
+
+          card.appendChild(imgContainer);
+          card.appendChild(textButtonDiv);
+
+          productList.appendChild(card);
+        });
+
+        if (categoryId === "marmitas" || categoryId === "acompanhamentos") {
+          const nextBtn = document.createElement("button");
+          nextBtn.type = "button";
+          nextBtn.className =
+            "w-full mt-2 bg-black text-white font-semibold py-3 rounded-lg hover:bg-gray-800 focus:outline-none focus:ring-2 focus:ring-offset-1 focus:ring-black";
+          nextBtn.textContent = "Próximo";
+          nextBtn.setAttribute("aria-label", "Ir para a próxima categoria");
+
+          nextBtn.addEventListener("click", () => {
+            const currentIndex = categories.findIndex((c) => c.id === categoryId);
+            const nextIndex = (currentIndex + 1) % categories.length;
+            const nextCategory = categories[nextIndex];
+            categoryButtons.forEach((b) => {
+              b.classList.remove("border-green-700", "text-green-700", "font-bold");
+              b.classList.add("text-gray-700", "font-semibold");
+              b.setAttribute("aria-selected", "false");
+            });
+            const nextBtnTab = Array.from(categoryButtons).find(
+              (b) => b.dataset.category === nextCategory.id
+            );
+            if (nextBtnTab) {
+              nextBtnTab.classList.add("border-green-700", "text-green-700", "font-bold");
+              nextBtnTab.classList.remove("text-gray-700", "font-semibold");
+              nextBtnTab.setAttribute("aria-selected", "true");
+            }
+            renderCategory(nextCategory.id);
+          });
+
+          productList.appendChild(nextBtn);
+        }
+
+        if (categoryId === "bebidas") {
+          const viewCartBtn = document.createElement("button");
+          viewCartBtn.type = "button";
+          viewCartBtn.className =
+            "w-full mt-2 bg-green-700 text-white font-semibold py-3 rounded-lg hover:bg-green-800 focus:outline-none focus:ring-2 focus:ring-offset-1 focus:ring-green-700";
+          viewCartBtn.textContent = "Ver Carrinho";
+          viewCartBtn.setAttribute("aria-label", "Abrir carrinho");
+
+          viewCartBtn.addEventListener("click", () => {
+            toggleCart();
+          });
+
+          productList.appendChild(viewCartBtn);
+        }
+      }
+
+      function addToCart(item) {
+        const existing = cart.find(
+          (c) => c.item.name === item.name && c.item.price === item.price
+        );
+        if (existing) {
+          existing.quantity++;
+        } else {
+          cart.push({ item: item, quantity: 1 });
+        }
+        saveCart();
+        renderCart();
+      }
+
+      function removeFromCart(index) {
+        // If removing delivery fee item, clear deliveryFeeItem reference
+        if (cart[index] && cart[index].item.name === "Taxa de Entrega") {
+          deliveryFeeItem = null;
+        }
+        cart.splice(index, 1);
+        saveCart();
+        renderCart();
+      }
+
+      function changeQuantity(index, delta) {
+        const entry = cart[index];
+        if (!entry) return;
+        entry.quantity += delta;
+        if (entry.quantity < 1) {
+          removeFromCart(index);
+        } else {
+          saveCart();
+          renderCart();
+        }
+      }
+
+      function updateDeliveryFeeInCart(selectedBairro) {
+        // Remove existing delivery fee item if any
+        if (deliveryFeeItem) {
+          const idx = cart.findIndex(c => c.item.name === "Taxa de Entrega");
+          if (idx !== -1) {
+            cart.splice(idx, 1);
+          }
+          deliveryFeeItem = null;
+        }
+        if (!selectedBairro) {
+          saveCart();
+          renderCart();
+          return;
+        }
+        const bairroObj = bairros.find(b => b.name === selectedBairro);
+        if (!bairroObj) {
+          saveCart();
+          renderCart();
+          return;
+        }
+        if (bairroObj.feeValue > 0) {
+          const feeItem = {
+            name: "Taxa de Entrega",
+            description: `Taxa de entrega para o bairro ${bairroObj.name}`,
+            price: bairroObj.feeValue,
+            priceText: `R$ ${bairroObj.feeValue.toFixed(2).replace(".", ",")}`,
+            img: "https://placehold.co/112x112/png?text=Entrega",
+            alt: `Ícone ilustrativo de taxa de entrega para o bairro ${bairroObj.name}`,
+            hasExtra: false,
+            extraText: "",
+            extraPrice: 0,
+          };
+          cart.push({ item: feeItem, quantity: 1 });
+          deliveryFeeItem = feeItem;
+        }
+        saveCart();
+        renderCart();
+      }
+
+      function renderCart() {
+        cartList.innerHTML = "";
+        if (cart.length === 0) {
+          const emptyMsg = document.createElement("p");
+          emptyMsg.className = "text-green-700 text-center py-6";
+          emptyMsg.textContent = "Seu carrinho está vazio.";
+          cartList.appendChild(emptyMsg);
+          cartTotal.textContent = "R$ 0,00";
+          cartBuyBtn.disabled = true;
+          cartBuyBtn.classList.add("opacity-50", "cursor-not-allowed");
+          updateCartCount();
+          updateCartPreview();
+          return;
+        }
+
+        cart.forEach((entry, index) => {
+          const { item, quantity } = entry;
+
+          const li = document.createElement("li");
+          li.className = "flex items-center space-x-4 border-b border-green-700/30 py-3";
+
+          const img = document.createElement("img");
+          img.src = item.img;
+          img.alt = item.alt;
+          img.width = 60;
+          img.height = 60;
+          img.className = "w-16 h-16 rounded-lg object-cover flex-shrink-0";
+
+          const infoDiv = document.createElement("div");
+          infoDiv.className = "flex-1";
+
+          const name = document.createElement("h4");
+          name.className = "font-semibold text-green-700";
+          name.textContent = item.name;
+
+          const price = document.createElement("p");
+          price.className = "text-green-500 font-semibold mt-1";
+          const totalPrice = (item.price || 0) * quantity;
+          price.textContent = formatPrice(totalPrice);
+
+          infoDiv.appendChild(name);
+          infoDiv.appendChild(price);
+
+          const qtyControls = document.createElement("div");
+          qtyControls.className = "flex items-center space-x-2";
+
+          // Disable quantity controls for delivery fee item
+          if (item.name === "Taxa de Entrega") {
+            const qtyText = document.createElement("span");
+            qtyText.className = "w-6 text-center font-semibold text-green-700";
+            qtyText.textContent = quantity;
+            qtyControls.appendChild(qtyText);
+          } else {
+            const btnMinus = document.createElement("button");
+            btnMinus.type = "button";
+            btnMinus.className =
+              "bg-green-200 hover:bg-green-300 rounded px-2 py-1 text-green-700 focus:outline-none focus:ring-2 focus:ring-offset-1 focus:ring-green-700";
+            btnMinus.setAttribute("aria-label", `Diminuir quantidade de ${item.name}`);
+            btnMinus.textContent = "-";
+            btnMinus.addEventListener("click", () => changeQuantity(index, -1));
+
+            const qtyText = document.createElement("span");
+            qtyText.className = "w-6 text-center font-semibold text-green-700";
+            qtyText.textContent = quantity;
+
+            const btnPlus = document.createElement("button");
+            btnPlus.type = "button";
+            btnPlus.className =
+              "bg-green-200 hover:bg-green-300 rounded px-2 py-1 text-green-700 focus:outline-none focus:ring-2 focus:ring-offset-1 focus:ring-green-700";
+            btnPlus.setAttribute("aria-label", `Aumentar quantidade de ${item.name}`);
+            btnPlus.textContent = "+";
+            btnPlus.addEventListener("click", () => changeQuantity(index, 1));
+
+            const btnRemove = document.createElement("button");
+            btnRemove.type = "button";
+            btnRemove.className =
+              "ml-4 text-red-500 hover:text-red-700 focus:outline-none focus:ring-2 focus:ring-offset-1 focus:ring-red-600";
+            btnRemove.setAttribute("aria-label", `Remover ${item.name} do carrinho`);
+            btnRemove.innerHTML = '<i class="fas fa-trash-alt"></i>';
+            btnRemove.addEventListener("click", () => removeFromCart(index));
+
+            qtyControls.appendChild(btnMinus);
+            qtyControls.appendChild(qtyText);
+            qtyControls.appendChild(btnPlus);
+            qtyControls.appendChild(btnRemove);
+          }
+
+          li.appendChild(img);
+          li.appendChild(infoDiv);
+          li.appendChild(qtyControls);
+
+          cartList.appendChild(li);
+        });
+
+        // Add address input container below cart list
+        let addressContainer = document.getElementById("address-container");
+        if (!addressContainer) {
+          addressContainer = document.createElement("div");
+          addressContainer.id = "address-container";
+
+          const labelRua = document.createElement("label");
+          labelRua.setAttribute("for", "input-rua");
+          labelRua.textContent = "Nome da Rua";
+
+          const inputRua = document.createElement("input");
+          inputRua.type = "text";
+          inputRua.id = "input-rua";
+          inputRua.placeholder = "Digite o nome da rua";
+          inputRua.setAttribute("aria-label", "Nome da rua para entrega");
+
+          const labelNumero = document.createElement("label");
+          labelNumero.setAttribute("for", "input-numero");
+          labelNumero.textContent = "Número da Casa";
+
+          const inputNumero = document.createElement("input");
+          inputNumero.type = "text";
+          inputNumero.id = "input-numero";
+          inputNumero.placeholder = "Digite o número da casa";
+          inputNumero.setAttribute("aria-label", "Número da casa para entrega");
+
+          addressContainer.appendChild(labelRua);
+          addressContainer.appendChild(inputRua);
+          addressContainer.appendChild(labelNumero);
+          addressContainer.appendChild(inputNumero);
+
+          cartPanel.insertBefore(addressContainer, cartPanel.querySelector("footer"));
+        }
+
+        const total = cart.reduce((acc, cur) => acc + (cur.item.price || 0) * cur.quantity, 0);
+
+        cartTotal.textContent = formatPrice(total);
+
+        if (total < 12) {
+          cartBuyBtn.disabled = true;
+          cartBuyBtn.classList.add("opacity-50", "cursor-not-allowed");
+        } else {
+          cartBuyBtn.disabled = false;
+          cartBuyBtn.classList.remove("opacity-50", "cursor-not-allowed");
+        }
+
+        updateCartCount();
+        updateCartPreview();
+      }
+
+      function toggleCart() {
+        if (cartPanel.classList.contains("translate-x-full")) {
+          cartPanel.classList.remove("translate-x-full");
+          cartPanel.classList.add("translate-x-0");
+          cartPanel.setAttribute("aria-hidden", "false");
+          setTimeout(() => {
+            const focusable = cartPanel.querySelector(
+              'button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])'
+            );
+            if (focusable) {
+              focusable.focus();
+            } else {
+              cartPanel.focus();
+            }
+          }, 100);
+        } else {
+          cartPanel.classList.add("translate-x-full");
+          cartPanel.classList.remove("translate-x-0");
+          cartPanel.setAttribute("aria-hidden", "true");
+        }
+      }
+
+      function sendCartOrder() {
+        if (cart.length === 0) return;
+
+        const total = cart.reduce((acc, cur) => acc + (cur.item.price || 0) * cur.quantity, 0);
+        if (total < 12) {
+          alert("O pedido mínimo é R$ 12,00. Por favor, adicione mais itens.");
+          return;
+        }
+
+        const ruaInput = document.getElementById("input-rua");
+        const numeroInput = document.getElementById("input-numero");
+        const rua = ruaInput ? ruaInput.value.trim() : "";
+        const numero = numeroInput ? numeroInput.value.trim() : "";
+
+        showSendingOverlay();
+
+        let message = "Quero esse pedido:\n";
+        cart.forEach(({ item, quantity }) => {
+          const priceText = item.price > 0 ? ` - ${formatPrice(item.price)}` : "";
+          message += `*${item.name}* x${quantity}${priceText}\n`;
+        });
+        message += `\nTotal: ${formatPrice(total)}`;
+        message += `\nForma de pagamento: ${paymentMethod}`;
+        if (rua || numero) {
+          message += `\nEndereço: ${rua}${numero ? ", Nº " + numero : ""}`;
+        }
+
+        const encodedText = encodeURIComponent(message);
+
+        setTimeout(() => {
+          window.location.href = `https://wa.me/67992526860?text=${encodedText}`;
+        }, 1500);
+      }
+
+      const splashArt = document.createElement("div");
+      splashArt.id = "splash-art";
+      splashArt.setAttribute("aria-live", "polite");
+      splashArt.setAttribute("role", "alert");
+      splashArt.innerHTML = `
+        <img src="logo-bira.jpg" alt="Logo Rancho do Bira estilizado" />
+        <p>Adicionando ao carrinho...</p>
+      `;
+      document.body.appendChild(splashArt);
+
+      function showSplashAnimation(callback) {
+        splashArt.classList.add("show");
+        setTimeout(() => {
+          splashArt.classList.remove("show");
+          if (typeof callback === "function") callback();
+        }, 1500);
+      }
+
+      categoryButtons.forEach((btn) => {
+        btn.addEventListener("click", () => {
+          categoryButtons.forEach((b) => {
+            b.classList.remove("border-green-700", "text-green-700", "font-bold");
+            b.classList.add("text-gray-700", "font-semibold");
+            b.setAttribute("aria-selected", "false");
+          });
+          btn.classList.add("border-green-700", "text-green-700", "font-bold");
+          btn.classList.remove("text-gray-700", "font-semibold");
+          btn.setAttribute("aria-selected", "true");
+          renderCategory(btn.dataset.category);
+        });
+      });
+
+      renderCategory("marmitas");
+
+      colorButtons.forEach((btn) => {
+        btn.addEventListener("click", () => {
+          const color = btn.getAttribute("data-color");
+          let adjustedColor = color;
+          if (color.toLowerCase() === "#ec4899") {
+            adjustedColor = "#a3b18a";
+          }
+          body.style.backgroundColor = adjustedColor;
+
+          colorButtons.forEach((b) => b.classList.remove("ring-2", "ring-offset-1"));
+          btn.classList.add("ring-2", "ring-offset-1");
+        });
+      });
+
+      body.style.backgroundColor = "#f8fafc";
+      const defaultBtn = document.querySelector("div.bg-color-selector button[data-color='#f8fafc']");
+      if (defaultBtn) {
+        defaultBtn.classList.add("ring-2", "ring-offset-1");
+      }
+
+      function sendSearchText() {
+        const text = searchInput.value.trim();
+        if (text.length === 0) return;
+        const message = `Quero esse pedido: ${text}`;
+        const encodedText = encodeURIComponent(message);
+        window.location.href = `https://wa.me/67992526860?text=${encodedText}`;
+      }
+
+      searchSendBtn.addEventListener("click", sendSearchText);
+      searchInput.addEventListener("keydown", (e) => {
+        if (e.key === "Enter") {
+          e.preventDefault();
+          sendSearchText();
+        }
+      });
+
+      cartButton.addEventListener("click", toggleCart);
+      cartBuyBtn.addEventListener("click", sendCartOrder);
+
+      document.getElementById("cart-close-btn").addEventListener("click", () => {
+        cartPanel.classList.add("translate-x-full");
+        cartPanel.classList.remove("translate-x-0");
+        cartPanel.setAttribute("aria-hidden", "true");
+        cartButton.focus();
+      });
+
+      cartPanel.addEventListener("keydown", (e) => {
+        if (e.key === "Escape") {
+          toggleCart();
+          cartButton.focus();
+        }
+      });
+
+      cartPreview.id = "cart-preview";
+      cartPreview.setAttribute("aria-live", "polite");
+      cartPreview.setAttribute("role", "region");
+      cartPreview.setAttribute("aria-label", "Resumo do carrinho");
+      cartPreview.innerHTML = `
+        <div id="cart-preview-info" class="flex items-center gap-4">
+          <i class="fas fa-shopping-bag text-xl"></i>
+          <span id="cart-preview-qty">0 itens</span>
+          <span id="cart-preview-total">R$ 0,00</span>
+        </div>
+        <button id="cart-preview-button" type="button" aria-label="Ver sacola">Ver sacola</button>
+      `;
+      document.body.appendChild(cartPreview);
+
+      const cartPreviewQty = document.getElementById("cart-preview-qty");
+      const cartPreviewTotal = document.getElementById("cart-preview-total");
+      const cartPreviewButton = document.getElementById("cart-preview-button");
+
+      cartPreviewButton.addEventListener("click", () => {
+        toggleCart();
+      });
+
+      function updateCartPreview() {
+        const totalQty = cart.reduce((acc, cur) => acc + cur.quantity, 0);
+        const totalPrice = cart.reduce((acc, cur) => acc + (cur.item.price || 0) * cur.quantity, 0);
+        cartPreviewQty.textContent = totalQty === 1 ? "1 item" : `${totalQty} itens`;
+        cartPreviewTotal.textContent = formatPrice(totalPrice);
+        if (totalQty > 0) {
+          cartPreview.style.display = "flex";
+        } else {
+          cartPreview.style.display = "none";
+        }
+      }
+
+      loadCart();
+      renderCart();
+
+      const sendingOverlay = document.createElement("div");
+      sendingOverlay.id = "sending-overlay";
+      sendingOverlay.setAttribute("aria-live", "assertive");
+      sendingOverlay.setAttribute("role", "alertdialog");
+      sendingOverlay.innerHTML = `
+        <img src="logo-bira.jpg" alt="Logo Rancho do Bira estilizado" />
+        <span>Pedido sendo enviado...</span>
+      `;
+      document.body.appendChild(sendingOverlay);
+
+      function showSendingOverlay() {
+        sendingOverlay.classList.add("show");
+      }
+
+      // Listen for bairro selection changes to update delivery fee in cart
+      searchInput.addEventListener("change", () => {
+        const selectedBairro = searchInput.value;
+        updateDeliveryFeeInCart(selectedBairro);
+      });
+
+      // Add Clear Cart button to cart footer
+      const cartFooter = cartPanel.querySelector("footer div.flex.flex-col.space-y-2");
+      if (cartFooter) {
+        const clearCartBtn = document.createElement("button");
+        clearCartBtn.type = "button";
+        clearCartBtn.id = "cart-clear-btn";
+        clearCartBtn.className = "w-full bg-red-600 text-white font-semibold py-3 rounded-lg hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-offset-1 focus:ring-red-700 mt-2";
+        clearCartBtn.textContent = "Limpar Carrinho";
+        clearCartBtn.setAttribute("aria-label", "Limpar todos os itens do carrinho");
+        clearCartBtn.addEventListener("click", () => {
+          cart = [];
+          deliveryFeeItem = null;
+          saveCart();
+          renderCart();
+        });
+        cartFooter.appendChild(clearCartBtn);
+      }
+    });
+  </script>
+ </head>
+ <body class="min-h-screen flex flex-col transition-colors duration-300 relative">
+  <header class="relative rounded-b-[40px] px-4 pt-6 pb-4 shadow-lg z-20 header-title-cart">
+   <form class="relative flex items-center bg-white rounded-full px-3 py-2 text-gray-400 text-sm font-normal z-10" onsubmit="return false">
+    <select aria-label="Selecione seu bairro" class="w-full outline-none text-gray-700 text-sm font-normal bg-transparent pr-10 cursor-pointer" id="header-search" title="Selecione seu bairro">
+     <option value="" disabled selected>Selecione seu bairro</option>
+     <option value="Jardim Pres.">Jardim Pres. - Taxa Grátis</option>
+     <option value="Mata do Segredo">Mata do Segredo - R$ 3</option>
+     <option value="Trevisso">Trevisso - R$ 3</option>
+     <option value="JD. Das Cerejeiras">JD. Das Cerejeiras - R$ 4</option>
+     <option value="Morada Verde">Morada Verde - R$ 4</option>
+     <option value="Gabura">Gabura - R$ 5</option>
+     <option value="Estrela do Sul">Estrela do Sul - R$ 5</option>
+     <option value="Center Park">Center Park - R$ 5</option>
+     <option value="Nova Lima">Nova Lima - R$ 4</option>
+     <option value="Jardim Anache">Jardim Anache - R$ 5</option>
+     <option value="Oscar Salazar">Oscar Salazar - R$ 5</option>
+     <option value="Tarsila do Amaral">Tarsila do Amaral - R$ 5</option>
+     <option value="Vida Nova">Vida Nova - R$ 5</option>
+     <option value="Jardim Columbia">Jardim Columbia - R$ 6</option>
+     <option value="Hospital São Julião">Hospital São Julião - R$ 6</option>
+     <option value="Jardim Montevidéu">Jardim Montevidéu - R$ 6</option>
+     <option value="Alphaville">Alphaville - R$ 8</option>
+     <option value="PQ. Novos Estados">PQ. Novos Estados - R$ 6</option>
+     <option value="Estrela Dalva">Estrela Dalva - R$ 6</option>
+     <option value="Danúbio Azul">Danúbio Azul - R$ 6</option>
+     <option value="Taquaral Bosque">Taquaral Bosque - R$ 6</option>
+     <option value="Mata do Jacinto">Mata do Jacinto - R$ 6</option>
+     <option value="Carandá Bosque">Carandá Bosque - R$ 7</option>
+     <option value="Vila Margarida">Vila Margarida - R$ 7</option>
+     <option value="Vila do Polonês">Vila do Polonês - R$ 8</option>
+     <option value="Jardim Autonomista">Jardim Autonomista - R$ 8</option>
+     <option value="Monte Castelo">Monte Castelo - R$ 8</option>
+     <option value="Vila Rica">Vila Rica - R$ 8</option>
+    </select>
+    <button aria-label="Enviar bairro" class="absolute right-2 text-gray-400 hover:text-green-700 focus:outline-none focus:text-green-700" id="search-send-btn" tabindex="0" type="button">
+     <i class="fas fa-paper-plane"></i>
+    </button>
+   </form>
+   <div class="flex items-center mt-4 rounded-[30px] px-4 py-2 text-white font-semibold text-lg z-10 relative">
+    <div class="flex items-center justify-center w-10 h-10 rounded-full bg-black mr-3 overflow-hidden">
+     <img alt="Logo Rancho do Bira" class="w-full h-full object-cover" height="40" src="logo-bira.jpg" width="40"/>
+    </div>
+    <span class="truncate flex-1">
+     Rancho do Bira - Nova Lima
+    </span>
+    <button aria-label="Abrir carrinho" class="relative text-white focus:outline-none focus:ring-2 focus:ring-offset-1 focus:ring-green-700" id="cart-button" title="Abrir carrinho" type="button">
+     <i class="fas fa-shopping-cart text-xl"></i>
+     <span class="hidden absolute -top-1 -right-3 bg-yellow-400 text-black rounded-full text-xs font-bold w-5 h-5 flex items-center justify-center" id="cart-count-badge">0</span>
+    </button>
+   </div>
+   <p class="text-white text-xs mt-1 ml-14 flex items-center gap-1 z-10 relative">
+    <i class="fas fa-coins"></i>
+    Pedido mínimo: R$ 12,00
+   </p>
+  </header>
+  <nav class="bg-white mt-4 mx-4 rounded-xl shadow flex justify-between text-sm font-semibold text-gray-700 px-4 overflow-x-auto z-10 relative" id="category-buttons" role="tablist">
+   <button aria-selected="true" class="flex items-center space-x-1 border-b-2 border-green-700 text-green-700 font-bold pb-2 whitespace-nowrap" data-category="marmitas" role="tab" type="button">Marmitas</button>
+   <button class="pb-2 hover:text-green-700 transition font-semibold text-gray-700 whitespace-nowrap" data-category="bebidas" role="tab" type="button">Bebidas</button>
+   <button class="pb-2 hover:text-green-700 transition font-semibold text-gray-700 whitespace-nowrap" data-category="acompanhamentos" role="tab" type="button">Acompanhamentos</button>
+  </nav>
+  <section aria-live="polite" class="bg-white mt-4 mx-4 rounded-xl shadow flex items-center px-4 py-3 space-x-3 z-10 relative">
+   <i class="fas fa-box text-green-700 text-xl" id="discount-icon"></i>
+   <h2 class="text-green-700 font-bold text-lg" id="discount-text">🍱 Marmitas com acompanhamentos</h2>
+  </section>
+  <main class="flex-1 overflow-y-auto mt-4 mx-4 space-y-4 pb-24 relative z-10" id="product-list" role="list"></main>
+  <aside aria-hidden="true" aria-label="Carrinho de compras" aria-modal="true" class="fixed top-0 right-0 h-full w-80 max-w-full shadow-xl transform translate-x-full transition-transform duration-300 flex flex-col z-40" id="cart-panel" role="dialog" style="background-color: #ffffff;" tabindex="-1">
+   <header class="flex items-center justify-between p-4 border-b border-green-700/30">
+    <h3 class="text-lg font-semibold text-green-700">Carrinho</h3>
+    <button aria-label="Fechar carrinho" class="text-green-700 hover:text-green-900 focus:outline-none focus:ring-2 focus:ring-offset-1 focus:ring-green-700" id="cart-close-btn" type="button">
+     <i class="fas fa-times text-xl"></i>
+    </button>
+   </header>
+   <ul class="flex-1 overflow-y-auto divide-y divide-green-700/30 p-4" id="cart-list" tabindex="0"></ul>
+   <div id="address-container" class="px-4 pb-4 border-t border-green-700/30 flex flex-col gap-3">
+    <label for="input-rua" class="font-semibold text-green-700">Nome da Rua</label>
+    <input type="text" id="input-rua" placeholder="Digite o nome da rua" aria-label="Nome da rua para entrega" class="rounded border border-green-700 px-3 py-2 text-green-700 focus:outline-none focus:ring-2 focus:ring-green-600 focus:ring-offset-1"/>
+    <label for="input-numero" class="font-semibold text-green-700">Número da Casa</label>
+    <input type="text" id="input-numero" placeholder="Digite o número da casa" aria-label="Número da casa para entrega" class="rounded border border-green-700 px-3 py-2 text-green-700 focus:outline-none focus:ring-2 focus:ring-green-600 focus:ring-offset-1"/>
+   </div>
+   <footer class="p-4 border-t border-green-700/30">
+    <div class="flex flex-col space-y-2">
+     <div class="flex justify-between items-center">
+      <span aria-atomic="true" aria-live="polite" class="font-semibold text-green-700 text-lg" id="cart-total">R$ 0,00</span>
+     </div>
+     <button class="w-full bg-[#2563eb] text-[#ffeb3b] font-semibold py-3 rounded-lg hover:bg-[#1e40af] hover:text-[#fdd835] focus:outline-none focus:ring-2 focus:ring-offset-1 focus:ring-[#1e40af] disabled:opacity-50 disabled:cursor-not-allowed" disabled="" id="cart-buy-btn" type="button">Finalizar Compra</button>
+    </div>
+   </footer>
+  </aside>
+  <div class="bg-color-selector" role="region" aria-label="Seletor de cor do plano de fundo">
+   <button aria-label="Branco Gelo" class="w-6 h-6 rounded-full bg-[#f8fafc] border-2 border-white shadow-md hover:border-gray-300 focus:outline-none focus:ring-2 focus:ring-offset-1 focus:ring-[#f8fafc]" data-color="#f8fafc" type="button"></button>
+   <button aria-label="Verde" class="w-6 h-6 rounded-full bg-green-500 border-2 border-white shadow-md hover:border-gray-300 focus:outline-none focus:ring-2 focus:ring-offset-1 focus:ring-green-500" data-color="#22c55e" type="button"></button>
+   <button aria-label="Azul" class="w-6 h-6 rounded-full bg-[#0a7fff] border-2 border-white shadow-md hover:border-gray-300 focus:outline-none focus:ring-2 focus:ring-offset-1 focus:ring-[#0a7fff]" data-color="#0a7fff" type="button"></button>
+   <button aria-label="Rosa" class="w-6 h-6 rounded-full bg-pink-500 border-2 border-white shadow-md hover:border-gray-300 focus:outline-none focus:ring-2 focus:ring-offset-1 focus:ring-pink-500" data-color="#ec4899" type="button"></button>
+   <button aria-label="Amarelo" class="w-6 h-6 rounded-full bg-yellow-400 border-2 border-white shadow-md hover:border-gray-300 focus:outline-none focus:ring-2 focus:ring-offset-1 focus:ring-yellow-400" data-color="#facc15" type="button"></button>
+   <button aria-label="Cinza" class="w-6 h-6 rounded-full bg-gray-400 border-2 border-white shadow-md hover:border-gray-300 focus:outline-none focus:ring-2 focus:ring-offset-1 focus:ring-gray-400" data-color="#9ca3af" type="button"></button>
+   <button aria-label="Laranja" class="w-6 h-6 rounded-full bg-orange-500 border-2 border-white shadow-md hover:border-gray-300 focus:outline-none focus:ring-2 focus:ring-offset-1 focus:ring-orange-500" data-color="#f97316" type="button"></button>
+   <button aria-label="Vermelho" class="w-6 h-6 rounded-full bg-red-600 border-2 border-white shadow-md hover:border-gray-300 focus:outline-none focus:ring-2 focus:ring-offset-1 focus:ring-red-600" data-color="#dc2626" type="button"></button>
+   <button aria-label="Roxo" class="w-6 h-6 rounded-full bg-purple-600 border-2 border-white shadow-md hover:border-gray-300 focus:outline-none focus:ring-2 focus:ring-offset-1 focus:ring-purple-600" data-color="#7c3aed" type="button"></button>
+   <button aria-label="Turquesa" class="w-6 h-6 rounded-full bg-teal-500 border-2 border-white shadow-md hover:border-gray-300 focus:outline-none focus:ring-2 focus:ring-offset-1 focus:ring-teal-500" data-color="#14b8a6" type="button"></button>
+   <button aria-label="Marrom" class="w-6 h-6 rounded-full bg-yellow-900 border-2 border-white shadow-md hover:border-gray-300 focus:outline-none focus:ring-2 focus:ring-offset-1 focus:ring-yellow-900" data-color="#78350f" type="button"></button>
+  </div>
+ </body>
+</html>
