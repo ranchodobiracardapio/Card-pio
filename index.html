@@ -1064,7 +1064,7 @@
 
           const labelRua = document.createElement("label");
           labelRua.setAttribute("for", "input-rua");
-          labelRua.textContent = "Nome da Rua";
+          labelRua.textContent = "Qual endereço de Entrega?";
 
           const inputRua = document.createElement("input");
           inputRua.type = "text";
@@ -1221,7 +1221,7 @@
         btn.addEventListener("click", () => {
           const color = btn.getAttribute("data-color");
           let adjustedColor = color;
-          if (color.toLowerCase() === "#ec4899") {
+          if (color.toLowerCase() === "#ffffff") {
             adjustedColor = "#a3b18a";
           }
           body.style.backgroundColor = adjustedColor;
