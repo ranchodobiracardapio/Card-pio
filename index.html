@@ -34,24 +34,13 @@
       overflow: visible;
     }
     #cart-buy-btn {
-      background-color: #2563eb; /* Tailwind blue-600 */
+      background-color: #22c55e; /* Tailwind verd500 */
       color: #ffffff;
       font-weight: 700;
       box-shadow: 0 0 12px rgba(37, 99, 235, 0.8);
       transition: none;
     }
-    #cart-buy-btn:disabled {
-      background-color: #bfdbfe; /* Tailwind blue-200 */
-      color: #93c5fd; /* Tailwind blue-300 */
-      cursor: not-allowed;
-      box-shadow: none;
-      font-weight: 600;
-    }
-    #cart-buy-btn:hover:not(:disabled) {
-      background-color: #2563eb; /* Remove hover effect */
-      color: #ffffff;
-      box-shadow: 0 0 12px rgba(37, 99, 235, 0.8);
-    }
+
     #splash-art {
       position: fixed;
       top: 50%;
@@ -1593,20 +1582,13 @@
     >
       <label class="font-semibold text-green-700" for="input-rua">Nome da Rua</label>
       <input
-        aria-label="Nome da rua para entrega"
+        aria-label="Endereço para entrega"
         class="rounded border border-green-700 px-3 py-2 text-green-700 focus:outline-none focus:ring-2 focus:ring-green-600 focus:ring-offset-1"
         id="input-rua"
-        placeholder="Digite o nome da rua"
+        placeholder="Digite o Nome da Rua e N°"
         type="text"
       />
-      <label class="font-semibold text-green-700" for="input-numero">Número da Casa</label>
-      <input
-        aria-label="Número da casa para entrega"
-        class="rounded border border-green-700 px-3 py-2 text-green-700 focus:outline-none focus:ring-2 focus:ring-green-600 focus:ring-offset-1"
-        id="input-numero"
-        placeholder="Digite o número da casa"
-        type="text"
-      />
+      
       <label class="font-semibold text-green-700" for="input-observacoes"
         >Observações (opcional)</label
       >
