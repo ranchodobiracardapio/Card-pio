@@ -699,7 +699,7 @@
       ];
 
       const bairros = [
-        { name: "Vou Retirar na Loja", feeText: "", feeValue: 0 },
+        { name: "Vou Retirar na Loja", feeText: "R$ 0", feeValue: 0 },
         { name: "Centro", feeText: "R$ 10", feeValue: 10 },
         { name: "Jardim Pres.", feeText: "R$ 2", feeValue: 2 },
         { name: "Mata do Segredo", feeText: "R$ 3", feeValue: 3 },
@@ -1199,7 +1199,7 @@
       splashArt.setAttribute("aria-live", "polite");
       splashArt.setAttribute("role", "alert");
       splashArt.innerHTML = `
-        <img src="https://placehold.co/80x80/png?text=Marmitaria+Estrela+Dalva" alt="Logo Marmitaria Estrela Dalva estilizado em fundo branco com bordas arredondadas" />
+        <img src="logo-bira.png" alt="Logo Marmitaria Estrela Dalva estilizado em fundo branco com bordas arredondadas" />
         <p>Adicionando ao carrinho...</p>
       `;
       document.body.appendChild(splashArt);
@@ -1429,7 +1429,7 @@
         <option disabled selected value="">
           Selecione seu bairro
         </option>
-        <option value="Vou Retirar">Vou Retirar. - R$ 0</option>
+        <option value="Vou Retirar na Loja">Vou Retirar na Loja. - </option>
         <option value="Jardim Pres.">Jardim Pres. - R$ 2</option>
         <option value="Centro">Centro - R$ 10</option>
         <option value="Mata do Segredo">Mata do Segredo - R$ 3</option>
