@@ -612,7 +612,7 @@
         message += `*${index + 1}. ${item.name}*${item.size ? ' - Tamanho: ' + item.size : ''}%0APreço: R$ ${item.price.toFixed(2).replace('.', ',')}%0A%0A`;
       });
       message += `*Total:* R$ ${cart.getTotal().toFixed(2).replace('.', ',')}`;
-      const phoneNumber = '6799932890';
+      const phoneNumber = '5567999321890';
       const url = `https://wa.me/${phoneNumber}?text=${message}`;
       window.open(url, '_blank');
       checkoutModal.classList.add('hidden');
