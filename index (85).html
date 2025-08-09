@@ -1,0 +1,295 @@
+<html class="scroll-smooth" lang="pt-BR">
+ <head>
+  <meta charset="utf-8"/>
+  <meta content="width=device-width, initial-scale=1" name="viewport"/>
+  <title>
+   Fúria das Ruas
+  </title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" rel="stylesheet"/>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700&amp;display=swap" rel="stylesheet"/>
+  <style>
+   body {
+     font-family: "Inter", sans-serif;
+   }
+   /* Scrollbar for sidebar */
+   #cart-sidebar::-webkit-scrollbar {
+     width: 8px;
+   }
+   #cart-sidebar::-webkit-scrollbar-track {
+     background: #f1f1f1;
+   }
+   #cart-sidebar::-webkit-scrollbar-thumb {
+     background: #888;
+     border-radius: 4px;
+   }
+   #cart-sidebar::-webkit-scrollbar-thumb:hover {
+     background: #555;
+   }
+   /* Slightly taller banner height */
+   .banner-height {
+     height: 120px !important;
+     max-height: 120px;
+   }
+  </style>
+ </head>
+ <body class="bg-white text-black min-h-screen flex flex-col justify-between relative overflow-x-hidden">
+  <!-- Header -->
+  <header class="bg-[#0047B3] flex items-center justify-between px-6 py-5 rounded-br-[2.5rem]">
+   <div class="w-14 h-14 rounded-full bg-white flex items-center justify-center shrink-0">
+    <img alt="Logo Fúria das Ruas, white circle with black text furialogo.png" class="w-14 h-14 object-contain" draggable="false" height="56" src="furialogo.png" width="56"/>
+   </div>
+   <h1 class="text-white font-extrabold text-xl md:text-2xl select-none">
+    FÚRIA DAS RUAS
+   </h1>
+   <button aria-label="Abrir carrinho de compras" class="relative shrink-0 focus:outline-none" id="cart-button" type="button">
+    <i class="fas fa-shopping-cart text-green-600 text-3xl"></i>
+    <span class="absolute -top-1 -right-1 bg-white text-black text-xs font-semibold rounded-full w-5 h-5 flex items-center justify-center select-none hidden" id="cart-count">
+     0
+    </span>
+   </button>
+  </header>
+  <!-- Navigation -->
+  <nav class="flex gap-5 px-6 py-5 overflow-x-auto scrollbar-hide">
+   <a class="flex items-center gap-2 bg-gradient-to-r from-gray-800 to-gray-600 text-white font-bold rounded-full px-5 py-2 whitespace-nowrap shrink-0" href="#">
+    <i class="fas fa-box-open text-lg"></i>
+    Pedidos
+   </a>
+   <a class="flex items-center gap-2 bg-gradient-to-r from-gray-800 to-gray-600 text-white font-bold rounded-full px-5 py-2 whitespace-nowrap shrink-0" href="#">
+    <i class="fas fa-shopping-bag text-lg"></i>
+    Shopping
+   </a>
+   <a class="flex items-center gap-2 bg-gradient-to-r from-gray-800 to-gray-600 text-white font-bold rounded-full px-5 py-2 whitespace-nowrap shrink-0" href="#">
+    <i class="fab fa-whatsapp text-lg"></i>
+    Grupo
+   </a>
+   <a class="flex items-center gap-2 bg-gradient-to-r from-gray-800 to-gray-600 text-white font-bold rounded-full px-5 py-2 whitespace-nowrap shrink-0" href="#">
+    <i class="fas fa-bullhorn text-lg"></i>
+    Notícias Fúria CG
+   </a>
+  </nav>
+  <!-- Banner -->
+  <section class="px-6 mt-6">
+   <img alt="Banner cinza com texto branco furiabanner.jpg" class="w-full max-w-sm mx-auto rounded-3xl object-cover banner-height" draggable="false" src="banner.png" width="320" />
+  </section>
+  <!-- Choose your shirt text -->
+  <section class="px-6 mt-10 text-center">
+   <h2 class="font-extrabold text-lg select-none">
+    Escolha sua Camiseta
+   </h2>
+  </section>
+  <!-- Products -->
+  <section class="px-6 mt-7 mb-14 max-w-5xl mx-auto overflow-x-auto scrollbar-thin scrollbar-thumb-gray-400 scrollbar-track-gray-200" id="products" style="white-space: nowrap;">
+   <!-- Product 1 -->
+   <article class="bg-gradient-to-b from-gray-300 to-white rounded-3xl w-40 inline-block flex-shrink-0 mx-5 p-5 align-top">
+    <img alt="Imagem da camiseta Fúria Adulto, fundo branco com texto furiaadulto.png" class="rounded-2xl mb-4 object-contain" draggable="false" height="120" src="https://storage.googleapis.com/a1aa/image/0aff1bd4-9e28-4dac-3813-2792266869e8.jpg" width="120"/>
+    <h3 class="font-extrabold text-center select-none">
+     Fúria Adulto
+    </h3>
+    <p class="text-center text-xs select-none mt-1">
+     Escolha o Tamanho
+    </p>
+    <button class="mt-4 bg-gradient-to-r from-teal-600 to-green-400 text-white font-extrabold rounded-full px-4 py-2 text-sm select-none add-to-cart" data-name="Fúria Adulto" data-price="60" data-img="https://storage.googleapis.com/a1aa/image/0aff1bd4-9e28-4dac-3813-2792266869e8.jpg" type="button">
+     R$60
+     <span class="font-normal">
+      Adicionar
+     </span>
+    </button>
+   </article>
+   <!-- Product 2 -->
+   <article class="bg-gradient-to-b from-gray-300 to-white rounded-3xl w-40 inline-block flex-shrink-0 mx-5 p-5 align-top">
+    <img alt="Imagem da camiseta Fúria + Hubz, fundo branco com texto furiahubz.png" class="rounded-2xl mb-4 object-contain" draggable="false" height="120" src="https://storage.googleapis.com/a1aa/image/a22ff1ec-3781-450f-950d-e53f999f4345.jpg" width="120"/>
+    <h3 class="font-extrabold text-center select-none">
+     Fúria + Hubz
+    </h3>
+    <p class="text-center text-xs select-none mt-1">
+     T. Único G
+    </p>
+    <button class="mt-4 bg-gradient-to-r from-teal-600 to-green-400 text-white font-extrabold rounded-full px-4 py-2 text-sm select-none add-to-cart" data-name="Fúria + Hubz" data-price="40" data-img="https://storage.googleapis.com/a1aa/image/a22ff1ec-3781-450f-950d-e53f999f4345.jpg" type="button">
+     R$40
+     <span class="font-normal">
+      Adicionar
+     </span>
+    </button>
+   </article>
+   <!-- Product 3 -->
+   <article class="bg-gradient-to-b from-gray-300 to-white rounded-3xl w-40 inline-block flex-shrink-0 mx-5 p-5 align-top">
+    <img alt="Imagem da camiseta Fúria Infantil, fundo branco com texto furiainfantil.png" class="rounded-2xl mb-4 object-contain" draggable="false" height="120" src="https://storage.googleapis.com/a1aa/image/02b3bf4c-4548-405e-6dcd-d7d65f4eb079.jpg" width="120"/>
+    <h3 class="font-extrabold text-center select-none">
+     Fúria Infantil
+    </h3>
+    <p class="text-center text-xs select-none mt-1">
+     Escolha o Tamanho
+    </p>
+    <button class="mt-4 bg-gradient-to-r from-teal-600 to-green-400 text-white font-extrabold rounded-full px-4 py-2 text-sm select-none add-to-cart" data-name="Fúria Infantil" data-price="50" data-img="https://storage.googleapis.com/a1aa/image/02b3bf4c-4548-405e-6dcd-d7d65f4eb079.jpg" type="button">
+     R$50
+     <span class="font-normal">
+      Adicionar
+     </span>
+    </button>
+   </article>
+  </section>
+  <!-- Footer cart -->
+  <footer class="bg-[#0047B3] flex items-center justify-between px-6 py-4 text-white select-none" id="footer-cart">
+   <div class="flex items-center gap-3">
+    <i class="fas fa-shopping-bag text-3xl"></i>
+    <span class="font-bold text-lg" id="cart-items-count">0 item</span>
+   </div>
+   <div class="font-extrabold text-lg" id="cart-total-price">R$ 0,00</div>
+   <div class="flex gap-4">
+    <button class="bg-red-500 hover:bg-red-600 transition-colors rounded-full px-4 py-1.5 font-extrabold uppercase text-sm" id="clear-cart" type="button">
+     Limpar
+    </button>
+    <button class="bg-red-500 hover:bg-red-600 transition-colors rounded-full px-4 py-1.5 font-extrabold uppercase text-sm" id="view-cart" type="button">
+     Ver Carrinho
+    </button>
+   </div>
+  </footer>
+
+  <!-- Sidebar Cart -->
+  <aside id="cart-sidebar" class="fixed top-0 right-0 h-full w-80 bg-white shadow-lg transform translate-x-full transition-transform duration-300 z-50 flex flex-col">
+   <header class="flex items-center justify-between p-4 border-b border-gray-300">
+    <h2 class="text-xl font-extrabold text-gray-900 select-none">Seu Carrinho</h2>
+    <button aria-label="Fechar carrinho" id="close-cart" class="text-gray-700 hover:text-gray-900 focus:outline-none text-2xl font-bold">&times;</button>
+   </header>
+   <div id="cart-items-container" class="flex-1 overflow-y-auto p-4 space-y-4">
+    <!-- Items will be dynamically added here -->
+   </div>
+   <footer class="p-4 border-t border-gray-300">
+    <div class="flex justify-between font-extrabold text-lg mb-4">
+     <span>Total:</span>
+     <span id="sidebar-cart-total">R$ 0,00</span>
+    </div>
+    <button id="checkout-button" class="w-full bg-green-600 hover:bg-green-700 text-white font-extrabold py-2 rounded-lg select-none">
+     Finalizar Compra
+    </button>
+   </footer>
+  </aside>
+
+  <!-- Overlay -->
+  <div id="cart-overlay" class="fixed inset-0 bg-black bg-opacity-40 hidden z-40"></div>
+
+  <script>
+   (() => {
+    const cart = {
+      items: [],
+      addItem(name, price, img) {
+        this.items.push({ name, price, img });
+        this.updateUI();
+      },
+      clear() {
+        this.items = [];
+        this.updateUI();
+      },
+      getTotal() {
+        return this.items.reduce((sum, item) => sum + item.price, 0);
+      },
+      updateUI() {
+        const count = this.items.length;
+        const total = this.getTotal();
+        const cartCountEl = document.getElementById('cart-count');
+        const cartItemsCountEl = document.getElementById('cart-items-count');
+        const cartTotalPriceEl = document.getElementById('cart-total-price');
+        const footerCartEl = document.getElementById('footer-cart');
+
+        // Update header cart count and toggle visibility
+        if (count > 0) {
+          cartCountEl.textContent = count;
+          cartCountEl.classList.remove('hidden');
+        } else {
+          cartCountEl.classList.add('hidden');
+        }
+
+        // Update footer cart preview or hide if empty
+        if (count > 0) {
+          cartItemsCountEl.textContent = count + (count === 1 ? ' item' : ' items');
+          cartTotalPriceEl.textContent = `R$ ${total.toFixed(2).replace('.', ',')}`;
+          footerCartEl.classList.remove('hidden');
+        } else {
+          footerCartEl.classList.add('hidden');
+        }
+
+        // Update sidebar cart items
+        const container = document.getElementById('cart-items-container');
+        container.innerHTML = '';
+        if (count === 0) {
+          const emptyMsg = document.createElement('p');
+          emptyMsg.textContent = 'Seu carrinho está vazio.';
+          emptyMsg.className = 'text-center text-gray-500 mt-10 select-none';
+          container.appendChild(emptyMsg);
+        } else {
+          this.items.forEach((item, index) => {
+            const itemDiv = document.createElement('div');
+            itemDiv.className = 'flex justify-between items-center border-b border-gray-200 pb-2 gap-3';
+            itemDiv.innerHTML = `
+              <img src="${item.img}" alt="Imagem do produto ${item.name}" class="w-16 h-16 object-contain rounded-lg flex-shrink-0" />
+              <div class="flex-1 font-semibold text-gray-900 select-none">${item.name}</div>
+              <div class="text-gray-700 select-none">R$ ${item.price.toFixed(2).replace('.', ',')}</div>
+            `;
+            container.appendChild(itemDiv);
+          });
+        }
+        document.getElementById('sidebar-cart-total').textContent = `R$ ${total.toFixed(2).replace('.', ',')}`;
+      }
+    };
+
+    // Initialize empty cart and update UI
+    cart.updateUI();
+
+    // Add event listeners to add-to-cart buttons
+    document.querySelectorAll('.add-to-cart').forEach(button => {
+      button.addEventListener('click', () => {
+        const name = button.getAttribute('data-name');
+        const price = parseFloat(button.getAttribute('data-price'));
+        const img = button.getAttribute('data-img') || '';
+        cart.addItem(name, price, img);
+      });
+    });
+
+    // Clear cart button
+    document.getElementById('clear-cart').addEventListener('click', () => {
+      cart.clear();
+      closeCartSidebar();
+    });
+
+    // View cart button opens sidebar
+    document.getElementById('view-cart').addEventListener('click', () => {
+      openCartSidebar();
+    });
+
+    // Cart button in header opens sidebar
+    document.getElementById('cart-button').addEventListener('click', () => {
+      openCartSidebar();
+    });
+
+    // Close sidebar button
+    document.getElementById('close-cart').addEventListener('click', () => {
+      closeCartSidebar();
+    });
+
+    // Overlay click closes sidebar
+    document.getElementById('cart-overlay').addEventListener('click', () => {
+      closeCartSidebar();
+    });
+
+    // Checkout button (just alert for demo)
+    document.getElementById('checkout-button').addEventListener('click', () => {
+      if (cart.items.length === 0) {
+        alert('Seu carrinho está vazio.');
+        return;
+      }
+      alert('Checkout não implementado.');
+    });
+
+    function openCartSidebar() {
+      document.getElementById('cart-sidebar').classList.remove('translate-x-full');
+      document.getElementById('cart-overlay').classList.remove('hidden');
+    }
+    function closeCartSidebar() {
+      document.getElementById('cart-sidebar').classList.add('translate-x-full');
+      document.getElementById('cart-overlay').classList.add('hidden');
+    }
+   })();
+  </script>
+ </body>
+</html>
