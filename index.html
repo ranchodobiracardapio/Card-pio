@@ -5,7 +5,8 @@
   <title>
    Fúria das Ruas
   </title>
-  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://cdn.tailwindcss.com">
+  </script>
   <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" rel="stylesheet"/>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700&amp;display=swap" rel="stylesheet"/>
   <style>
@@ -28,8 +29,8 @@
    }
    /* Banner height */
    .banner-height {
-     height: 120px !important;
-     max-height: 120px;
+     height: 240px !important;
+     max-height: 240px;
    }
    /* Horizontal scroll for products */
    #products {
@@ -211,6 +212,14 @@
      width: 100%;
      cursor: pointer;
    }
+   /* Hide default scrollbar for nav and products on supported browsers */
+   .scrollbar-hide::-webkit-scrollbar {
+     display: none;
+   }
+   .scrollbar-hide {
+     -ms-overflow-style: none;
+     scrollbar-width: none;
+   }
   </style>
  </head>
  <body class="bg-white text-black min-h-screen flex flex-col justify-start relative overflow-x-hidden pb-16">
@@ -250,7 +259,7 @@
   </nav>
   <!-- Banner -->
   <section class="banner-section px-6">
-   <img src= "banner.jpg" class="w-full max-w-sm mx-auto rounded-3xl object-cover banner-height" draggable="false" src="src/banner.jpg" width="320" />
+   <img alt="Banner promocional com arte urbana e texto Fúria das Ruas em estilo grafite" class="w-full max-w-4xl mx-auto rounded-3xl object-cover banner-height" draggable="false" height="240" src="src/banner.jpg" width="1280" style="height: 240px; max-height: 240px;"/>
   </section>
   <!-- Choose your shirt text -->
   <section class="choose-shirt px-6 text-center">
@@ -261,7 +270,7 @@
   <!-- Products -->
   <section id="products" class="max-w-5xl mx-auto overflow-x-auto whitespace-nowrap scrollbar-thin scrollbar-thumb-gray-400 scrollbar-track-gray-200 px-4">
    <article class="bg-gradient-to-b from-gray-300 to-white rounded-3xl w-36 p-3 inline-block align-top">
-    <img src="adulto.jpg" class="rounded-2xl mb-2 object-contain" draggable="false" height="110" src="src/adulto.jpg" width="110"/>
+    <img alt="Camiseta Fúria Adulto, camiseta preta com estampa urbana estilizada" class="rounded-2xl mb-2 object-contain" draggable="false" height="110" src="src/adulto.jpg" width="110"/>
     <h3 class="font-extrabold text-center select-none text-sm">
      Fúria Adulto
     </h3>
@@ -276,7 +285,7 @@
     </button>
    </article>
    <article class="bg-gradient-to-b from-gray-300 to-white rounded-3xl w-36 p-3 inline-block align-top">
-    <img src="hubz.jpg" class="rounded-2xl mb-2 object-contain" draggable="false" height="110" src="src/hubz.jpg" width="110"/>
+    <img alt="Camiseta Fúria + Hubz, camiseta branca com estampa combinada de logos" class="rounded-2xl mb-2 object-contain" draggable="false" height="110" src="src/hubz.jpg" width="110"/>
     <h3 class="font-extrabold text-center select-none text-sm">
      Fúria + Hubz
     </h3>
@@ -291,7 +300,7 @@
     </button>
    </article>
    <article class="bg-gradient-to-b from-gray-300 to-white rounded-3xl w-36 p-3 inline-block align-top">
-    <img src="infantil.jpg" class="rounded-2xl mb-2 object-contain" draggable="false" height="110" src="src/infantil.jpg" width="110"/>
+    <img alt="Camiseta Fúria Infantil, camiseta colorida com estampa infantil divertida" class="rounded-2xl mb-2 object-contain" draggable="false" height="110" src="src/infantil.jpg" width="110"/>
     <h3 class="font-extrabold text-center select-none text-sm">
      Fúria Infantil
     </h3>
@@ -336,10 +345,6 @@
       Número de Telefone
       <input type="tel" id="client-phone" name="clientPhone" required pattern="^\d{8,15}$" placeholder="Somente números, ex: 67999999999" class="border border-gray-300 rounded px-3 py-2 mt-1 focus:outline-none focus:ring-2 focus:ring-blue-500"/>
      </label>
-     <label class="flex flex-col text-sm font-semibold">
-      Imagem Quadrada
-      <input type="file" id="client-image" name="clientImage" accept="image/*" class="border border-gray-300 rounded px-3 py-2 mt-1 focus:outline-none focus:ring-2 focus:ring-blue-500"/>
-     </label>
      <div class="flex justify-end gap-4">
       <button type="button" id="checkout-cancel" class="btn btn-secondary">Cancelar</button>
       <button type="submit" class="btn btn-primary">Enviar para WhatsApp</button>
@@ -372,7 +377,7 @@
     <button aria-label="Fechar carrinho" id="close-cart" class="text-gray-700 hover:text-gray-900 focus:outline-none text-xl font-bold">&times;</button>
    </header>
    <div id="cart-items-container" class="flex-1 overflow-y-auto p-2 space-y-2">
-    <!-- Items will be dynamically added here -->
+    <p class="text-center text-gray-500 mt-4 select-none">Seu carrinho está vazio.</p>
    </div>
    <footer class="p-2 border-t border-gray-300">
     <div class="flex justify-between font-extrabold text-base mb-2">
@@ -480,7 +485,6 @@
     const checkoutForm = document.getElementById('checkout-form');
     const clientNameInput = document.getElementById('client-name');
     const clientPhoneInput = document.getElementById('client-phone');
-    const clientImageInput = document.getElementById('client-image');
     const checkoutCancelBtn = document.getElementById('checkout-cancel');
 
     let selectedSize = null;
@@ -585,7 +589,6 @@
       }
       clientNameInput.value = '';
       clientPhoneInput.value = '';
-      clientImageInput.value = '';
       checkoutModal.classList.remove('hidden');
     });
 
@@ -597,17 +600,12 @@
       e.preventDefault();
       const name = clientNameInput.value.trim();
       const phone = clientPhoneInput.value.trim();
-      const imageUrl = clientImageInput.value.trim();
       if (!name || !phone) {
         alert('Por favor, preencha nome e telefone corretamente.');
         return;
       }
-      // Prepare WhatsApp message with client info, image URL and order
-      let message = `*Pedido Fúria das Ruas*%0A%0A*Cliente:* ${encodeURIComponent(name)}%0A*Telefone:* ${encodeURIComponent(phone)}%0A`;
-      if (imageUrl) {
-        message += `%0A*Imagem Quadrada:* ${encodeURIComponent(imageUrl)}%0A`;
-      }
-      message += `%0A`;
+      // Prepare WhatsApp message with client info and order
+      let message = `*Pedido Fúria das Ruas*%0A%0A*Cliente:* ${encodeURIComponent(name)}%0A*Telefone:* ${encodeURIComponent(phone)}%0A%0A`;
       cart.items.forEach((item, index) => {
         message += `*${index + 1}. ${item.name}*${item.size ? ' - Tamanho: ' + item.size : ''}%0APreço: R$ ${item.price.toFixed(2).replace('.', ',')}%0A%0A`;
       });
