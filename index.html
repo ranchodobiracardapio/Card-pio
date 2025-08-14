@@ -1628,6 +1628,22 @@
         }
         const name = clientNameInput.value.trim();
         const phone = clientPhoneInput.value.trim();
+
+        // Save order to cookie
+        const orders = loadOrdersFromCookie();
+        const order = {
+          clientName: name,
+          clientPhone: phone,
+          clientAddress: address,
+          clientBairro: selectedBairro.name,
+          items: cart.items.map(i => ({ name: i.name, price: i.price })),
+          coupon: cart.coupon ? { code: cart.coupon.code, description: cart.coupon.description } : null,
+          total: cart.getTotal(),
+          date: new Date().toISOString()
+        };
+        orders.push(order);
+        saveOrdersToCookie(orders);
+
         let message = `*Pedido Rancho do Bira - Nova Lima*%0A%0A*Cliente:* ${encodeURIComponent(name)}%0A*Telefone:* ${encodeURIComponent(phone)}%0A*Endereço:* ${encodeURIComponent(address)}%0A*Bairro:* ${encodeURIComponent(selectedBairro.name)}%0A%0A`;
         cart.items.forEach((item, index) => {
           message += `*${index + 1}. ${item.name}*%0APreço: R$ ${item.price.toFixed(2).replace('.', ',')}%0A%0A`;
