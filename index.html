@@ -1,0 +1,1482 @@
+<html class="scroll-smooth" lang="pt-BR">
+ <head>
+  <meta charset="utf-8"/>
+  <meta content="width=device-width, initial-scale=1" name="viewport"/>
+  <title>
+   Rancho do Bira - Nova Lima
+  </title>
+  <script src="https://cdn.tailwindcss.com">
+  </script>
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" rel="stylesheet"/>
+  <link href="https://fonts.googleapis.com/css2?family=Fredericka+the+Great&amp;family=Inter:wght@400;700&amp;display=swap" rel="stylesheet"/>
+  <style>
+   body {
+     font-family: "Inter", sans-serif;
+   }
+   #cart-sidebar::-webkit-scrollbar {
+     width: 8px;
+   }
+   #cart-sidebar::-webkit-scrollbar-track {
+     background: #f1f1f1;
+   }
+   #cart-sidebar::-webkit-scrollbar-thumb {
+     background: #888;
+     border-radius: 4px;
+   }
+   #cart-sidebar::-webkit-scrollbar-thumb:hover {
+     background: #555;
+   }
+   .banner-height {
+     height: 160px !important;
+     max-height: 160px;
+   }
+   .products-container {
+     display: flex;
+     gap: 0.5rem;
+     overflow-x: auto;
+     padding-left: 4px;
+     padding-right: 4px;
+     scrollbar-width: thin;
+     scrollbar-color: #7c5a3a #e5e7eb;
+     margin-top: 4px !important;
+     margin-bottom: 4px !important;
+   }
+   .products-container::-webkit-scrollbar {
+     height: 6px;
+   }
+   .products-container::-webkit-scrollbar-track {
+     background: #e5e7eb;
+   }
+   .products-container::-webkit-scrollbar-thumb {
+     background-color: #7c5a3a;
+     border-radius: 4px;
+   }
+   nav::-webkit-scrollbar {
+     height: 8px;
+   }
+   nav::-webkit-scrollbar-track {
+     background: #e5e7eb;
+   }
+   nav::-webkit-scrollbar-thumb {
+     background-color: #7c5a3a;
+     border-radius: 4px;
+   }
+   header {
+     padding-top: 8px !important;
+     padding-bottom: 8px !important;
+     margin-bottom: 6px !important;
+     border-bottom-left-radius: 2.5rem;
+     border-bottom-right-radius: 2.5rem;
+     background-color: #6b4226;
+     display: flex;
+     align-items: center;
+     justify-content: space-between;
+     padding-left: 1.5rem;
+     padding-right: 1.5rem;
+     position: relative;
+     z-index: 60;
+     transition: z-index 0.3s ease;
+   }
+   header > div:first-child {
+     flex-shrink: 0;
+   }
+   .title-frame {
+     position: relative;
+     display: flex;
+     flex-direction: column;
+     align-items: center;
+     flex-grow: 1;
+     margin: 0 1rem;
+     user-select: none;
+   }
+   .title-frame img {
+     width: 100%;
+     max-width: 140px;
+     height: auto;
+     object-fit: contain;
+     margin-bottom: 0.25rem;
+     pointer-events: none;
+     user-select: none;
+   }
+   h1 {
+     font-family: 'Fredericka the Great', cursive;
+     font-size: 1.5rem;
+     color: #f3e9dc;
+     text-shadow:
+       2px 2px 0 #3b2f2f,
+       4px 4px 0 #6b4226,
+       6px 6px 5px rgba(107,66,38,0.7);
+     user-select: none;
+     letter-spacing: 0.05em;
+     line-height: 1;
+     white-space: nowrap;
+     text-transform: uppercase;
+   }
+   nav {
+     padding-top: 6px !important;
+     padding-bottom: 6px !important;
+     margin-top: 4px !important;
+     margin-bottom: 6px !important;
+     background-color: #a9745b;
+     border-radius: 9999px;
+     max-width: fit-content;
+     margin-left: auto;
+     margin-right: auto;
+     transition: all 0.3s ease;
+     position: relative;
+     z-index: 60;
+     overflow-x: auto;
+     scrollbar-width: thin;
+     scrollbar-color: #7c5a3a #e5e7eb;
+   }
+   nav::-webkit-scrollbar {
+     height: 8px;
+   }
+   nav::-webkit-scrollbar-track {
+     background: #e5e7eb;
+   }
+   nav::-webkit-scrollbar-thumb {
+     background-color: #7c5a3a;
+     border-radius: 4px;
+   }
+   nav.fixed-top {
+     position: fixed !important;
+     top: 0;
+     left: 0;
+     right: 0;
+     margin: 0 auto;
+     max-width: 100%;
+     border-radius: 0;
+     padding-left: 1rem !important;
+     padding-right: 1rem !important;
+     box-shadow: 0 2px 8px rgba(0,0,0,0.15);
+     background-color: #a9745b;
+     z-index: 1000;
+     overflow-x: auto;
+     scrollbar-width: thin;
+     scrollbar-color: #7c5a3a #e5e7eb;
+   }
+   nav.fixed-top::-webkit-scrollbar {
+     height: 8px;
+   }
+   nav.fixed-top::-webkit-scrollbar-track {
+     background: #e5e7eb;
+   }
+   nav.fixed-top::-webkit-scrollbar-thumb {
+     background-color: #7c5a3a;
+     border-radius: 4px;
+   }
+   section.banner-section {
+     margin-top: 2px !important;
+     margin-bottom: 2px !important;
+     padding-left: 4px !important;
+     padding-right: 4px !important;
+     position: relative;
+     max-width: 100%;
+     margin-left: auto;
+     margin-right: auto;
+   }
+   section.choose-category {
+     margin-top: 6px !important;
+     margin-bottom: 2px !important;
+     padding-left: 4px !important;
+     padding-right: 4px !important;
+   }
+   section.choose-category h2 {
+     color: black !important;
+   }
+   article {
+     flex: 0 0 auto;
+     width: 110px;
+     padding: 0.5rem;
+     background: linear-gradient(to bottom, #f3ede7, #ffffff);
+     border-radius: 1.25rem;
+     display: flex;
+     flex-direction: column;
+     align-items: center;
+     text-align: center;
+     margin: 0;
+     box-shadow: 0 2px 6px rgba(107,66,38,0.15);
+     min-width: 110px;
+   }
+   article img {
+     height: 70px;
+     width: 70px;
+     margin-bottom: 0.2rem;
+     object-fit: contain;
+     border-radius: 0.5rem;
+   }
+   article h3 {
+     font-size: 0.75rem;
+     margin-bottom: 0.1rem;
+     line-height: 1.1;
+     font-weight: 700;
+     color: #5a3e1b;
+     user-select: none;
+     white-space: normal;
+     word-break: break-word;
+   }
+   article p {
+     display: none;
+   }
+   article button {
+     font-size: 0.65rem;
+     padding: 0.25rem 0.5rem;
+     margin-top: auto;
+     border-radius: 9999px;
+     font-weight: 700;
+     user-select: none;
+     background-image: linear-gradient(to right, #a9745b, #6b4226);
+     color: white;
+     border: none;
+     cursor: pointer;
+     transition: background-color 0.2s ease;
+     display: inline-flex;
+     align-items: center;
+     justify-content: center;
+     min-width: 70px;
+   }
+   article button:hover {
+     background-color: #5a3e1b;
+   }
+   article button span {
+     font-weight: 400;
+     margin-left: 0.2rem;
+   }
+   footer#footer-cart {
+     padding-top: 6px !important;
+     padding-bottom: 6px !important;
+     margin-top: 6px !important;
+     position: fixed;
+     bottom: 0;
+     left: 0;
+     right: 0;
+     z-index: 40;
+     background-color: black;
+     color: white;
+     display: flex;
+     align-items: center;
+     justify-content: space-between;
+     pointer-events: auto;
+     font-size: 0.875rem;
+     gap: 0.5rem;
+     padding-left: 1rem;
+     padding-right: 1rem;
+   }
+   #cart-sidebar {
+     z-index: 1001;
+     background-color: #fff7f0 !important;
+     top: 0;
+     right: 0;
+     height: 100vh;
+     width: 22rem;
+     box-shadow: 0 0 15px rgba(107,66,38,0.5);
+     transform: translateX(100%);
+     transition: transform 0.3s ease;
+     display: flex;
+     flex-direction: column;
+     position: fixed;
+     max-height: 100vh;
+   }
+   #cart-sidebar.open {
+     transform: translateX(0);
+   }
+   #cart-overlay {
+     z-index: 1000;
+   }
+   #size-modal, #checkout-modal {
+     position: fixed;
+     inset: 0;
+     background: rgba(0,0,0,0.5);
+     display: flex;
+     align-items: center;
+     justify-content: center;
+     z-index: 9999;
+   }
+   #size-modal.hidden, #checkout-modal.hidden {
+     display: none;
+   }
+   .modal-content {
+     background: white;
+     border-radius: 0.75rem;
+     padding: 1.5rem;
+     max-width: 400px;
+     width: 90%;
+     z-index: 10000;
+   }
+   .modal-header {
+     font-weight: 700;
+     font-size: 1.25rem;
+     margin-bottom: 1rem;
+     text-align: center;
+   }
+   .size-option {
+     border: 1px solid #7c5a3a;
+     border-radius: 0.375rem;
+     padding: 0.3rem 0.5rem;
+     font-size: 0.75rem;
+     cursor: pointer;
+     user-select: none;
+     margin-bottom: 0.4rem;
+     text-align: center;
+     min-width: auto;
+     white-space: normal;
+     line-height: 1.1;
+     word-break: break-word;
+     max-width: 100%;
+     color: #5a3e1b;
+   }
+   .size-option.selected {
+     background-color: #6b4226;
+     border-color: #5a3e1b;
+     color: white;
+   }
+   .modal-buttons {
+     display: flex;
+     justify-content: flex-end;
+     gap: 0.75rem;
+     margin-top: 1rem;
+   }
+   .btn {
+     padding: 0.5rem 1rem;
+     border-radius: 0.375rem;
+     font-weight: 700;
+     cursor: pointer;
+     user-select: none;
+   }
+   .btn-primary {
+     background-color: #22c55e !important;
+     color: white !important;
+     border: none;
+   }
+   .btn-primary:disabled {
+     opacity: 0.5;
+     cursor: not-allowed;
+   }
+   .btn-secondary {
+     background-color: #d1bfa7;
+     border: none;
+     color: #5a3e1b;
+   }
+   .file-input-label {
+     display: block;
+     margin-bottom: 0.25rem;
+     font-weight: 600;
+     font-size: 0.875rem;
+   }
+   .file-input {
+     border: 1px solid #7c5a3a;
+     border-radius: 0.375rem;
+     padding: 0.5rem 0.75rem;
+     width: 100%;
+     cursor: pointer;
+   }
+   .scrollbar-hide::-webkit-scrollbar {
+     display: none;
+   }
+   .scrollbar-hide {
+     -ms-overflow-style: none;
+     scrollbar-width: none;
+   }
+   #orders-section {
+     max-width: 5xl;
+     margin: 0 auto 2rem auto;
+     padding: 0 1rem;
+   }
+   #orders-list {
+     margin-top: 1rem;
+     max-height: 300px;
+     overflow-y: auto;
+     border: 1px solid #cbb89a;
+     border-radius: 0.75rem;
+     padding: 1rem;
+     background: #fef9f4;
+     color: #5a3e1b;
+   }
+   .order-item {
+     border-bottom: 1px solid #e2d8c3;
+     padding-bottom: 0.75rem;
+     margin-bottom: 0.75rem;
+   }
+   .order-item:last-child {
+     border-bottom: none;
+     margin-bottom: 0;
+     padding-bottom: 0;
+   }
+   .order-header {
+     font-weight: 700;
+     font-size: 1rem;
+     margin-bottom: 0.25rem;
+     color: #3b2f2f;
+   }
+   .order-date {
+     font-size: 0.75rem;
+     color: #7c5a3a;
+     margin-bottom: 0.5rem;
+   }
+   .order-products {
+     font-size: 0.875rem;
+     color: #5a3e1b;
+     margin-bottom: 0.5rem;
+   }
+   .order-total {
+     font-weight: 700;
+     color: #3b2f2f;
+   }
+   #add-to-cart-splash {
+     position: fixed;
+     top: 50%;
+     left: 50%;
+     transform: translate(-50%, -50%) scale(0);
+     background-color: rgba(107,66,38,0.9);
+     color: white;
+     font-weight: 700;
+     font-size: 1.5rem;
+     padding: 1rem 2rem;
+     border-radius: 1.5rem;
+     z-index: 1000;
+     pointer-events: none;
+     opacity: 0;
+     transition: opacity 0.3s ease, transform 0.3s ease;
+     display: flex;
+     align-items: center;
+     gap: 0.5rem;
+   }
+   #add-to-cart-splash.show {
+     opacity: 1;
+     transform: translate(-50%, -50%) scale(1);
+   }
+   .banner-image-container {
+     position: relative;
+     width: 100%;
+     max-width: 100%;
+     height: 160px;
+     max-height: 160px;
+     margin-left: auto;
+     margin-right: auto;
+     border-radius: 1.5rem;
+     overflow: hidden;
+     box-shadow: 0 4px 8px rgba(107,66,38,0.3);
+   }
+   .banner-image-container img {
+     position: absolute;
+     top: 0;
+     left: 0;
+     width: 100%;
+     height: 160px;
+     max-height: 160px;
+     object-fit: cover;
+     border-radius: 1.5rem;
+     opacity: 0;
+     transition: opacity 0.8s ease;
+     user-select: none;
+     pointer-events: none;
+   }
+   .banner-image-container img.active {
+     opacity: 1;
+     position: relative;
+     pointer-events: auto;
+   }
+   @media (max-width: 640px) {
+     .banner-image-container {
+       height: 120px;
+       max-height: 120px;
+       border-radius: 1rem;
+       max-width: 100vw;
+     }
+     .banner-image-container img {
+       height: 120px;
+       max-height: 120px;
+       border-radius: 1rem;
+     }
+   }
+   @media (max-width: 400px) {
+     .banner-image-container {
+       height: 100px;
+       max-height: 100px;
+       border-radius: 0.75rem;
+       max-width: 100vw;
+     }
+     .banner-image-container img {
+       height: 100px;
+       max-height: 100px;
+       border-radius: 0.75rem;
+     }
+   }
+   @media (max-width: 640px) {
+     nav {
+       max-width: 100vw !important;
+       padding-left: 0.5rem !important;
+       padding-right: 0.5rem !important;
+       border-radius: 0.75rem !important;
+     }
+     nav.fixed-top {
+       max-width: 100vw !important;
+       padding-left: 0.5rem !important;
+       padding-right: 0.5rem !important;
+       border-radius: 0 !important;
+     }
+   }
+   #view-cart {
+     background-color: #22c55e !important;
+     color: white !important;
+     border: none;
+     padding-left: 0.75rem;
+     padding-right: 0.75rem;
+     font-size: 0.75rem;
+   }
+   #view-cart:hover {
+     background-color: #16a34a !important;
+   }
+   /* Banner inside cart */
+   #cart-banner {
+     width: 100%;
+     max-width: 100%;
+     height: 100px;
+     border-radius: 0.75rem;
+     margin-top: 0.5rem;
+     object-fit: cover;
+     user-select: none;
+     pointer-events: none;
+     box-shadow: 0 2px 6px rgba(0,0,0,0.15);
+   }
+   /* Coupon area styles */
+   #coupon-area {
+     background-color: #f3ede7;
+     border-radius: 0.75rem;
+     padding: 0.75rem 1rem;
+     margin-bottom: 0.75rem;
+     box-shadow: 0 2px 6px rgba(107,66,38,0.15);
+   }
+   #coupon-area label {
+     font-weight: 700;
+     color: #5a3e1b;
+     user-select: none;
+   }
+   #apply-coupon-btn {
+     background-image: linear-gradient(to right, #a9745b, #6b4226);
+     color: white;
+     font-weight: 700;
+     border-radius: 9999px;
+     padding: 0.25rem 0.75rem;
+     cursor: pointer;
+     border: none;
+     transition: background-color 0.2s ease;
+     margin-left: 0.5rem;
+   }
+   #apply-coupon-btn:hover {
+     background-color: #5a3e1b;
+   }
+   #coupon-list {
+     margin-top: 0.75rem;
+     max-height: 150px;
+     overflow-y: auto;
+     border: 1px solid #7c5a3a;
+     border-radius: 0.5rem;
+     background: white;
+     padding: 0.5rem;
+     display: none;
+   }
+   #coupon-list button {
+     width: 100%;
+     text-align: left;
+     padding: 0.5rem 0.75rem;
+     border-radius: 0.5rem;
+     border: 1px solid transparent;
+     background-color: #fef9f4;
+     color: #5a3e1b;
+     font-weight: 600;
+     cursor: pointer;
+     margin-bottom: 0.5rem;
+     transition: background-color 0.2s ease, border-color 0.2s ease;
+   }
+   #coupon-list button:hover {
+     background-color: #a9745b;
+     color: white;
+     border-color: #6b4226;
+   }
+   #coupon-list button:last-child {
+     margin-bottom: 0;
+   }
+   #coupon-applied {
+     margin-top: 0.5rem;
+     font-weight: 700;
+     color: #2f855a;
+     user-select: none;
+   }
+  </style>
+ </head>
+ <body class="bg-white text-black min-h-screen flex flex-col justify-start relative overflow-x-hidden pb-16">
+  <!-- Header -->
+  <header id="page-header">
+   <div class="w-14 h-14 rounded-full bg-white flex items-center justify-center shrink-0 overflow-hidden shadow-md">
+    <img alt="Logo circular com desenho rústico de rancho e texto Rancho do Bira em estilo artesanal" class="w-14 h-14 object-contain rounded-full" draggable="false" height="56" src="https://placehold.co/56x56/png?text=Rancho+Logo" width="56"/>
+   </div>
+   <div aria-label="Moldura com imagem do título Rancho do Bira Nova Lima" class="title-frame">
+    <img alt="Imagem decorativa do título Rancho do Bira Nova Lima em estilo rústico com madeira e elementos naturais" draggable="false" height="60" src="https://placehold.co/140x60/png?text=Rancho+do+Bira" width="140"/>
+   </div>
+   <button aria-label="Abrir carrinho de compras" class="relative shrink-0 focus:outline-none" id="cart-button" type="button">
+    <i class="fas fa-cart-plus text-green-700 text-3xl">
+    </i>
+    <span class="absolute -top-1 -right-1 bg-white text-green-700 text-xs font-semibold rounded-full w-5 h-5 flex items-center justify-center select-none hidden" id="cart-count">
+     0
+    </span>
+   </button>
+  </header>
+  <!-- Navigation -->
+  <nav class="flex gap-1 px-6 overflow-x-auto scrollbar-hide" id="main-nav">
+   <a class="flex items-center gap-1 bg-gray-800 text-white font-bold rounded-full px-4 py-1 whitespace-nowrap shrink-0 cursor-pointer" href="javascript:void(0)" id="nav-pedidos">
+    <i class="fas fa-box-open text-base">
+    </i>
+    Pedidos
+   </a>
+   <a class="flex items-center gap-1 bg-gray-800 text-white font-bold rounded-full px-4 py-1 whitespace-nowrap shrink-0 cursor-pointer" id="nav-shopping">
+    <i class="fas fa-utensils text-base">
+    </i>
+    Cardápio
+   </a>
+   <a class="flex items-center gap-1 bg-gray-800 text-white font-bold rounded-full px-4 py-1 whitespace-nowrap shrink-0" href="javascript:void(0)" id="nav-address">
+    <i class="fas fa-map-marker-alt text-base">
+    </i>
+    Endereço
+   </a>
+  </nav>
+  <!-- Banner -->
+  <section class="banner-section px-6" id="shopping-section">
+   <div aria-label="Banner promocional rotativo com imagem de rancho rústico e natureza" class="banner-image-container" role="img">
+    <img alt="Banner promocional 1 com imagem de rancho rústico em meio à natureza, céu azul e árvores ao fundo" class="active" draggable="false" height="160" src="https://placehold.co/1280x160/png?text=Rancho+Banner+1" width="1280"/>
+    <img alt="Banner promocional 2 com imagem de comida caseira em prato rústico, ambiente aconchegante" draggable="false" height="160" src="https://placehold.co/1280x160/png?text=Rancho+Banner+2" width="1280"/>
+    <img alt="Banner promocional 3 com imagem de bebidas geladas em garrafas e copos sobre mesa de madeira" draggable="false" height="160" src="https://placehold.co/1280x160/png?text=Rancho+Banner+3" width="1280"/>
+   </div>
+   <section class="choose-category px-6 text-center mt-6 mb-2">
+    <h2 class="font-extrabold text-sm select-none text-black">
+     Escolha sua Marmita
+    </h2>
+   </section>
+   <section class="products-container max-w-5xl mx-auto px-4" id="products-marmitas">
+    <article class="bg-gradient-to-b from-yellow-100 to-white rounded-3xl p-2" id="marmita-p-article">
+     <img alt="Imagem ilustrativa de Marmita Pequena com arroz, feijão, carne e salada em prato rústico" class="rounded-2xl mb-1 object-contain" draggable="false" height="70" src="https://placehold.co/70x70/png?text=Marmita+P" width="70"/>
+     <h3 class="font-extrabold select-none text-xs">
+      Marmita P
+     </h3>
+     <button class="add-to-cart" data-img="https://placehold.co/70x70/png?text=Marmita+P" data-name="Marmita P" data-price="12" id="marmita-p-button" type="button">
+      R$12
+      <span>
+       Adicionar
+      </span>
+     </button>
+    </article>
+    <article class="bg-gradient-to-b from-yellow-100 to-white rounded-3xl p-2" id="marmita-m-article">
+     <img alt="Imagem ilustrativa de Marmita Média com arroz, feijão, carne e salada em prato rústico" class="rounded-2xl mb-1 object-contain" draggable="false" height="70" src="https://placehold.co/70x70/png?text=Marmita+M" width="70"/>
+     <h3 class="font-extrabold select-none text-xs">
+      Marmita M
+     </h3>
+     <button class="add-to-cart" data-img="https://placehold.co/70x70/png?text=Marmita+M" data-name="Marmita M" data-price="15" id="marmita-m-button" type="button">
+      R$15
+      <span>
+       Adicionar
+      </span>
+     </button>
+    </article>
+    <article class="bg-gradient-to-b from-yellow-100 to-white rounded-3xl p-2" id="marmita-g-article">
+     <img alt="Imagem ilustrativa de Marmita Grande com arroz, feijão, carne e salada em prato rústico" class="rounded-2xl mb-1 object-contain" draggable="false" height="70" src="https://placehold.co/70x70/png?text=Marmita+G" width="70"/>
+     <h3 class="font-extrabold select-none text-xs">
+      Marmita G
+     </h3>
+     <button class="add-to-cart" data-img="https://placehold.co/70x70/png?text=Marmita+G" data-name="Marmita G" data-price="20" id="marmita-g-button" type="button">
+      R$20
+      <span>
+       Adicionar
+      </span>
+     </button>
+    </article>
+   </section>
+   <section class="choose-category px-6 text-center mt-6 mb-2">
+    <h2 class="font-extrabold text-sm select-none text-black">
+     Escolha sua Bebida
+    </h2>
+   </section>
+   <section class="products-container max-w-5xl mx-auto px-4" id="products-bebidas">
+    <article class="bg-gradient-to-b from-blue-100 to-white rounded-3xl p-2" id="coca-mini-article">
+     <img alt="Garrafa mini de Coca-Cola 269ml com rótulo vermelho clássico" class="rounded-2xl mb-1 object-contain" draggable="false" height="70" src="https://placehold.co/70x70/png?text=Coca-Cola+Mini" width="70"/>
+     <h3 class="font-extrabold select-none text-xs">
+      Coca-Cola Mini 269ml
+     </h3>
+     <button class="add-to-cart" data-img="https://placehold.co/70x70/png?text=Coca-Cola+Mini" data-name="Coca-Cola Mini 269ml" data-price="5" id="coca-mini-button" type="button">
+      R$5
+      <span>
+       Adicionar
+      </span>
+     </button>
+    </article>
+    <article class="bg-gradient-to-b from-blue-100 to-white rounded-3xl p-2" id="guarana-article">
+     <img alt="Garrafa de Guaraná 310ml com rótulo verde e vermelho" class="rounded-2xl mb-1 object-contain" draggable="false" height="70" src="https://placehold.co/70x70/png?text=Guaraná+310ml" width="70"/>
+     <h3 class="font-extrabold select-none text-xs">
+      Guaraná 310ml
+     </h3>
+     <button class="add-to-cart" data-img="https://placehold.co/70x70/png?text=Guaraná+310ml" data-name="Guaraná 310ml" data-price="4" id="guarana-button" type="button">
+      R$4
+      <span>
+       Adicionar
+      </span>
+     </button>
+    </article>
+    <article class="bg-gradient-to-b from-blue-100 to-white rounded-3xl p-2" id="refriko-article">
+     <img alt="Garrafa pet de Refriko 500ml com rótulo azul e branco" class="rounded-2xl mb-1 object-contain" draggable="false" height="70" src="https://placehold.co/70x70/png?text=Refriko+500ml" width="70"/>
+     <h3 class="font-extrabold select-none text-xs">
+      Refriko Pet 500ml
+     </h3>
+     <button class="add-to-cart" data-img="https://placehold.co/70x70/png?text=Refriko+500ml" data-name="Refriko Pet 500ml" data-price="5" id="refriko-button" type="button">
+      R$5
+      <span>
+       Adicionar
+      </span>
+     </button>
+    </article>
+    <article class="bg-gradient-to-b from-blue-100 to-white rounded-3xl p-2" id="coca-vidro-article">
+     <img alt="Garrafa vidro de Coca-Cola 1L com rótulo vermelho clássico" class="rounded-2xl mb-1 object-contain" draggable="false" height="70" src="https://placehold.co/70x70/png?text=Coca-Cola+Vidro+1L" width="70"/>
+     <h3 class="font-extrabold select-none text-xs">
+      Coca-Cola Vidro 1L
+     </h3>
+     <button class="add-to-cart" data-img="https://placehold.co/70x70/png?text=Coca-Cola+Vidro+1L" data-name="Coca-Cola Vidro 1L" data-price="8" id="coca-vidro-button" type="button">
+      R$8
+      <span>
+       Adicionar
+      </span>
+     </button>
+    </article>
+    <article class="bg-gradient-to-b from-blue-100 to-white rounded-3xl p-2" id="coca-pet-article">
+     <img alt="Garrafa pet de Coca-Cola 2L com rótulo vermelho clássico" class="rounded-2xl mb-1 object-contain" draggable="false" height="70" src="https://placehold.co/70x70/png?text=Coca-Cola+Pet+2L" width="70"/>
+     <h3 class="font-extrabold select-none text-xs">
+      Coca-Cola Pet 2L
+     </h3>
+     <button class="add-to-cart" data-img="https://placehold.co/70x70/png?text=Coca-Cola+Pet+2L" data-name="Coca-Cola Pet 2L" data-price="14" id="coca-pet-button" type="button">
+      R$14
+      <span>
+       Adicionar
+      </span>
+     </button>
+    </article>
+    <article class="bg-gradient-to-b from-blue-100 to-white rounded-3xl p-2" id="tubaina-pet-article">
+     <img alt="Garrafa pet de Tubaína 2L com rótulo amarelo e vermelho" class="rounded-2xl mb-1 object-contain" draggable="false" height="70" src="https://placehold.co/70x70/png?text=Tubaína+Pet+2L" width="70"/>
+     <h3 class="font-extrabold select-none text-xs">
+      Tubaína Pet 2L
+     </h3>
+     <button class="add-to-cart" data-img="https://placehold.co/70x70/png?text=Tubaína+Pet+2L" data-name="Tubaína Pet 2L" data-price="10" id="tubaina-pet-button" type="button">
+      R$10
+      <span>
+       Adicionar
+      </span>
+     </button>
+    </article>
+   </section>
+   <section class="choose-category px-6 text-center mt-6 mb-2">
+    <h2 class="font-extrabold text-sm select-none text-black">
+     Escolha sua Porção
+    </h2>
+   </section>
+   <section class="products-container max-w-5xl mx-auto px-4" id="products-porcoes">
+    <article class="bg-gradient-to-b from-green-100 to-white rounded-3xl p-2" id="carne-assada-article">
+     <img alt="Porção de carne assada 100g em prato rústico com guarnição" class="rounded-2xl mb-1 object-contain" draggable="false" height="70" src="https://placehold.co/70x70/png?text=Carne+Assada+100g" width="70"/>
+     <h3 class="font-extrabold select-none text-xs">
+      Carne Assada 100g
+     </h3>
+     <button class="add-to-cart" data-img="https://placehold.co/70x70/png?text=Carne+Assada+100g" data-name="Carne Assada 100g" data-price="19" id="carne-assada-button" type="button">
+      R$19
+      <span>
+       Adicionar
+      </span>
+     </button>
+    </article>
+    <article class="bg-gradient-to-b from-green-100 to-white rounded-3xl p-2" id="marmita-arroz-article">
+     <img alt="Porção de arroz em marmita rústica" class="rounded-2xl mb-1 object-contain" draggable="false" height="70" src="https://placehold.co/70x70/png?text=Marmita+de+Arroz" width="70"/>
+     <h3 class="font-extrabold select-none text-xs">
+      Marmita de Arroz
+     </h3>
+     <button class="add-to-cart" data-img="https://placehold.co/70x70/png?text=Marmita+de+Arroz" data-name="Marmita de Arroz" data-price="9" id="marmita-arroz-button" type="button">
+      R$9
+      <span>
+       Adicionar
+      </span>
+     </button>
+    </article>
+    <article class="bg-gradient-to-b from-green-100 to-white rounded-3xl p-2" id="marmita-feijao-article">
+     <img alt="Porção de feijão em marmita rústica" class="rounded-2xl mb-1 object-contain" draggable="false" height="70" src="https://placehold.co/70x70/png?text=Marmita+de+Feijão" width="70"/>
+     <h3 class="font-extrabold select-none text-xs">
+      Marmita de Feijão
+     </h3>
+     <button class="add-to-cart" data-img="https://placehold.co/70x70/png?text=Marmita+de+Feijão" data-name="Marmita de Feijão" data-price="10" id="marmita-feijao-button" type="button">
+      R$10
+      <span>
+       Adicionar
+      </span>
+     </button>
+    </article>
+    <article class="bg-gradient-to-b from-green-100 to-white rounded-3xl p-2" id="marmita-macarrao-article">
+     <img alt="Porção de macarrão em marmita rústica" class="rounded-2xl mb-1 object-contain" draggable="false" height="70" src="https://placehold.co/70x70/png?text=Marmita+de+Macarrão" width="70"/>
+     <h3 class="font-extrabold select-none text-xs">
+      Marmita de Macarrão
+     </h3>
+     <button class="add-to-cart" data-img="https://placehold.co/70x70/png?text=Marmita+de+Macarrão" data-name="Marmita de Macarrão" data-price="9" id="marmita-macarrao-button" type="button">
+      R$9
+      <span>
+       Adicionar
+      </span>
+     </button>
+    </article>
+   </section>
+  </section>
+  <section class="hidden" id="orders-section">
+   <h2 class="font-extrabold text-xl text-center mt-6 mb-4 select-none text-green-800">
+    Pedidos Realizados
+   </h2>
+   <div aria-live="polite" aria-relevant="additions removals" id="orders-list">
+    <p class="text-center text-gray-500 select-none">
+     Nenhum pedido realizado ainda.
+    </p>
+   </div>
+  </section>
+  <div aria-labelledby="size-modal-title" aria-modal="true" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center hidden z-60" id="size-modal" role="dialog">
+   <div class="bg-white rounded-xl p-6 max-w-md w-full mx-4">
+    <h3 class="text-xl font-extrabold mb-4 text-center text-green-800" id="size-modal-title">
+    </h3>
+    <form class="flex flex-col" id="size-name-form">
+     <div aria-label="Opções de tamanho" class="grid grid-cols-3 gap-3 mb-4 max-h-64 overflow-y-auto" id="size-options" role="list">
+     </div>
+     <label class="block mb-1 font-semibold text-green-900 select-none" for="custom-name">
+      Nome ou Apelido para estampar (opcional)
+     </label>
+     <input autocomplete="off" class="border border-green-700 rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-green-600 mb-4 text-green-900" id="custom-name" maxlength="20" name="customName" placeholder="Digite o nome ou apelido" type="text"/>
+     <div class="flex justify-end gap-4">
+      <button class="bg-green-200 hover:bg-green-300 rounded px-4 py-2 font-semibold text-green-900" id="size-cancel" type="button">
+       Cancelar
+      </button>
+      <button class="bg-green-700 hover:bg-green-800 text-white rounded px-4 py-2 font-extrabold disabled:opacity-50" disabled="" id="size-confirm" type="submit">
+       Confirmar
+      </button>
+     </div>
+    </form>
+   </div>
+  </div>
+  <div class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center hidden z-9999" id="checkout-modal">
+   <div class="modal-content">
+    <h3 class="modal-header text-green-800">
+     Finalize sua Compra
+    </h3>
+    <form class="flex flex-col gap-4" id="checkout-form">
+     <label class="flex flex-col text-sm font-semibold text-green-900">
+      Nome do Cliente
+      <input class="border border-green-700 rounded px-3 py-2 mt-1 focus:outline-none focus:ring-2 focus:ring-green-600 text-green-900" id="client-name" name="clientName" required="" type="text"/>
+     </label>
+     <label class="flex flex-col text-sm font-semibold text-green-900">
+      Número de Telefone
+      <input class="border border-green-700 rounded px-3 py-2 mt-1 focus:outline-none focus:ring-2 focus:ring-green-600 text-green-900" id="client-phone" name="clientPhone" pattern="^\d{8,15}$" placeholder="Somente números, ex: 67992526860" required="" type="tel"/>
+     </label>
+     <label class="flex flex-col text-sm font-semibold text-green-900" id="address-label" style="display:none;">
+      Endereço (Rua e número)
+      <input autocomplete="off" class="border border-green-700 rounded px-3 py-2 mt-1 focus:outline-none focus:ring-2 focus:ring-green-600 text-green-900" id="client-address" name="clientAddress" placeholder="Ex: Rua Alegrete 89" type="text"/>
+      <p class="text-xs text-red-600 mt-1 hidden" id="address-error">
+       Por favor, informe o endereço completo.
+      </p>
+     </label>
+     <div class="flex justify-end gap-4" id="checkout-buttons">
+      <button class="btn btn-secondary" id="checkout-cancel" type="button">
+       Cancelar
+      </button>
+      <button class="btn btn-primary" id="checkout-submit" type="submit">
+       Próximo
+      </button>
+     </div>
+    </form>
+   </div>
+  </div>
+  <footer class="bg-black flex items-center justify-between px-4 py-1 text-white select-none hidden" id="footer-cart">
+   <div class="flex items-center gap-1 text-sm">
+    <i class="fas fa-shopping-bag text-xl">
+    </i>
+    <span class="font-bold" id="cart-items-count">
+     0 item
+    </span>
+   </div>
+   <div class="font-extrabold text-sm" id="cart-total-price">
+    R$ 0,00
+   </div>
+   <div class="flex gap-1">
+    <button class="bg-red-600 hover:bg-red-700 transition-colors rounded-full px-2 py-0.5 font-extrabold uppercase text-xs" id="clear-cart" type="button">
+     Limpar
+    </button>
+    <button class="bg-green-600 hover:bg-green-700 transition-colors rounded-full px-2 py-0.5 font-extrabold uppercase text-xs" id="view-cart" type="button">
+     Ver Carrinho
+    </button>
+   </div>
+  </footer>
+  <aside aria-label="Carrinho de compras" class="fixed top-0 right-0 h-full w-88 bg-white shadow-lg translate-x-full transition-transform duration-300 flex flex-col" id="cart-sidebar" style="max-height: 100vh;">
+   <header class="flex items-center justify-between p-3 border-b border-green-700 bg-[#fef9f4]">
+    <h2 class="text-lg font-extrabold text-green-900 select-none">
+     Seu Carrinho
+    </h2>
+    <button aria-label="Fechar carrinho" class="text-green-700 hover:text-green-900 focus:outline-none text-xl font-bold" id="close-cart" type="button">
+     ×
+    </button>
+   </header>
+   <div class="flex-1 overflow-y-auto p-3 space-y-3" id="cart-items-container" style="max-height: calc(100vh - 320px);" tabindex="0">
+    <p class="text-center text-green-700 mt-4 select-none">
+     Seu carrinho está vazio.
+    </p>
+   </div>
+   <!-- Coupon area -->
+   <div class="px-3" id="coupon-area">
+    <label class="inline-flex items-center select-none" for="coupon-input">
+     Cupom:
+     <input aria-label="Campo para digitar cupom" class="border border-green-700 rounded px-2 py-1 ml-2 text-green-900 flex-1" id="coupon-input" placeholder="Digite o código do cupom" type="text"/>
+     <button aria-label="Aplicar cupom" id="apply-coupon-btn" type="button">
+      Aplicar
+     </button>
+    </label>
+    <div aria-label="Lista de cupons disponíveis para aplicar" id="coupon-list" role="list">
+     <button aria-label="Cupom frete grátis até 5 reais" data-coupon="fretegratis" role="listitem" type="button">
+      Frete Grátis até R$ 5
+     </button>
+     <button aria-label="Cupom 2% de desconto para novos clientes" data-coupon="desconto2" role="listitem" type="button">
+      2% de Desconto para Novos Clientes
+     </button>
+    </div>
+    <div aria-atomic="true" aria-live="polite" id="coupon-applied">
+    </div>
+   </div>
+   <footer class="p-3 border-t border-green-700 bg-[#fef9f4] flex flex-col items-center">
+    <div class="flex justify-between font-extrabold text-base mb-3 text-green-900 w-full">
+     <span>
+      Total:
+     </span>
+     <span id="sidebar-cart-total">
+      R$ 0,00
+     </span>
+    </div>
+    <button class="w-full bg-green-600 hover:bg-green-700 text-white font-extrabold py-2 rounded-lg select-none text-sm" id="checkout-button" type="button">
+     Finalizar Compra
+    </button>
+    <img alt="Banner promocional dentro do carrinho com tema rústico e comida caseira" draggable="false" id="cart-banner" src="https://placehold.co/320x100/png?text=Promoção+Rancho+do+Bira"/>
+   </footer>
+  </aside>
+  <div aria-hidden="true" class="fixed inset-0 bg-black bg-opacity-40 hidden" id="cart-overlay" tabindex="-1">
+  </div>
+  <div aria-atomic="true" aria-live="assertive" id="add-to-cart-splash" role="alert">
+   <i class="fas fa-check-circle">
+   </i>
+   Item adicionado ao carrinho!
+  </div>
+  <script>
+   (() => {
+    const DELIVERY_FEE_PER_KM = 2.0;
+
+    const coupons = {
+      fretegratis: {
+        code: 'fretegratis',
+        description: 'Frete Grátis até R$ 5',
+        type: 'delivery_discount',
+        maxDiscount: 5,
+        applied: false
+      },
+      desconto2: {
+        code: 'desconto2',
+        description: '2% de Desconto para Novos Clientes',
+        type: 'cart_discount',
+        percent: 2,
+        applied: false
+      }
+    };
+
+    const cart = {
+      items: [],
+      deliveryFeeItem: null,
+      coupon: null,
+      addItem(name, price, img) {
+        this.items.push({ name, price, img });
+        this.updateUI();
+      },
+      clear() {
+        this.items = [];
+        this.deliveryFeeItem = null;
+        this.coupon = null;
+        this.updateUI();
+        updateCouponUI();
+      },
+      getSubtotal() {
+        return this.items.reduce((sum, item) => {
+          if (item !== this.deliveryFeeItem) return sum + item.price;
+          return sum;
+        }, 0);
+      },
+      getDeliveryFee() {
+        if (this.deliveryFeeItem) return this.deliveryFeeItem.price;
+        return 0;
+      },
+      getDiscountAmount() {
+        if (!this.coupon) return 0;
+        if (this.coupon.type === 'cart_discount') {
+          return (this.getSubtotal() * this.coupon.percent) / 100;
+        }
+        if (this.coupon.type === 'delivery_discount') {
+          return Math.min(this.getDeliveryFee(), this.coupon.maxDiscount);
+        }
+        return 0;
+      },
+      getTotal() {
+        let subtotal = this.getSubtotal();
+        let deliveryFee = this.getDeliveryFee();
+        let discount = this.getDiscountAmount();
+
+        if (this.coupon) {
+          if (this.coupon.type === 'cart_discount') {
+            subtotal = subtotal - discount;
+            if (subtotal < 0) subtotal = 0;
+          } else if (this.coupon.type === 'delivery_discount') {
+            deliveryFee = deliveryFee - discount;
+            if (deliveryFee < 0) deliveryFee = 0;
+          }
+        }
+        return subtotal + deliveryFee;
+      },
+      updateDeliveryFee(distanceKm) {
+        const fee = Math.ceil(distanceKm) * DELIVERY_FEE_PER_KM;
+        if (this.deliveryFeeItem) {
+          this.deliveryFeeItem.price = fee;
+        } else {
+          this.deliveryFeeItem = {
+            name: `Taxa de entrega (${Math.ceil(distanceKm)} km)`,
+            price: fee,
+            img: "https://placehold.co/70x70/png?text=Entrega"
+          };
+          this.items.push(this.deliveryFeeItem);
+        }
+        this.updateUI();
+      },
+      removeDeliveryFee() {
+        if (this.deliveryFeeItem) {
+          this.items = this.items.filter(i => i !== this.deliveryFeeItem);
+          this.deliveryFeeItem = null;
+          this.updateUI();
+        }
+      },
+      applyCoupon(couponCode) {
+        const coupon = coupons[couponCode.toLowerCase()];
+        if (!coupon) {
+          alert('Cupom inválido.');
+          return false;
+        }
+        // Check conditions for desconto2 (2% discount) - only if no previous orders
+        if (coupon.code === 'desconto2') {
+          const orders = loadOrdersFromCookie();
+          if (orders.length > 0) {
+            alert('Cupom válido apenas para clientes sem pedidos anteriores.');
+            return false;
+          }
+        }
+        this.coupon = coupon;
+        coupon.applied = true;
+        this.updateUI();
+        updateCouponUI();
+        return true;
+      },
+      removeCoupon() {
+        if (this.coupon) {
+          this.coupon.applied = false;
+          this.coupon = null;
+          this.updateUI();
+          updateCouponUI();
+        }
+      },
+      updateUI() {
+        const count = this.items.length;
+        const cartCountEl = document.getElementById('cart-count');
+        const cartItemsCountEl = document.getElementById('cart-items-count');
+        const cartTotalPriceEl = document.getElementById('cart-total-price');
+        const footerCartEl = document.getElementById('footer-cart');
+
+        if (count > 0) {
+          cartCountEl.textContent = count;
+          cartCountEl.classList.remove('hidden');
+          footerCartEl.classList.remove('hidden');
+        } else {
+          cartCountEl.classList.add('hidden');
+          footerCartEl.classList.add('hidden');
+        }
+
+        if (count > 0) {
+          cartItemsCountEl.textContent = count + (count === 1 ? ' item' : ' items');
+          cartTotalPriceEl.textContent = `R$ ${this.getTotal().toFixed(2).replace('.', ',')}`;
+        } else {
+          cartItemsCountEl.textContent = '0 item';
+          cartTotalPriceEl.textContent = 'R$ 0,00';
+        }
+
+        const container = document.getElementById('cart-items-container');
+        container.innerHTML = '';
+        if (count === 0) {
+          const emptyMsg = document.createElement('p');
+          emptyMsg.textContent = 'Seu carrinho está vazio.';
+          emptyMsg.className = 'text-center text-green-700 mt-4 select-none';
+          container.appendChild(emptyMsg);
+        } else {
+          this.items.forEach((item) => {
+            const itemDiv = document.createElement('div');
+            itemDiv.className = 'flex justify-between items-center border-b border-green-200 pb-1 gap-2';
+            let displayPrice = item.price;
+            // If delivery fee and coupon applied for delivery discount, show discounted price
+            if (item === this.deliveryFeeItem && this.coupon && this.coupon.type === 'delivery_discount') {
+              const discount = Math.min(item.price, this.coupon.maxDiscount);
+              displayPrice = item.price - discount;
+            }
+            // If cart discount, prices remain original here, total reflects discount
+            itemDiv.innerHTML = `
+              <img src="${item.img}" alt="Imagem do produto ${item.name}" class="w-14 h-14 object-contain rounded-lg flex-shrink-0" />
+              <div class="flex-1 font-semibold text-green-900 select-none text-sm">${item.name}</div>
+              <div class="text-green-700 select-none text-sm">R$ ${displayPrice.toFixed(2).replace('.', ',')}</div>
+            `;
+            container.appendChild(itemDiv);
+          });
+          // Show discount line if coupon applied
+          if (this.coupon) {
+            const discountDiv = document.createElement('div');
+            discountDiv.className = 'flex justify-between items-center border-b border-green-400 pb-1 gap-2 mt-1';
+            discountDiv.innerHTML = `
+              <div class="flex-1 font-semibold text-green-900 select-none text-sm">Desconto: ${this.coupon.description}</div>
+              <div class="text-green-700 select-none text-sm">- R$ ${this.getDiscountAmount().toFixed(2).replace('.', ',')}</div>
+            `;
+            container.appendChild(discountDiv);
+          }
+        }
+        document.getElementById('sidebar-cart-total').textContent = `R$ ${this.getTotal().toFixed(2).replace('.', ',')}`;
+      }
+    };
+
+    function updateCouponUI() {
+      const couponList = document.getElementById('coupon-list');
+      const couponAppliedDiv = document.getElementById('coupon-applied');
+      const couponInput = document.getElementById('coupon-input');
+      if (cart.coupon) {
+        couponList.style.display = 'none';
+        couponAppliedDiv.textContent = `Cupom aplicado: ${cart.coupon.description} `;
+        // Add remove button
+        const removeBtn = document.createElement('button');
+        removeBtn.type = 'button';
+        removeBtn.textContent = 'Remover';
+        removeBtn.className = 'ml-2 text-red-600 font-bold underline cursor-pointer bg-transparent border-none p-0';
+        removeBtn.addEventListener('click', () => {
+          cart.removeCoupon();
+          couponInput.value = '';
+        });
+        couponAppliedDiv.appendChild(removeBtn);
+      } else {
+        couponAppliedDiv.textContent = '';
+        couponList.style.display = 'none';
+      }
+    }
+
+    function attachAddToCartListeners() {
+      document.querySelectorAll('.add-to-cart').forEach(button => {
+        button.removeEventListener('click', addToCartHandler);
+        button.addEventListener('click', addToCartHandler);
+      });
+    }
+    function addToCartHandler(event) {
+      const button = event.currentTarget;
+      const name = button.getAttribute('data-name');
+      const price = parseFloat(button.getAttribute('data-price'));
+      const img = button.getAttribute('data-img') || '';
+      cart.addItem(name, price, img);
+      showAddToCartSplash();
+    }
+    attachAddToCartListeners();
+
+    document.getElementById('clear-cart').addEventListener('click', () => {
+      cart.clear();
+      closeCartSidebar();
+    });
+
+    document.getElementById('view-cart').addEventListener('click', () => {
+      openCartSidebar();
+    });
+
+    document.getElementById('cart-button').addEventListener('click', () => {
+      openCartSidebar();
+    });
+
+    document.getElementById('close-cart').addEventListener('click', () => {
+      closeCartSidebar();
+    });
+
+    document.getElementById('cart-overlay').addEventListener('click', () => {
+      closeCartSidebar();
+    });
+
+    // Coupon area handlers
+    const couponInput = document.getElementById('coupon-input');
+    const applyCouponBtn = document.getElementById('apply-coupon-btn');
+    const couponList = document.getElementById('coupon-list');
+
+    applyCouponBtn.addEventListener('click', () => {
+      if (couponList.style.display === 'block') {
+        couponList.style.display = 'none';
+      } else {
+        couponList.style.display = 'block';
+      }
+    });
+
+    couponInput.addEventListener('focus', () => {
+      couponList.style.display = 'block';
+    });
+
+    couponInput.addEventListener('input', () => {
+      const val = couponInput.value.toLowerCase();
+      Array.from(couponList.children).forEach(btn => {
+        if (btn.textContent.toLowerCase().includes(val)) {
+          btn.style.display = '';
+        } else {
+          btn.style.display = 'none';
+        }
+      });
+    });
+
+    couponList.querySelectorAll('button').forEach(btn => {
+      btn.addEventListener('click', () => {
+        const code = btn.getAttribute('data-coupon');
+        const applied = cart.applyCoupon(code);
+        if (applied) {
+          couponInput.value = btn.textContent;
+          couponList.style.display = 'none';
+        }
+      });
+    });
+
+    // Checkout modal and form
+    const checkoutModal = document.getElementById('checkout-modal');
+    const checkoutForm = document.getElementById('checkout-form');
+    const clientNameInput = document.getElementById('client-name');
+    const clientPhoneInput = document.getElementById('client-phone');
+    const clientAddressInput = document.getElementById('client-address');
+    const addressLabel = document.getElementById('address-label');
+    const addressError = document.getElementById('address-error');
+    const checkoutButtons = document.getElementById('checkout-buttons');
+    const checkoutSubmit = document.getElementById('checkout-submit');
+    const checkoutCancelBtn = document.getElementById('checkout-cancel');
+
+    let addressStep = false;
+
+    document.getElementById('checkout-button').addEventListener('click', () => {
+      if (cart.items.length === 0) {
+        alert('Seu carrinho está vazio.');
+        return;
+      }
+      clientNameInput.value = '';
+      clientPhoneInput.value = '';
+      clientAddressInput.value = '';
+      addressLabel.style.display = 'none';
+      addressError.classList.add('hidden');
+      checkoutSubmit.textContent = 'Próximo';
+      addressStep = false;
+      checkoutModal.classList.remove('hidden');
+    });
+
+    checkoutCancelBtn.addEventListener('click', () => {
+      checkoutModal.classList.add('hidden');
+    });
+
+    checkoutForm.addEventListener('submit', (e) => {
+      e.preventDefault();
+      if (!addressStep) {
+        const name = clientNameInput.value.trim();
+        const phone = clientPhoneInput.value.trim();
+        if (!name || !phone) {
+          alert('Por favor, preencha nome e telefone corretamente.');
+          return;
+        }
+        addressLabel.style.display = 'flex';
+        addressError.classList.add('hidden');
+        checkoutSubmit.textContent = 'Finalizar Compra';
+        addressStep = true;
+        clientAddressInput.focus();
+        return;
+      } else {
+        const address = clientAddressInput.value.trim();
+        if (!address) {
+          addressError.classList.remove('hidden');
+          clientAddressInput.focus();
+          return;
+        }
+        addressError.classList.add('hidden');
+        // Add fixed delivery fee of R$5 (approx 2.5 km) if no delivery fee yet
+        const fixedDistanceKm = 2.5;
+        if (!cart.deliveryFeeItem) {
+          cart.updateDeliveryFee(fixedDistanceKm);
+        }
+        const name = clientNameInput.value.trim();
+        const phone = clientPhoneInput.value.trim();
+        let message = `*Pedido Rancho do Bira - Nova Lima*%0A%0A*Cliente:* ${encodeURIComponent(name)}%0A*Telefone:* ${encodeURIComponent(phone)}%0A*Endereço:* ${encodeURIComponent(address)}%0A%0A`;
+        cart.items.forEach((item, index) => {
+          message += `*${index + 1}. ${item.name}*%0APreço: R$ ${item.price.toFixed(2).replace('.', ',')}%0A%0A`;
+        });
+        if (cart.coupon) {
+          message += `*Cupom aplicado:* ${cart.coupon.description}%0A%0A`;
+        }
+        message += `*Total:* R$ ${cart.getTotal().toFixed(2).replace('.', ',')}`;
+        const phoneNumber = '5567992526860';
+        const url = `https://wa.me/${phoneNumber}?text=${message}`;
+
+        window.open(url, '_blank');
+        checkoutModal.classList.add('hidden');
+        cart.clear();
+        closeCartSidebar();
+        showSection('shopping');
+      }
+    });
+
+    function openCartSidebar() {
+      const cartSidebar = document.getElementById('cart-sidebar');
+      cartSidebar.classList.add('open');
+      document.getElementById('cart-overlay').classList.remove('hidden');
+      document.body.style.overflow = 'hidden';
+      document.getElementById('page-header').style.zIndex = '999';
+    }
+    function closeCartSidebar() {
+      const cartSidebar = document.getElementById('cart-sidebar');
+      cartSidebar.classList.remove('open');
+      document.getElementById('cart-overlay').classList.add('hidden');
+      document.body.style.overflow = '';
+      document.getElementById('page-header').style.zIndex = '60';
+    }
+
+    const navPedidos = document.getElementById('nav-pedidos');
+    const navShopping = document.getElementById('nav-shopping');
+    const navAddress = document.getElementById('nav-address');
+    const ordersSection = document.getElementById('orders-section');
+    const shoppingSection = document.getElementById('shopping-section');
+
+    function showSection(section) {
+      if (section === 'pedidos') {
+        renderOrders();
+        ordersSection.classList.remove('hidden');
+        shoppingSection.classList.add('hidden');
+        navPedidos.classList.add('bg-gray-900');
+        navPedidos.classList.remove('bg-gray-800');
+        navShopping.classList.remove('bg-gray-900');
+        navShopping.classList.add('bg-gray-800');
+        navAddress.classList.remove('bg-gray-900');
+        navAddress.classList.add('bg-gray-800');
+      } else if (section === 'address') {
+        checkoutModal.classList.remove('hidden');
+        navAddress.classList.add('bg-gray-900');
+        navAddress.classList.remove('bg-gray-800');
+        navPedidos.classList.remove('bg-gray-900');
+        navPedidos.classList.add('bg-gray-800');
+        navShopping.classList.remove('bg-gray-900');
+        navShopping.classList.add('bg-gray-800');
+      } else {
+        shoppingSection.classList.remove('hidden');
+        ordersSection.classList.add('hidden');
+        navShopping.classList.add('bg-gray-900');
+        navShopping.classList.remove('bg-gray-800');
+        navPedidos.classList.remove('bg-gray-900');
+        navPedidos.classList.add('bg-gray-800');
+        navAddress.classList.remove('bg-gray-900');
+        navAddress.classList.add('bg-gray-800');
+      }
+    }
+
+    navPedidos.addEventListener('click', () => {
+      showSection('pedidos');
+    });
+    navShopping.addEventListener('click', () => {
+      showSection('shopping');
+    });
+    navAddress.addEventListener('click', () => {
+      showSection('address');
+    });
+
+    const ordersList = document.getElementById('orders-list');
+    function saveOrdersToCookie(orders) {
+      const json = JSON.stringify(orders);
+      const expires = new Date();
+      expires.setFullYear(expires.getFullYear() + 1);
+      document.cookie = `rancho_orders=${encodeURIComponent(json)}; expires=${expires.toUTCString()}; path=/; SameSite=Lax`;
+    }
+    function loadOrdersFromCookie() {
+      const cookies = document.cookie.split(';').map(c => c.trim());
+      for (const c of cookies) {
+        if (c.startsWith('rancho_orders=')) {
+          try {
+            return JSON.parse(decodeURIComponent(c.substring('rancho_orders='.length)));
+          } catch {
+            return [];
+          }
+        }
+      }
+      return [];
+    }
+    function renderOrders() {
+      const orders = loadOrdersFromCookie();
+      ordersList.innerHTML = '';
+      if (orders.length === 0) {
+        const p = document.createElement('p');
+        p.className = 'text-center text-green-700 select-none';
+        p.textContent = 'Nenhum pedido realizado ainda.';
+        ordersList.appendChild(p);
+        return;
+      }
+      orders.forEach(order => {
+        const div = document.createElement('div');
+        div.className = 'order-item';
+        const date = new Date(order.date);
+        const dateStr = date.toLocaleString('pt-BR', { dateStyle: 'short', timeStyle: 'short' });
+        const productsHtml = order.items.map((item, i) => {
+          return `${i+1}. ${item.name} - R$ ${item.price.toFixed(2).replace('.', ',')}`;
+        }).join('<br>');
+        div.innerHTML = `
+          <div class="order-header">Pedido de ${order.clientName}</div>
+          <div class="order-date">${dateStr}</div>
+          <div class="order-products">${productsHtml}</div>
+          <div class="order-total">Total: R$ ${order.total.toFixed(2).replace('.', ',')}</div>
+        `;
+        ordersList.appendChild(div);
+      });
+    }
+
+    const splash = document.getElementById('add-to-cart-splash');
+    let splashTimeout = null;
+    function showAddToCartSplash() {
+      if (splashTimeout) {
+        clearTimeout(splashTimeout);
+      }
+      splash.classList.add('show');
+      splashTimeout = setTimeout(() => {
+        splash.classList.remove('show');
+      }, 500);
+    }
+
+    const bannerImages = document.querySelectorAll('.banner-image-container img');
+    let currentBannerIndex = 0;
+    const totalBanners = bannerImages.length;
+    function showBanner(index) {
+      bannerImages.forEach((img, i) => {
+        if (i === index) {
+          img.classList.add('active');
+        } else {
+          img.classList.remove('active');
+        }
+      });
+    }
+    function rotateBanners() {
+      currentBannerIndex = (currentBannerIndex + 1) % totalBanners;
+      showBanner(currentBannerIndex);
+      setTimeout(rotateBanners, 4000);
+    }
+    setTimeout(rotateBanners, 4000);
+
+    cart.updateUI();
+    updateCouponUI();
+    showSection('shopping');
+   })();
+  </script>
+ </body>
+</html>
