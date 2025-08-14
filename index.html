@@ -67,7 +67,7 @@
      margin-bottom: 6px !important;
      border-bottom-left-radius: 2.5rem;
      border-bottom-right-radius: 2.5rem;
-     background-color: #6b4226;
+     background-color: black;
      display: flex;
      align-items: center;
      justify-content: space-between;
@@ -226,7 +226,7 @@
      border-radius: 9999px;
      font-weight: 700;
      user-select: none;
-     background-image: linear-gradient(to right, #a9745b, #6b4226);
+     background-color: #22c55e;
      color: white;
      border: none;
      cursor: pointer;
@@ -237,7 +237,7 @@
      min-width: 70px;
    }
    article button:hover {
-     background-color: #5a3e1b;
+     background-color: #16a34a;
    }
    article button span {
      font-weight: 400;
@@ -552,57 +552,73 @@
      font-weight: 700;
      color: #5a3e1b;
      user-select: none;
-   }
-   #apply-coupon-btn {
-     background-image: linear-gradient(to right, #a9745b, #6b4226);
-     color: white;
-     font-weight: 700;
-     border-radius: 9999px;
-     padding: 0.25rem 0.75rem;
-     cursor: pointer;
-     border: none;
-     transition: background-color 0.2s ease;
-     margin-left: 0.5rem;
-   }
-   #apply-coupon-btn:hover {
-     background-color: #5a3e1b;
+     display: block;
+     margin-bottom: 0.5rem;
    }
    #coupon-list {
-     margin-top: 0.75rem;
      max-height: 150px;
      overflow-y: auto;
      border: 1px solid #7c5a3a;
      border-radius: 0.5rem;
      background: white;
      padding: 0.5rem;
-     display: none;
+     display: flex;
+     flex-direction: column;
+     gap: 0.5rem;
    }
    #coupon-list button {
      width: 100%;
-     text-align: left;
+     text-align: center;
      padding: 0.5rem 0.75rem;
      border-radius: 0.5rem;
-     border: 1px solid transparent;
-     background-color: #fef9f4;
-     color: #5a3e1b;
-     font-weight: 600;
-     cursor: pointer;
-     margin-bottom: 0.5rem;
-     transition: background-color 0.2s ease, border-color 0.2s ease;
-   }
-   #coupon-list button:hover {
+     border: none;
      background-color: #a9745b;
      color: white;
-     border-color: #6b4226;
+     font-weight: 700;
+     cursor: pointer;
+     transition: background-color 0.2s ease;
    }
-   #coupon-list button:last-child {
-     margin-bottom: 0;
+   #coupon-list button:hover {
+     background-color: #6b4226;
    }
    #coupon-applied {
      margin-top: 0.5rem;
      font-weight: 700;
      color: #2f855a;
      user-select: none;
+   }
+   /* Bairro autocomplete styles */
+   #bairro-autocomplete-list {
+     position: absolute;
+     background: white;
+     border: 1px solid #7c5a3a;
+     border-radius: 0.375rem;
+     max-height: 150px;
+     overflow-y: auto;
+     width: 100%;
+     z-index: 50;
+     box-shadow: 0 2px 6px rgba(107,66,38,0.3);
+   }
+   #bairro-autocomplete-list button {
+     width: 100%;
+     text-align: left;
+     padding: 0.5rem 0.75rem;
+     border: none;
+     background: transparent;
+     cursor: pointer;
+     color: #5a3e1b;
+     font-weight: 600;
+     border-bottom: 1px solid #e2d8c3;
+     transition: background-color 0.2s ease;
+   }
+   #bairro-autocomplete-list button:last-child {
+     border-bottom: none;
+   }
+   #bairro-autocomplete-list button:hover,
+   #bairro-autocomplete-list button:focus {
+     background-color: #a9745b;
+     color: white;
+     outline: none;
    }
   </style>
  </head>
@@ -872,11 +888,20 @@
       Número de Telefone
       <input class="border border-green-700 rounded px-3 py-2 mt-1 focus:outline-none focus:ring-2 focus:ring-green-600 text-green-900" id="client-phone" name="clientPhone" pattern="^\d{8,15}$" placeholder="Somente números, ex: 67992526860" required="" type="tel"/>
      </label>
-     <label class="flex flex-col text-sm font-semibold text-green-900" id="address-label" style="display:none;">
+     <label class="flex flex-col text-sm font-semibold text-green-900" id="address-label" style="display:flex; position:relative;">
       Endereço (Rua e número)
       <input autocomplete="off" class="border border-green-700 rounded px-3 py-2 mt-1 focus:outline-none focus:ring-2 focus:ring-green-600 text-green-900" id="client-address" name="clientAddress" placeholder="Ex: Rua Alegrete 89" type="text"/>
       <p class="text-xs text-red-600 mt-1 hidden" id="address-error">
        Por favor, informe o endereço completo.
+      </p>
+     </label>
+     <label class="flex flex-col text-sm font-semibold text-green-900 relative mt-4" id="bairro-label">
+      Bairro
+      <input aria-autocomplete="list" aria-controls="bairro-autocomplete-list" aria-expanded="false" aria-haspopup="listbox" autocomplete="off" class="border border-green-700 rounded px-3 py-2 mt-1 focus:outline-none focus:ring-2 focus:ring-green-600 text-green-900" id="client-bairro" name="clientBairro" placeholder="Digite seu bairro" type="text"/>
+      <div class="hidden" id="bairro-autocomplete-list" role="listbox">
+      </div>
+      <p class="text-xs text-red-600 mt-1 hidden" id="bairro-error">
+       Por favor, selecione um bairro válido.
       </p>
      </label>
      <div class="flex justify-end gap-4" id="checkout-buttons">
@@ -926,12 +951,8 @@
    </div>
    <!-- Coupon area -->
    <div class="px-3" id="coupon-area">
-    <label class="inline-flex items-center select-none" for="coupon-input">
-     Cupom:
-     <input aria-label="Campo para digitar cupom" class="border border-green-700 rounded px-2 py-1 ml-2 text-green-900 flex-1" id="coupon-input" placeholder="Digite o código do cupom" type="text"/>
-     <button aria-label="Aplicar cupom" id="apply-coupon-btn" type="button">
-      Aplicar
-     </button>
+    <label class="select-none block font-bold mb-2">
+     Escolha um cupom:
     </label>
     <div aria-label="Lista de cupons disponíveis para aplicar" id="coupon-list" role="list">
      <button aria-label="Cupom frete grátis até 5 reais" data-coupon="fretegratis" role="listitem" type="button">
@@ -941,7 +962,7 @@
       2% de Desconto para Novos Clientes
      </button>
     </div>
-    <div aria-atomic="true" aria-live="polite" id="coupon-applied">
+    <div aria-atomic="true" aria-live="polite" class="mt-2" id="coupon-applied">
     </div>
    </div>
    <footer class="p-3 border-t border-green-700 bg-[#fef9f4] flex flex-col items-center">
@@ -964,11 +985,206 @@
   <div aria-atomic="true" aria-live="assertive" id="add-to-cart-splash" role="alert">
    <i class="fas fa-check-circle">
    </i>
-   Item adicionado ao carrinho!
+   Adicionado ao Carrinho!
   </div>
   <script>
    (() => {
-    const DELIVERY_FEE_PER_KM = 2.0;
+    const DELIVERY_FEE_PER_KM = 1.0;
+
+    const bairros = [
+      { name: "Morada Verde", km: 2 },
+      { name: "Nova Lima de 0km para 2km", km: 2 },
+      { name: "Nova Lima 2", km: 3 },
+      { name: "Nova Lima 3", km: 5 },
+      { name: "Monte Castelo", km: 7 },
+      { name: "Morada Verde 3", km: 3 },
+      { name: "Jardim Presidente", km: 2 },
+      { name: "Jardim das Cerejeiras", km: 3 },
+      { name: "Alphaville para 6", km: 6 },
+      { name: "Alphaville para 5", km: 5 },
+      { name: "Alphaville para 7", km: 7 },
+      { name: "Alphaville para 8", km: 8 },
+      { name: "Água Limpa Park", km: 12.4 },
+      { name: "Aguadinha", km: 11.8 },
+      { name: "Alameda dos Castelos", km: 10.5 },
+      { name: "Alphaville Campo Grande", km: 9.7 },
+      { name: "Alphaville Campo Grande 3", km: 9.9 },
+      { name: "Alphaville Campo Grande 4", km: 10.1 },
+      { name: "Altos do Panamá", km: 8.8 },
+      { name: "Alves Pereira", km: 18.3 },
+      { name: "Amambaí", km: 9.7 },
+      { name: "Amantini Residence", km: 12.0 },
+      { name: "Anhanduí", km: 11.5 },
+      { name: "Área Rural de Campo Grande", km: 16.2 },
+      { name: "Arnaldino da Silva", km: 14.3 },
+      { name: "Arnaldo Estevão Figueiredo", km: 15.1 },
+      { name: "Ary Abussafi de Lima", km: 13.7 },
+      { name: "Autonomista", km: 10.2 },
+      { name: "Bairro Industrial", km: 12.6 },
+      { name: "Bairro São Pedro", km: 13.0 },
+      { name: "Bairro Seminário", km: 6.2 },
+      { name: "Barra da Tijuca II", km: 17.8 },
+      { name: "Beirute Residence Park", km: 14.1 },
+      { name: "Bom Retiro", km: 13.8 },
+      { name: "Bonjardim", km: 12.9 },
+      { name: "Bosque das Araras", km: 11.7 },
+      { name: "Bosque de Avilan", km: 11.5 },
+      { name: "Bosque do Carvalho", km: 12.2 },
+      { name: "Bosque Santa Mônica", km: 10.9 },
+      { name: "Bosque Santa Mônica II", km: 11.0 },
+      { name: "Cabreúva", km: 11.9 },
+      { name: "Caiçara", km: 14.4 },
+      { name: "Caiobá", km: 18.8 },
+      { name: "Campo Dourado", km: 12.7 },
+      { name: "Carandá Bosque", km: 4.9 },
+      { name: "Centenário", km: 9.2 },
+      { name: "Center Park", km: 10.8 },
+      { name: "Centro", km: 7.2 },
+      { name: "Centro Oeste", km: 8.0 },
+      { name: "Chácara Cachoeira", km: 7.5 },
+      { name: "Chácara das Mansões", km: 9.3 },
+      { name: "Chácara dos Poderes", km: 6.8 },
+      { name: "Chácara Lageado", km: 8.1 },
+      { name: "Chácara Santa Abadia", km: 9.4 },
+      { name: "Cidade Jardim", km: 7.8 },
+      { name: "Cohafama", km: 12.5 },
+      { name: "Colinas de Campo Grande", km: 10.7 },
+      { name: "Conjunto Aero Rancho", km: 11.2 },
+      { name: "Conjunto Habitacional Estrela D’Alva I", km: 13.0 },
+      { name: "Conjunto Habitacional Estrela D’Alva II", km: 13.2 },
+      { name: "Conjunto Habitacional Estrela D’Alva III", km: 13.5 },
+      { name: "Conjunto Habitacional Jardim Talismã", km: 12.1 },
+      { name: "Conjunto Habitacional Nascente Segredo", km: 12.8 },
+      { name: "Conjunto Iracy Coelho III", km: 14.5 },
+      { name: "Conjunto José Abrão", km: 15.0 },
+      { name: "Conjunto Parati II", km: 14.2 },
+      { name: "Conjunto Residencial Botafogo", km: 11.8 },
+      { name: "Conjunto Residencial Estrela do Sul", km: 12.0 },
+      { name: "Conjunto Residencial Nova Olinda", km: 12.7 },
+      { name: "Conjunto Residencial Octavio Pécora", km: 13.1 },
+      { name: "Conjunto Residencial Recanto dos Rouxinóis", km: 12.9 },
+      { name: "Conjunto União II", km: 13.8 },
+      { name: "Coophafé", km: 13.5 },
+      { name: "Coophamat", km: 13.8 },
+      { name: "Coopharádio", km: 14.0 },
+      { name: "Coophasul", km: 14.2 },
+      { name: "Coophatrabalho", km: 14.1 },
+      { name: "Coophavila II", km: 14.5 },
+      { name: "Coronel Antonino", km: 3.3 },
+      { name: "Delfos Residencial", km: 13.7 },
+      { name: "Dom Antônio Barbosa", km: 14.1 },
+      { name: "Edson Brito Garcia", km: 14.6 },
+      { name: "Gregorio Correa", km: 15.2 },
+      { name: "Guanandi", km: 14.8 },
+      { name: "Guanandi II", km: 15.0 },
+      { name: "Indaiá Park", km: 12.6 },
+      { name: "Itanhangá Park", km: 8.8 },
+      { name: "Jardim Aero Rancho", km: 11.3 },
+      { name: "Jardim Aeroporto", km: 12.8 },
+      { name: "Jardim Agulhas Negras", km: 13.0 },
+      { name: "Jardim Alto São Francisco", km: 12.5 },
+      { name: "Jardim Bela Vista", km: 13.2 },
+      { name: "Jardim Vitória", km: 13.4 },
+      { name: "Jardim Vitória II", km: 13.7 },
+      { name: "Jockey Club", km: 12.9 },
+      { name: "Lagoa Bonita", km: 14.8 },
+      { name: "Lagoa Itatiaia", km: 14.5 },
+      { name: "Lagoa Nativa", km: 15.0 },
+      { name: "Lagoa Real", km: 15.3 },
+      { name: "Lagoa Verde", km: 15.1 },
+      { name: "Lagoa Verde II", km: 15.4 },
+      { name: "Lagoa Verde III", km: 15.6 },
+      { name: "Loteamento Carandá", km: 11.5 },
+      { name: "Loteamento Célia", km: 11.7 },
+      { name: "Loteamento Morada do Sol", km: 12.0 },
+      { name: "Loteamento Santa Luzia", km: 12.3 },
+      { name: "Loteamento Tijuca", km: 12.5 },
+      { name: "Morada do Sol", km: 12.0 },
+      { name: "Nova Lima", km: 0.0 },
+      { name: "Nova Olinda", km: 12.7 },
+      { name: "Parque do Sol", km: 13.2 },
+      { name: "Parque dos Jequitibás", km: 13.5 },
+      { name: "Parque do Lageado", km: 11.8 },
+      { name: "Parque dos Estados", km: 12.2 },
+      { name: "Parque dos Estados II", km: 12.5 },
+      { name: "Parque dos Estados III", km: 12.7 },
+      { name: "Parque do Sol II", km: 13.0 },
+      { name: "Parque do Sol III", km: 13.2 },
+      { name: "Parque dos Jequitibás II", km: 13.5 },
+      { name: "Parque dos Jequitibás III", km: 13.7 },
+      { name: "Parque Nova Esperança", km: 13.9 },
+      { name: "Parque São Jorge", km: 14.0 },
+      { name: "Parque Seminário", km: 12.8 },
+      { name: "Parque Universitário", km: 14.2 },
+      { name: "Paulo Coelho Machado", km: 14.5 },
+      { name: "Parque do Lageado II", km: 12.0 },
+      { name: "Parque do Lageado III", km: 12.2 },
+      { name: "Parque do Sol IV", km: 13.5 },
+      { name: "Parque do Sol V", km: 13.7 },
+      { name: "Parque São Francisco", km: 14.0 },
+      { name: "Parque São Lucas", km: 14.2 },
+      { name: "Parque São Vicente", km: 14.5 },
+      { name: "Praça do Rádio", km: 14.8 },
+      { name: "Recanto das Emas", km: 15.2 },
+      { name: "Recanto dos Rouxinóis", km: 12.9 },
+      { name: "Residencial Botafogo", km: 11.8 },
+      { name: "Residencial Estrela do Sul", km: 12.0 },
+      { name: "Residencial Nova Olinda", km: 12.7 },
+      { name: "Residencial Octavio Pécora", km: 13.1 },
+      { name: "Residencial Parque das Nações", km: 13.4 },
+      { name: "Residencial Recanto Verde", km: 13.6 },
+      { name: "Residencial União II", km: 13.8 },
+      { name: "Santa Abadia", km: 9.4 },
+      { name: "Santa Mônica", km: 10.9 },
+      { name: "Santa Mônica II", km: 11.0 },
+      { name: "Santo Antônio", km: 13.2 },
+      { name: "São Bento", km: 13.5 },
+      { name: "São Francisco", km: 14.0 },
+      { name: "São Lucas", km: 14.2 },
+      { name: "São Pedro", km: 13.0 },
+      { name: "Seminário", km: 6.2 },
+      { name: "Serradinho", km: 14.6 },
+      { name: "Tijuca", km: 12.5 },
+      { name: "União II", km: 13.8 },
+      { name: "União I", km: 14.0 },
+      { name: "Universitário", km: 14.2 },
+      { name: "Vila Albuquerque", km: 13.9 },
+      { name: "Vila Cidade Morena", km: 14.1 },
+      { name: "Vila Gomes", km: 13.6 },
+      { name: "Vila Jacy", km: 14.3 },
+      { name: "Vila Marambaia", km: 14.5 },
+      { name: "Vila Nova Campo Grande", km: 14.7 },
+      { name: "Vila Popular", km: 14.4 },
+      { name: "Vila Rica", km: 14.6 },
+      { name: "Vila Santa Catarina", km: 14.8 },
+      { name: "Vila Santo Antônio", km: 14.9 },
+      { name: "Vila São Bento", km: 14.5 },
+      { name: "Vila São Jorge", km: 14.7 },
+      { name: "Vila São Lucas", km: 14.8 },
+      { name: "Vila São Pedro", km: 14.0 },
+      { name: "Vila Verde", km: 14.2 },
+      { name: "Vila Vilas Boas", km: 15.0 },
+      { name: "Vila Vitória", km: 13.4 },
+      { name: "Vila Vitória II", km: 13.7 },
+      { name: "Vila União", km: 14.0 },
+      { name: "Vila Bela Vista", km: 13.2 },
+      { name: "Vila Industrial", km: 12.6 },
+      { name: "Vila Moreninha", km: 14.1 },
+      { name: "Vila Nascente", km: 12.8 },
+      { name: "Vila Nova Esperança", km: 13.9 },
+      { name: "Vila Planalto", km: 13.5 },
+      { name: "Vila Popular II", km: 14.4 },
+      { name: "Vila São Francisco", km: 14.0 },
+      { name: "Vila São Vicente", km: 14.5 },
+      { name: "Vila Santo Antônio II", km: 14.9 },
+      { name: "Vila Santa Luzia", km: 13.2 },
+      { name: "Vila Santa Maria", km: 13.5 },
+      { name: "Vila Santa Terezinha", km: 13.7 },
+      { name: "Vila Tijuca", km: 12.5 },
+      { name: "Vila Universitária", km: 14.2 },
+      { name: "Vila Verde II", km: 14.3 },
+      { name: "Zona Rural", km: 16.2 }
+    ];
 
     const coupons = {
       fretegratis: {
@@ -1154,9 +1370,12 @@
     function updateCouponUI() {
       const couponList = document.getElementById('coupon-list');
       const couponAppliedDiv = document.getElementById('coupon-applied');
-      const couponInput = document.getElementById('coupon-input');
       if (cart.coupon) {
-        couponList.style.display = 'none';
+        couponList.querySelectorAll('button').forEach(btn => {
+          btn.disabled = btn.getAttribute('data-coupon') === cart.coupon.code;
+          btn.classList.toggle('opacity-50', btn.disabled);
+          btn.classList.toggle('cursor-not-allowed', btn.disabled);
+        });
         couponAppliedDiv.textContent = `Cupom aplicado: ${cart.coupon.description} `;
         // Add remove button
         const removeBtn = document.createElement('button');
@@ -1165,12 +1384,14 @@
         removeBtn.className = 'ml-2 text-red-600 font-bold underline cursor-pointer bg-transparent border-none p-0';
         removeBtn.addEventListener('click', () => {
           cart.removeCoupon();
-          couponInput.value = '';
         });
         couponAppliedDiv.appendChild(removeBtn);
       } else {
+        couponList.querySelectorAll('button').forEach(btn => {
+          btn.disabled = false;
+          btn.classList.remove('opacity-50', 'cursor-not-allowed');
+        });
         couponAppliedDiv.textContent = '';
-        couponList.style.display = 'none';
       }
     }
 
@@ -1211,42 +1432,12 @@
       closeCartSidebar();
     });
 
-    // Coupon area handlers
-    const couponInput = document.getElementById('coupon-input');
-    const applyCouponBtn = document.getElementById('apply-coupon-btn');
+    // Coupon list buttons handlers
     const couponList = document.getElementById('coupon-list');
-
-    applyCouponBtn.addEventListener('click', () => {
-      if (couponList.style.display === 'block') {
-        couponList.style.display = 'none';
-      } else {
-        couponList.style.display = 'block';
-      }
-    });
-
-    couponInput.addEventListener('focus', () => {
-      couponList.style.display = 'block';
-    });
-
-    couponInput.addEventListener('input', () => {
-      const val = couponInput.value.toLowerCase();
-      Array.from(couponList.children).forEach(btn => {
-        if (btn.textContent.toLowerCase().includes(val)) {
-          btn.style.display = '';
-        } else {
-          btn.style.display = 'none';
-        }
-      });
-    });
-
     couponList.querySelectorAll('button').forEach(btn => {
       btn.addEventListener('click', () => {
         const code = btn.getAttribute('data-coupon');
-        const applied = cart.applyCoupon(code);
-        if (applied) {
-          couponInput.value = btn.textContent;
-          couponList.style.display = 'none';
-        }
+        cart.applyCoupon(code);
       });
     });
 
@@ -1262,7 +1453,143 @@
     const checkoutSubmit = document.getElementById('checkout-submit');
     const checkoutCancelBtn = document.getElementById('checkout-cancel');
 
+    const clientBairroInput = document.getElementById('client-bairro');
+    const bairroAutocompleteList = document.getElementById('bairro-autocomplete-list');
+    const bairroLabel = document.getElementById('bairro-label');
+    const bairroError = document.getElementById('bairro-error');
+
     let addressStep = false;
+
+    // Track selected bairro object
+    let selectedBairro = null;
+
+    // Load saved address and bairro from localStorage
+    function loadSavedAddress() {
+      const savedAddress = localStorage.getItem('rancho_client_address');
+      const savedBairro = localStorage.getItem('rancho_client_bairro');
+      if (savedAddress) {
+        clientAddressInput.value = savedAddress;
+      }
+      if (savedBairro) {
+        clientBairroInput.value = savedBairro;
+        // Try to select bairro object from list
+        const bairroObj = bairros.find(b => b.name.toLowerCase() === savedBairro.toLowerCase());
+        if (bairroObj) {
+          selectedBairro = bairroObj;
+          updateDeliveryFeeForBairro();
+        }
+      }
+    }
+
+    // Save address and bairro to localStorage
+    function saveAddress() {
+      localStorage.setItem('rancho_client_address', clientAddressInput.value.trim());
+      localStorage.setItem('rancho_client_bairro', clientBairroInput.value.trim());
+    }
+
+    // Function to filter bairros by input
+    function filterBairros(query) {
+      if (!query) return [];
+      const lowerQuery = query.toLowerCase();
+      return bairros.filter(bairro => bairro.name.toLowerCase().includes(lowerQuery));
+    }
+
+    // Function to render autocomplete list
+    function renderBairroAutocomplete(filteredBairros) {
+      bairroAutocompleteList.innerHTML = '';
+      if (filteredBairros.length === 0) {
+        bairroAutocompleteList.classList.add('hidden');
+        clientBairroInput.setAttribute('aria-expanded', 'false');
+        return;
+      }
+      filteredBairros.forEach((bairro, index) => {
+        const btn = document.createElement('button');
+        btn.type = 'button';
+        btn.textContent = `${bairro.name} - ${Math.ceil(bairro.km)} km`;
+        btn.setAttribute('role', 'option');
+        btn.id = `bairro-option-${index}`;
+        btn.addEventListener('click', () => {
+          clientBairroInput.value = bairro.name;
+          selectedBairro = bairro;
+          bairroAutocompleteList.classList.add('hidden');
+          clientBairroInput.setAttribute('aria-expanded', 'false');
+          bairroError.classList.add('hidden');
+          updateDeliveryFeeForBairro();
+        });
+        bairroAutocompleteList.appendChild(btn);
+      });
+      bairroAutocompleteList.classList.remove('hidden');
+      clientBairroInput.setAttribute('aria-expanded', 'true');
+    }
+
+    // Update delivery fee in cart based on selected bairro
+    function updateDeliveryFeeForBairro() {
+      if (selectedBairro) {
+        cart.updateDeliveryFee(selectedBairro.km);
+      } else {
+        cart.removeDeliveryFee();
+      }
+    }
+
+    // Event listeners for bairro input
+    clientBairroInput.addEventListener('input', (e) => {
+      selectedBairro = null;
+      const val = e.target.value.trim();
+      if (val.length === 0) {
+        bairroAutocompleteList.classList.add('hidden');
+        clientBairroInput.setAttribute('aria-expanded', 'false');
+        cart.removeDeliveryFee();
+        return;
+      }
+      const filtered = filterBairros(val);
+      renderBairroAutocomplete(filtered);
+      cart.removeDeliveryFee();
+    });
+
+    clientBairroInput.addEventListener('focus', () => {
+      const val = clientBairroInput.value.trim();
+      if (val.length > 0) {
+        const filtered = filterBairros(val);
+        renderBairroAutocomplete(filtered);
+      }
+    });
+
+    // Close autocomplete if click outside
+    document.addEventListener('click', (e) => {
+      if (!bairroLabel.contains(e.target)) {
+        bairroAutocompleteList.classList.add('hidden');
+        clientBairroInput.setAttribute('aria-expanded', 'false');
+      }
+    });
+
+    // Keyboard navigation for autocomplete
+    clientBairroInput.addEventListener('keydown', (e) => {
+      const items = Array.from(bairroAutocompleteList.querySelectorAll('button'));
+      if (bairroAutocompleteList.classList.contains('hidden') || items.length === 0) return;
+
+      const active = document.activeElement;
+      let index = items.indexOf(active);
+
+      if (e.key === 'ArrowDown') {
+        e.preventDefault();
+        if (index < items.length - 1) {
+          items[index + 1].focus();
+        } else {
+          items[0].focus();
+        }
+      } else if (e.key === 'ArrowUp') {
+        e.preventDefault();
+        if (index > 0) {
+          items[index - 1].focus();
+        } else {
+          clientBairroInput.focus();
+        }
+      } else if (e.key === 'Escape') {
+        bairroAutocompleteList.classList.add('hidden');
+        clientBairroInput.setAttribute('aria-expanded', 'false');
+        clientBairroInput.focus();
+      }
+    });
 
     document.getElementById('checkout-button').addEventListener('click', () => {
       if (cart.items.length === 0) {
@@ -1271,8 +1598,9 @@
       }
       clientNameInput.value = '';
       clientPhoneInput.value = '';
-      clientAddressInput.value = '';
-      addressLabel.style.display = 'none';
+      loadSavedAddress();
+      bairroError.classList.add('hidden');
+      addressLabel.style.display = 'flex';
       addressError.classList.add('hidden');
       checkoutSubmit.textContent = 'Próximo';
       addressStep = false;
@@ -1294,26 +1622,37 @@
         }
         addressLabel.style.display = 'flex';
         addressError.classList.add('hidden');
+        bairroError.classList.add('hidden');
         checkoutSubmit.textContent = 'Finalizar Compra';
         addressStep = true;
         clientAddressInput.focus();
         return;
       } else {
         const address = clientAddressInput.value.trim();
+        const bairroVal = clientBairroInput.value.trim();
         if (!address) {
           addressError.classList.remove('hidden');
           clientAddressInput.focus();
           return;
+        } else {
+          addressError.classList.add('hidden');
         }
-        addressError.classList.add('hidden');
-        // Add fixed delivery fee of R$5 (approx 2.5 km) if no delivery fee yet
-        const fixedDistanceKm = 2.5;
-        if (!cart.deliveryFeeItem) {
-          cart.updateDeliveryFee(fixedDistanceKm);
+        if (!bairroVal || !selectedBairro || bairroVal.toLowerCase() !== selectedBairro.name.toLowerCase()) {
+          bairroError.classList.remove('hidden');
+          clientBairroInput.focus();
+          return;
+        } else {
+          bairroError.classList.add('hidden');
         }
+        // Add delivery fee based on selected bairro km if not already added or update it
+        if (selectedBairro) {
+          cart.updateDeliveryFee(selectedBairro.km);
+        }
+        // Save address and bairro for future
+        saveAddress();
         const name = clientNameInput.value.trim();
         const phone = clientPhoneInput.value.trim();
-        let message = `*Pedido Rancho do Bira - Nova Lima*%0A%0A*Cliente:* ${encodeURIComponent(name)}%0A*Telefone:* ${encodeURIComponent(phone)}%0A*Endereço:* ${encodeURIComponent(address)}%0A%0A`;
+        let message = `*Pedido Rancho do Bira - Nova Lima*%0A%0A*Cliente:* ${encodeURIComponent(name)}%0A*Telefone:* ${encodeURIComponent(phone)}%0A*Endereço:* ${encodeURIComponent(address)}%0A*Bairro:* ${encodeURIComponent(selectedBairro.name)}%0A%0A`;
         cart.items.forEach((item, index) => {
           message += `*${index + 1}. ${item.name}*%0APreço: R$ ${item.price.toFixed(2).replace('.', ',')}%0A%0A`;
         });
@@ -1441,41 +1780,6 @@
         ordersList.appendChild(div);
       });
     }
-
-    const splash = document.getElementById('add-to-cart-splash');
-    let splashTimeout = null;
-    function showAddToCartSplash() {
-      if (splashTimeout) {
-        clearTimeout(splashTimeout);
-      }
-      splash.classList.add('show');
-      splashTimeout = setTimeout(() => {
-        splash.classList.remove('show');
-      }, 500);
-    }
-
-    const bannerImages = document.querySelectorAll('.banner-image-container img');
-    let currentBannerIndex = 0;
-    const totalBanners = bannerImages.length;
-    function showBanner(index) {
-      bannerImages.forEach((img, i) => {
-        if (i === index) {
-          img.classList.add('active');
-        } else {
-          img.classList.remove('active');
-        }
-      });
-    }
-    function rotateBanners() {
-      currentBannerIndex = (currentBannerIndex + 1) % totalBanners;
-      showBanner(currentBannerIndex);
-      setTimeout(rotateBanners, 4000);
-    }
-    setTimeout(rotateBanners, 4000);
-
-    cart.updateUI();
-    updateCouponUI();
-    showSection('shopping');
    })();
   </script>
  </body>
