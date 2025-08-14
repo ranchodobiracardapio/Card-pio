@@ -1463,30 +1463,6 @@
     // Track selected bairro object
     let selectedBairro = null;
 
-    // Load saved address and bairro from localStorage
-    function loadSavedAddress() {
-      const savedAddress = localStorage.getItem('rancho_client_address');
-      const savedBairro = localStorage.getItem('rancho_client_bairro');
-      if (savedAddress) {
-        clientAddressInput.value = savedAddress;
-      }
-      if (savedBairro) {
-        clientBairroInput.value = savedBairro;
-        // Try to select bairro object from list
-        const bairroObj = bairros.find(b => b.name.toLowerCase() === savedBairro.toLowerCase());
-        if (bairroObj) {
-          selectedBairro = bairroObj;
-          updateDeliveryFeeForBairro();
-        }
-      }
-    }
-
-    // Save address and bairro to localStorage
-    function saveAddress() {
-      localStorage.setItem('rancho_client_address', clientAddressInput.value.trim());
-      localStorage.setItem('rancho_client_bairro', clientBairroInput.value.trim());
-    }
-
     // Function to filter bairros by input
     function filterBairros(query) {
       if (!query) return [];
@@ -1598,7 +1574,9 @@
       }
       clientNameInput.value = '';
       clientPhoneInput.value = '';
-      loadSavedAddress();
+      clientAddressInput.value = '';
+      clientBairroInput.value = '';
+      selectedBairro = null;
       bairroError.classList.add('hidden');
       addressLabel.style.display = 'flex';
       addressError.classList.add('hidden');
@@ -1648,8 +1626,6 @@
         if (selectedBairro) {
           cart.updateDeliveryFee(selectedBairro.km);
         }
-        // Save address and bairro for future
-        saveAddress();
         const name = clientNameInput.value.trim();
         const phone = clientPhoneInput.value.trim();
         let message = `*Pedido Rancho do Bira - Nova Lima*%0A%0A*Cliente:* ${encodeURIComponent(name)}%0A*Telefone:* ${encodeURIComponent(phone)}%0A*Endereço:* ${encodeURIComponent(address)}%0A*Bairro:* ${encodeURIComponent(selectedBairro.name)}%0A%0A`;
@@ -1780,6 +1756,41 @@
         ordersList.appendChild(div);
       });
     }
+
+    const splash = document.getElementById('add-to-cart-splash');
+    let splashTimeout = null;
+    function showAddToCartSplash() {
+      if (splashTimeout) {
+        clearTimeout(splashTimeout);
+      }
+      splash.classList.add('show');
+      splashTimeout = setTimeout(() => {
+        splash.classList.remove('show');
+      }, 500);
+    }
+
+    const bannerImages = document.querySelectorAll('.banner-image-container img');
+    let currentBannerIndex = 0;
+    const totalBanners = bannerImages.length;
+    function showBanner(index) {
+      bannerImages.forEach((img, i) => {
+        if (i === index) {
+          img.classList.add('active');
+        } else {
+          img.classList.remove('active');
+        }
+      });
+    }
+    function rotateBanners() {
+      currentBannerIndex = (currentBannerIndex + 1) % totalBanners;
+      showBanner(currentBannerIndex);
+      setTimeout(rotateBanners, 4000);
+    }
+    setTimeout(rotateBanners, 4000);
+
+    cart.updateUI();
+    updateCouponUI();
+    showSection('shopping');
    })();
   </script>
  </body>
