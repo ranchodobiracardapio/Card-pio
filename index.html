@@ -205,6 +205,7 @@
      margin-bottom: 0.2rem;
      object-fit: contain;
      border-radius: 0.5rem;
+     cursor: pointer;
    }
    article h3 {
      font-size: 0.75rem;
@@ -620,16 +621,71 @@
      color: white;
      outline: none;
    }
+   /* Image modal styles */
+   #image-modal {
+     position: fixed;
+     inset: 0;
+     background: rgba(0,0,0,0.7);
+     display: none;
+     align-items: center;
+     justify-content: center;
+     z-index: 11000;
+     padding: 1rem;
+   }
+   #image-modal.open {
+     display: flex;
+   }
+   #image-modal-content {
+     position: relative;
+     max-width: 90vw;
+     max-height: 90vh;
+     border-radius: 1rem;
+     overflow: hidden;
+     box-shadow: 0 0 20px rgba(0,0,0,0.8);
+     background: white;
+     display: flex;
+     align-items: center;
+     justify-content: center;
+   }
+   #image-modal-content img {
+     max-width: 100%;
+     max-height: 100%;
+     object-fit: contain;
+     user-select: none;
+     pointer-events: none;
+     border-radius: 1rem;
+   }
+   #image-modal-close {
+     position: absolute;
+     top: 0.5rem;
+     right: 0.5rem;
+     background: rgba(0,0,0,0.6);
+     color: white;
+     border: none;
+     border-radius: 9999px;
+     width: 2.5rem;
+     height: 2.5rem;
+     font-size: 1.5rem;
+     cursor: pointer;
+     display: flex;
+     align-items: center;
+     justify-content: center;
+     transition: background-color 0.2s ease;
+     z-index: 11001;
+   }
+   #image-modal-close:hover {
+     background: rgba(0,0,0,0.9);
+   }
   </style>
  </head>
  <body class="bg-white text-black min-h-screen flex flex-col justify-start relative overflow-x-hidden pb-16">
   <!-- Header -->
   <header id="page-header">
    <div class="w-14 h-14 rounded-full bg-white flex items-center justify-center shrink-0 overflow-hidden shadow-md">
-    <img alt="Logo circular com desenho rústico de rancho e texto Rancho do Bira em estilo artesanal" class="w-14 h-14 object-contain rounded-full" draggable="false" height="56" src="https://placehold.co/56x56/png?text=Rancho+Logo" width="56"/>
+    <img alt="Logo circular com desenho rústico de rancho e texto Rancho do Bira em estilo artesanal" class="w-14 h-14 object-contain rounded-full" draggable="false" height="56" src="header logo.png" width="56"/>
    </div>
    <div aria-label="Moldura com imagem do título Rancho do Bira Nova Lima" class="title-frame">
-    <img alt="Imagem decorativa do título Rancho do Bira Nova Lima em estilo rústico com madeira e elementos naturais" draggable="false" height="60" src="https://placehold.co/140x60/png?text=Rancho+do+Bira" width="140"/>
+    <img alt="Imagem decorativa do título Rancho do Bira Nova Lima em estilo rústico com madeira e elementos naturais" draggable="false" height="60" src="header título.png" width="140"/>
    </div>
    <button aria-label="Abrir carrinho de compras" class="relative shrink-0 focus:outline-none" id="cart-button" type="button">
     <i class="fas fa-cart-plus text-green-700 text-3xl">
@@ -660,9 +716,9 @@
   <!-- Banner -->
   <section class="banner-section px-6" id="shopping-section">
    <div aria-label="Banner promocional rotativo com imagem de rancho rústico e natureza" class="banner-image-container" role="img">
-    <img alt="Banner promocional 1 com imagem de rancho rústico em meio à natureza, céu azul e árvores ao fundo" class="active" draggable="false" height="160" src="https://placehold.co/1280x160/png?text=Rancho+Banner+1" width="1280"/>
-    <img alt="Banner promocional 2 com imagem de comida caseira em prato rústico, ambiente aconchegante" draggable="false" height="160" src="https://placehold.co/1280x160/png?text=Rancho+Banner+2" width="1280"/>
-    <img alt="Banner promocional 3 com imagem de bebidas geladas em garrafas e copos sobre mesa de madeira" draggable="false" height="160" src="https://placehold.co/1280x160/png?text=Rancho+Banner+3" width="1280"/>
+    <img alt="Banner promocional 1 com imagem de rancho rústico em meio à natureza, céu azul e árvores ao fundo" class="active" draggable="false" height="160" src="banner.jpg" width="1280"/>
+    <img alt="Banner promocional 2 com imagem de comida caseira em prato rústico, ambiente aconchegante" draggable="false" height="160" src="bannerbira.jpg" width="1280"/>
+    <img alt="Banner promocional 3 com imagem de bebidas geladas em garrafas e copos sobre mesa de madeira" draggable="false" height="160" src="banner3.jpg" width="1280"/>
    </div>
    <section class="choose-category px-6 text-center mt-6 mb-2">
     <h2 class="font-extrabold text-sm select-none text-black">
@@ -671,11 +727,11 @@
    </section>
    <section class="products-container max-w-5xl mx-auto px-4" id="products-marmitas">
     <article class="bg-gradient-to-b from-yellow-100 to-white rounded-3xl p-2" id="marmita-p-article">
-     <img alt="Imagem ilustrativa de Marmita Pequena com arroz, feijão, carne e salada em prato rústico" class="rounded-2xl mb-1 object-contain" draggable="false" height="70" src="https://placehold.co/70x70/png?text=Marmita+P" width="70"/>
+     <img alt="Imagem ilustrativa de Marmita Pequena com arroz, feijão, carne e salada em prato rústico" class="rounded-2xl mb-1 object-contain" draggable="false" height="70" src="marmitap.png" width="70"/>
      <h3 class="font-extrabold select-none text-xs">
       Marmita P
      </h3>
-     <button class="add-to-cart" data-img="https://placehold.co/70x70/png?text=Marmita+P" data-name="Marmita P" data-price="12" id="marmita-p-button" type="button">
+     <button class="add-to-cart" data-img="marmitap.png" data-name="Marmita P" data-price="12" id="marmita-p-button" type="button">
       R$12
       <span>
        Adicionar
@@ -683,11 +739,11 @@
      </button>
     </article>
     <article class="bg-gradient-to-b from-yellow-100 to-white rounded-3xl p-2" id="marmita-m-article">
-     <img alt="Imagem ilustrativa de Marmita Média com arroz, feijão, carne e salada em prato rústico" class="rounded-2xl mb-1 object-contain" draggable="false" height="70" src="https://placehold.co/70x70/png?text=Marmita+M" width="70"/>
+     <img alt="Imagem ilustrativa de Marmita Média com arroz, feijão, carne e salada em prato rústico" class="rounded-2xl mb-1 object-contain" draggable="false" height="70" src="marmitama.jpg" width="70"/>
      <h3 class="font-extrabold select-none text-xs">
       Marmita M
      </h3>
-     <button class="add-to-cart" data-img="https://placehold.co/70x70/png?text=Marmita+M" data-name="Marmita M" data-price="15" id="marmita-m-button" type="button">
+     <button class="add-to-cart" data-img="marmitama.jpg" data-name="Marmita M" data-price="15" id="marmita-m-button" type="button">
       R$15
       <span>
        Adicionar
@@ -695,11 +751,11 @@
      </button>
     </article>
     <article class="bg-gradient-to-b from-yellow-100 to-white rounded-3xl p-2" id="marmita-g-article">
-     <img alt="Imagem ilustrativa de Marmita Grande com arroz, feijão, carne e salada em prato rústico" class="rounded-2xl mb-1 object-contain" draggable="false" height="70" src="https://placehold.co/70x70/png?text=Marmita+G" width="70"/>
+     <img alt="Imagem ilustrativa de Marmita Grande com arroz, feijão, carne e salada em prato rústico" class="rounded-2xl mb-1 object-contain" draggable="false" height="70" src="marmitaga.jpg" width="70"/>
      <h3 class="font-extrabold select-none text-xs">
       Marmita G
      </h3>
-     <button class="add-to-cart" data-img="https://placehold.co/70x70/png?text=Marmita+G" data-name="Marmita G" data-price="20" id="marmita-g-button" type="button">
+     <button class="add-to-cart" data-img="marmitaga.jpg" data-name="Marmita G" data-price="20" id="marmita-g-button" type="button">
       R$20
       <span>
        Adicionar
@@ -714,11 +770,11 @@
    </section>
    <section class="products-container max-w-5xl mx-auto px-4" id="products-bebidas">
     <article class="bg-gradient-to-b from-blue-100 to-white rounded-3xl p-2" id="coca-mini-article">
-     <img alt="Garrafa mini de Coca-Cola 269ml com rótulo vermelho clássico" class="rounded-2xl mb-1 object-contain" draggable="false" height="70" src="https://placehold.co/70x70/png?text=Coca-Cola+Mini" width="70"/>
+     <img alt="Garrafa mini de Coca-Cola 269ml com rótulo vermelho clássico" class="rounded-2xl mb-1 object-contain" draggable="false" height="70" src="cocamini.png" width="70"/>
      <h3 class="font-extrabold select-none text-xs">
       Coca-Cola Mini 269ml
      </h3>
-     <button class="add-to-cart" data-img="https://placehold.co/70x70/png?text=Coca-Cola+Mini" data-name="Coca-Cola Mini 269ml" data-price="5" id="coca-mini-button" type="button">
+     <button class="add-to-cart" data-img="cocamini.png" data-name="Coca-Cola Mini 269ml" data-price="5" id="coca-mini-button" type="button">
       R$5
       <span>
        Adicionar
@@ -726,11 +782,11 @@
      </button>
     </article>
     <article class="bg-gradient-to-b from-blue-100 to-white rounded-3xl p-2" id="guarana-article">
-     <img alt="Garrafa de Guaraná 310ml com rótulo verde e vermelho" class="rounded-2xl mb-1 object-contain" draggable="false" height="70" src="https://placehold.co/70x70/png?text=Guaraná+310ml" width="70"/>
+     <img alt="Garrafa de Guaraná 310ml com rótulo verde e vermelho" class="rounded-2xl mb-1 object-contain" draggable="false" height="70" src="guaranamini.png" width="70"/>
      <h3 class="font-extrabold select-none text-xs">
       Guaraná 310ml
      </h3>
-     <button class="add-to-cart" data-img="https://placehold.co/70x70/png?text=Guaraná+310ml" data-name="Guaraná 310ml" data-price="4" id="guarana-button" type="button">
+     <button class="add-to-cart" data-img="guaranamini.png" data-name="Guaraná 310ml" data-price="4" id="guarana-button" type="button">
       R$4
       <span>
        Adicionar
@@ -738,11 +794,11 @@
      </button>
     </article>
     <article class="bg-gradient-to-b from-blue-100 to-white rounded-3xl p-2" id="refriko-article">
-     <img alt="Garrafa pet de Refriko 500ml com rótulo azul e branco" class="rounded-2xl mb-1 object-contain" draggable="false" height="70" src="https://placehold.co/70x70/png?text=Refriko+500ml" width="70"/>
+     <img alt="Garrafa pet de Refriko 500ml com rótulo azul e branco" class="rounded-2xl mb-1 object-contain" draggable="false" height="70" src="refriko.png" width="70"/>
      <h3 class="font-extrabold select-none text-xs">
       Refriko Pet 500ml
      </h3>
-     <button class="add-to-cart" data-img="https://placehold.co/70x70/png?text=Refriko+500ml" data-name="Refriko Pet 500ml" data-price="5" id="refriko-button" type="button">
+     <button class="add-to-cart" data-img="refriko.png" data-name="Refriko Pet 500ml" data-price="5" id="refriko-button" type="button">
       R$5
       <span>
        Adicionar
@@ -750,11 +806,11 @@
      </button>
     </article>
     <article class="bg-gradient-to-b from-blue-100 to-white rounded-3xl p-2" id="coca-vidro-article">
-     <img alt="Garrafa vidro de Coca-Cola 1L com rótulo vermelho clássico" class="rounded-2xl mb-1 object-contain" draggable="false" height="70" src="https://placehold.co/70x70/png?text=Coca-Cola+Vidro+1L" width="70"/>
+     <img alt="Garrafa vidro de Coca-Cola 1L com rótulo vermelho clássico" class="rounded-2xl mb-1 object-contain" draggable="false" height="70" src="cocal.png" width="70"/>
      <h3 class="font-extrabold select-none text-xs">
       Coca-Cola Vidro 1L
      </h3>
-     <button class="add-to-cart" data-img="https://placehold.co/70x70/png?text=Coca-Cola+Vidro+1L" data-name="Coca-Cola Vidro 1L" data-price="8" id="coca-vidro-button" type="button">
+     <button class="add-to-cart" data-img="cocal.png" data-name="Coca-Cola Vidro 1L" data-price="8" id="coca-vidro-button" type="button">
       R$8
       <span>
        Adicionar
@@ -762,11 +818,11 @@
      </button>
     </article>
     <article class="bg-gradient-to-b from-blue-100 to-white rounded-3xl p-2" id="coca-pet-article">
-     <img alt="Garrafa pet de Coca-Cola 2L com rótulo vermelho clássico" class="rounded-2xl mb-1 object-contain" draggable="false" height="70" src="https://placehold.co/70x70/png?text=Coca-Cola+Pet+2L" width="70"/>
+     <img alt="Garrafa pet de Coca-Cola 2L com rótulo vermelho clássico" class="rounded-2xl mb-1 object-contain" draggable="false" height="70" src="coca2l.png" width="70"/>
      <h3 class="font-extrabold select-none text-xs">
       Coca-Cola Pet 2L
      </h3>
-     <button class="add-to-cart" data-img="https://placehold.co/70x70/png?text=Coca-Cola+Pet+2L" data-name="Coca-Cola Pet 2L" data-price="14" id="coca-pet-button" type="button">
+     <button class="add-to-cart" data-img="coca2l.png" data-name="Coca-Cola Pet 2L" data-price="14" id="coca-pet-button" type="button">
       R$14
       <span>
        Adicionar
@@ -774,11 +830,11 @@
      </button>
     </article>
     <article class="bg-gradient-to-b from-blue-100 to-white rounded-3xl p-2" id="tubaina-pet-article">
-     <img alt="Garrafa pet de Tubaína 2L com rótulo amarelo e vermelho" class="rounded-2xl mb-1 object-contain" draggable="false" height="70" src="https://placehold.co/70x70/png?text=Tubaína+Pet+2L" width="70"/>
+     <img alt="Garrafa pet de Tubaína 2L com rótulo amarelo e vermelho" class="rounded-2xl mb-1 object-contain" draggable="false" height="70" src="tubaina2l.png" width="70"/>
      <h3 class="font-extrabold select-none text-xs">
       Tubaína Pet 2L
      </h3>
-     <button class="add-to-cart" data-img="https://placehold.co/70x70/png?text=Tubaína+Pet+2L" data-name="Tubaína Pet 2L" data-price="10" id="tubaina-pet-button" type="button">
+     <button class="add-to-cart" data-img="tubaina2l.png" data-name="Tubaína Pet 2L" data-price="10" id="tubaina-pet-button" type="button">
       R$10
       <span>
        Adicionar
@@ -793,11 +849,11 @@
    </section>
    <section class="products-container max-w-5xl mx-auto px-4" id="products-porcoes">
     <article class="bg-gradient-to-b from-green-100 to-white rounded-3xl p-2" id="carne-assada-article">
-     <img alt="Porção de carne assada 100g em prato rústico com guarnição" class="rounded-2xl mb-1 object-contain" draggable="false" height="70" src="https://placehold.co/70x70/png?text=Carne+Assada+100g" width="70"/>
+     <img alt="Porção de carne assada 100g em prato rústico com guarnição" class="rounded-2xl mb-1 object-contain" draggable="false" height="70" src="mcv.png" width="70"/>
      <h3 class="font-extrabold select-none text-xs">
       Carne Assada 100g
      </h3>
-     <button class="add-to-cart" data-img="https://placehold.co/70x70/png?text=Carne+Assada+100g" data-name="Carne Assada 100g" data-price="19" id="carne-assada-button" type="button">
+     <button class="add-to-cart" data-img="mcv.png" data-name="Carne Assada 100g" data-price="19" id="carne-assada-button" type="button">
       R$19
       <span>
        Adicionar
@@ -805,11 +861,11 @@
      </button>
     </article>
     <article class="bg-gradient-to-b from-green-100 to-white rounded-3xl p-2" id="marmita-arroz-article">
-     <img alt="Porção de arroz em marmita rústica" class="rounded-2xl mb-1 object-contain" draggable="false" height="70" src="https://placehold.co/70x70/png?text=Marmita+de+Arroz" width="70"/>
+     <img alt="Porção de arroz em marmita rústica" class="rounded-2xl mb-1 object-contain" draggable="false" height="70" src="marrom.jpeg" width="70"/>
      <h3 class="font-extrabold select-none text-xs">
       Marmita de Arroz
      </h3>
-     <button class="add-to-cart" data-img="https://placehold.co/70x70/png?text=Marmita+de+Arroz" data-name="Marmita de Arroz" data-price="9" id="marmita-arroz-button" type="button">
+     <button class="add-to-cart" data-img="marrom.jpeg" data-name="Marmita de Arroz" data-price="9" id="marmita-arroz-button" type="button">
       R$9
       <span>
        Adicionar
@@ -817,11 +873,11 @@
      </button>
     </article>
     <article class="bg-gradient-to-b from-green-100 to-white rounded-3xl p-2" id="marmita-feijao-article">
-     <img alt="Porção de feijão em marmita rústica" class="rounded-2xl mb-1 object-contain" draggable="false" height="70" src="https://placehold.co/70x70/png?text=Marmita+de+Feijão" width="70"/>
+     <img alt="Porção de feijão em marmita rústica" class="rounded-2xl mb-1 object-contain" draggable="false" height="70" src="fei.jpeg" width="70"/>
      <h3 class="font-extrabold select-none text-xs">
       Marmita de Feijão
      </h3>
-     <button class="add-to-cart" data-img="https://placehold.co/70x70/png?text=Marmita+de+Feijão" data-name="Marmita de Feijão" data-price="10" id="marmita-feijao-button" type="button">
+     <button class="add-to-cart" data-img="fei.jpeg" data-name="Marmita de Feijão" data-price="10" id="marmita-feijao-button" type="button">
       R$10
       <span>
        Adicionar
@@ -829,11 +885,11 @@
      </button>
     </article>
     <article class="bg-gradient-to-b from-green-100 to-white rounded-3xl p-2" id="marmita-macarrao-article">
-     <img alt="Porção de macarrão em marmita rústica" class="rounded-2xl mb-1 object-contain" draggable="false" height="70" src="https://placehold.co/70x70/png?text=Marmita+de+Macarrão" width="70"/>
+     <img alt="Porção de macarrão em marmita rústica" class="rounded-2xl mb-1 object-contain" draggable="false" height="70" src="macca.jpeg" width="70"/>
      <h3 class="font-extrabold select-none text-xs">
       Marmita de Macarrão
      </h3>
-     <button class="add-to-cart" data-img="https://placehold.co/70x70/png?text=Marmita+de+Macarrão" data-name="Marmita de Macarrão" data-price="9" id="marmita-macarrao-button" type="button">
+     <button class="add-to-cart" data-img="macca.jpeg" data-name="Marmita de Macarrão" data-price="9" id="marmita-macarrao-button" type="button">
       R$9
       <span>
        Adicionar
@@ -888,28 +944,39 @@
       Número de Telefone
       <input class="border border-green-700 rounded px-3 py-2 mt-1 focus:outline-none focus:ring-2 focus:ring-green-600 text-green-900" id="client-phone" name="clientPhone" pattern="^\d{8,15}$" placeholder="Somente números, ex: 67992526860" required="" type="tel"/>
      </label>
-     <label class="flex flex-col text-sm font-semibold text-green-900" id="address-label" style="display:flex; position:relative;">
-      Endereço (Rua e número)
-      <input autocomplete="off" class="border border-green-700 rounded px-3 py-2 mt-1 focus:outline-none focus:ring-2 focus:ring-green-600 text-green-900" id="client-address" name="clientAddress" placeholder="Ex: Rua Alegrete 89" type="text"/>
-      <p class="text-xs text-red-600 mt-1 hidden" id="address-error">
-       Por favor, informe o endereço completo.
-      </p>
-     </label>
-     <label class="flex flex-col text-sm font-semibold text-green-900 relative mt-4" id="bairro-label">
-      Bairro
-      <input aria-autocomplete="list" aria-controls="bairro-autocomplete-list" aria-expanded="false" aria-haspopup="listbox" autocomplete="off" class="border border-green-700 rounded px-3 py-2 mt-1 focus:outline-none focus:ring-2 focus:ring-green-600 text-green-900" id="client-bairro" name="clientBairro" placeholder="Digite seu bairro" type="text"/>
-      <div class="hidden" id="bairro-autocomplete-list" role="listbox">
+     <div class="flex flex-col sm:flex-row sm:items-center sm:gap-4">
+      <label class="flex items-center gap-2 text-green-900 font-semibold select-none cursor-pointer" for="pickup-checkbox">
+       <input class="w-4 h-4 text-green-600 border-green-600 rounded focus:ring-green-500 focus:ring-2" id="pickup-checkbox" name="pickup" type="checkbox"/>
+       Retirar na loja
+      </label>
+      <div class="flex-1 flex flex-col gap-4 w-full mt-2 sm:mt-0" id="address-fields-container">
+       <label class="flex flex-col text-sm font-semibold text-green-900" id="address-label" style="display:flex; position:relative;">
+        Endereço (Rua e número)
+        <input autocomplete="off" class="border border-green-700 rounded px-3 py-2 mt-1 focus:outline-none focus:ring-2 focus:ring-green-600 text-green-900" id="client-address" name="clientAddress" placeholder="Ex: Rua Alegrete 89" type="text"/>
+        <p class="text-xs text-red-600 mt-1 hidden" id="address-error">
+         Por favor, informe o endereço completo.
+        </p>
+       </label>
+       <label class="flex flex-col text-sm font-semibold text-green-900 relative" id="bairro-label">
+        Bairro
+        <input aria-autocomplete="list" aria-controls="bairro-autocomplete-list" aria-expanded="false" aria-haspopup="listbox" autocomplete="off" class="border border-green-700 rounded px-3 py-2 mt-1 focus:outline-none focus:ring-2 focus:ring-green-600 text-green-900" id="client-bairro" name="clientBairro" placeholder="Digite seu bairro" type="text"/>
+        <div class="hidden" id="bairro-autocomplete-list" role="listbox">
+        </div>
+        <p class="text-xs text-red-600 mt-1 hidden" id="bairro-error">
+         Por favor, selecione um bairro válido.
+        </p>
+       </label>
       </div>
-      <p class="text-xs text-red-600 mt-1 hidden" id="bairro-error">
-       Por favor, selecione um bairro válido.
-      </p>
-     </label>
-     <div class="flex justify-end gap-4" id="checkout-buttons">
+     </div>
+     <div class="flex justify-end gap-4 mt-4">
       <button class="btn btn-secondary" id="checkout-cancel" type="button">
        Cancelar
       </button>
-      <button class="btn btn-primary" id="checkout-submit" type="submit">
-       Próximo
+      <button class="btn btn-primary hidden" id="checkout-send" type="submit">
+       Enviar
+      </button>
+      <button class="btn btn-primary" id="checkout-save" type="button">
+       Salvar
       </button>
      </div>
     </form>
@@ -955,7 +1022,7 @@
      Escolha um cupom:
     </label>
     <div aria-label="Lista de cupons disponíveis para aplicar" id="coupon-list" role="list">
-     <button aria-label="Cupom frete grátis até 5 reais" data-coupon="fretegratis" role="listitem" type="button">
+     <button aria-label="Cupom frete grátis até 5 reais" data-coupon="fretegratis" role="listitem" style="display:none;" type="button">
       Frete Grátis até R$ 5
      </button>
      <button aria-label="Cupom 2% de desconto para novos clientes" data-coupon="desconto2" role="listitem" type="button">
@@ -977,7 +1044,7 @@
     <button class="w-full bg-green-600 hover:bg-green-700 text-white font-extrabold py-2 rounded-lg select-none text-sm" id="checkout-button" type="button">
      Finalizar Compra
     </button>
-    <img alt="Banner promocional dentro do carrinho com tema rústico e comida caseira" draggable="false" id="cart-banner" src="https://placehold.co/320x100/png?text=Promoção+Rancho+do+Bira"/>
+    <img alt="Banner promocional dentro do carrinho com tema rústico e comida caseira" draggable="false" height="100" id="cart-banner" src="https://storage.googleapis.com/a1aa/image/24486a2d-9cdd-4444-80fc-57b0141e7036.jpg" width="320"/>
    </footer>
   </aside>
   <div aria-hidden="true" class="fixed inset-0 bg-black bg-opacity-40 hidden" id="cart-overlay" tabindex="-1">
@@ -986,6 +1053,15 @@
    <i class="fas fa-check-circle">
    </i>
    Adicionado ao Carrinho!
+  </div>
+  <!-- Image Modal -->
+  <div aria-label="Visualização ampliada da imagem do produto" aria-modal="true" id="image-modal" role="dialog">
+   <div id="image-modal-content">
+    <button aria-label="Fechar visualização da imagem" id="image-modal-close" type="button">
+     ×
+    </button>
+    <img alt="" id="image-modal-img" src=""/>
+   </div>
   </div>
   <script>
    (() => {
@@ -1208,7 +1284,13 @@
       deliveryFeeItem: null,
       coupon: null,
       addItem(name, price, img) {
-        this.items.push({ name, price, img });
+        // Check if item already exists (by name)
+        const existingItem = this.items.find(i => i.name === name && i !== this.deliveryFeeItem);
+        if (existingItem) {
+          existingItem.quantity = (existingItem.quantity || 1) + 1;
+        } else {
+          this.items.push({ name, price, img, quantity: 1 });
+        }
         this.updateUI();
       },
       clear() {
@@ -1220,7 +1302,7 @@
       },
       getSubtotal() {
         return this.items.reduce((sum, item) => {
-          if (item !== this.deliveryFeeItem) return sum + item.price;
+          if (item !== this.deliveryFeeItem) return sum + item.price * (item.quantity || 1);
           return sum;
         }, 0);
       },
@@ -1304,7 +1386,10 @@
         }
       },
       updateUI() {
-        const count = this.items.length;
+        const count = this.items.reduce((acc, item) => {
+          if (item !== this.deliveryFeeItem) return acc + (item.quantity || 1);
+          return acc;
+        }, 0);
         const cartCountEl = document.getElementById('cart-count');
         const cartItemsCountEl = document.getElementById('cart-items-count');
         const cartTotalPriceEl = document.getElementById('cart-total-price');
@@ -1329,28 +1414,41 @@
 
         const container = document.getElementById('cart-items-container');
         container.innerHTML = '';
-        if (count === 0) {
+        if (this.items.length === 0 || (this.items.length === 1 && this.deliveryFeeItem)) {
           const emptyMsg = document.createElement('p');
           emptyMsg.textContent = 'Seu carrinho está vazio.';
           emptyMsg.className = 'text-center text-green-700 mt-4 select-none';
           container.appendChild(emptyMsg);
         } else {
           this.items.forEach((item) => {
-            const itemDiv = document.createElement('div');
-            itemDiv.className = 'flex justify-between items-center border-b border-green-200 pb-1 gap-2';
-            let displayPrice = item.price;
-            // If delivery fee and coupon applied for delivery discount, show discounted price
-            if (item === this.deliveryFeeItem && this.coupon && this.coupon.type === 'delivery_discount') {
-              const discount = Math.min(item.price, this.coupon.maxDiscount);
-              displayPrice = item.price - discount;
+            if (item === this.deliveryFeeItem) {
+              // Delivery fee item
+              const itemDiv = document.createElement('div');
+              itemDiv.className = 'flex justify-between items-center border-b border-green-200 pb-1 gap-2';
+              let displayPrice = item.price;
+              if (this.coupon && this.coupon.type === 'delivery_discount') {
+                const discount = Math.min(item.price, this.coupon.maxDiscount);
+                displayPrice = item.price - discount;
+              }
+              itemDiv.innerHTML = `
+                <img src="${item.img}" alt="Imagem do produto ${item.name}" class="w-14 h-14 object-contain rounded-lg flex-shrink-0" />
+                <div class="flex-1 font-semibold text-green-900 select-none text-sm">${item.name}</div>
+                <div class="text-green-700 select-none text-sm">R$ ${displayPrice.toFixed(2).replace('.', ',')}</div>
+              `;
+              container.appendChild(itemDiv);
+            } else {
+              // Normal product with quantity
+              const itemDiv = document.createElement('div');
+              itemDiv.className = 'flex justify-between items-center border-b border-green-200 pb-1 gap-2';
+              const quantity = item.quantity || 1;
+              const priceTotal = item.price * quantity;
+              itemDiv.innerHTML = `
+                <img src="${item.img}" alt="Imagem do produto ${item.name}" class="w-14 h-14 object-contain rounded-lg flex-shrink-0" />
+                <div class="flex-1 font-semibold text-green-900 select-none text-sm">${quantity} x ${item.name}</div>
+                <div class="text-green-700 select-none text-sm">R$ ${priceTotal.toFixed(2).replace('.', ',')}</div>
+              `;
+              container.appendChild(itemDiv);
             }
-            // If cart discount, prices remain original here, total reflects discount
-            itemDiv.innerHTML = `
-              <img src="${item.img}" alt="Imagem do produto ${item.name}" class="w-14 h-14 object-contain rounded-lg flex-shrink-0" />
-              <div class="flex-1 font-semibold text-green-900 select-none text-sm">${item.name}</div>
-              <div class="text-green-700 select-none text-sm">R$ ${displayPrice.toFixed(2).replace('.', ',')}</div>
-            `;
-            container.appendChild(itemDiv);
           });
           // Show discount line if coupon applied
           if (this.coupon) {
@@ -1449,14 +1547,17 @@
     const clientAddressInput = document.getElementById('client-address');
     const addressLabel = document.getElementById('address-label');
     const addressError = document.getElementById('address-error');
-    const checkoutButtons = document.getElementById('checkout-buttons');
-    const checkoutSubmit = document.getElementById('checkout-submit');
     const checkoutCancelBtn = document.getElementById('checkout-cancel');
+    const checkoutSaveBtn = document.getElementById('checkout-save');
+    const checkoutSendBtn = document.getElementById('checkout-send');
 
     const clientBairroInput = document.getElementById('client-bairro');
     const bairroAutocompleteList = document.getElementById('bairro-autocomplete-list');
     const bairroLabel = document.getElementById('bairro-label');
     const bairroError = document.getElementById('bairro-error');
+
+    const pickupCheckbox = document.getElementById('pickup-checkbox');
+    const addressFieldsContainer = document.getElementById('address-fields-container');
 
     let addressStep = false;
 
@@ -1500,6 +1601,10 @@
 
     // Update delivery fee in cart based on selected bairro
     function updateDeliveryFeeForBairro() {
+      if (pickupCheckbox.checked) {
+        cart.removeDeliveryFee();
+        return;
+      }
       if (selectedBairro) {
         cart.updateDeliveryFee(selectedBairro.km);
       } else {
@@ -1514,12 +1619,12 @@
       if (val.length === 0) {
         bairroAutocompleteList.classList.add('hidden');
         clientBairroInput.setAttribute('aria-expanded', 'false');
-        cart.removeDeliveryFee();
+        if (!pickupCheckbox.checked) cart.removeDeliveryFee();
         return;
       }
       const filtered = filterBairros(val);
       renderBairroAutocomplete(filtered);
-      cart.removeDeliveryFee();
+      if (!pickupCheckbox.checked) cart.removeDeliveryFee();
     });
 
     clientBairroInput.addEventListener('focus', () => {
@@ -1567,6 +1672,38 @@
       }
     });
 
+    // Handle pickup checkbox change
+    pickupCheckbox.addEventListener('change', () => {
+      if (pickupCheckbox.checked) {
+        // Hide address fields
+        addressFieldsContainer.style.display = 'none';
+        // Remove delivery fee
+        cart.removeDeliveryFee();
+        // Clear errors
+        addressError.classList.add('hidden');
+        bairroError.classList.add('hidden');
+        // Clear address and bairro inputs and selectedBairro
+        clientAddressInput.value = '';
+        clientBairroInput.value = '';
+        selectedBairro = null;
+        // Change buttons: hide Enviar, show Salvar
+        checkoutSendBtn.classList.add('hidden');
+        checkoutSaveBtn.classList.remove('hidden');
+        // Reset addressStep to false for next time
+        addressStep = false;
+      } else {
+        // Show address fields
+        addressFieldsContainer.style.display = 'flex';
+        // Change buttons: show Enviar, hide Salvar
+        checkoutSendBtn.classList.remove('hidden');
+        checkoutSaveBtn.classList.add('hidden');
+        // Remove delivery fee (will be added after bairro selection)
+        cart.removeDeliveryFee();
+        // Reset addressStep to false for next time
+        addressStep = false;
+      }
+    });
+
     document.getElementById('checkout-button').addEventListener('click', () => {
       if (cart.items.length === 0) {
         alert('Seu carrinho está vazio.');
@@ -1577,11 +1714,15 @@
       clientAddressInput.value = '';
       clientBairroInput.value = '';
       selectedBairro = null;
-      bairroError.classList.add('hidden');
-      addressLabel.style.display = 'flex';
+      pickupCheckbox.checked = false;
+      addressFieldsContainer.style.display = 'flex';
       addressError.classList.add('hidden');
-      checkoutSubmit.textContent = 'Próximo';
+      bairroError.classList.add('hidden');
+      checkoutSendBtn.textContent = 'Enviar';
+      checkoutSendBtn.classList.remove('hidden');
+      checkoutSaveBtn.classList.add('hidden');
       addressStep = false;
+      bairroAutocompleteList.classList.add('hidden');
       checkoutModal.classList.remove('hidden');
     });
 
@@ -1589,8 +1730,81 @@
       checkoutModal.classList.add('hidden');
     });
 
+    // Save button click handler (for pickup option) - now sends order to WhatsApp as well
+    checkoutSaveBtn.addEventListener('click', () => {
+      const name = clientNameInput.value.trim();
+      const phone = clientPhoneInput.value.trim();
+      const address = clientAddressInput.value.trim();
+      const bairro = clientBairroInput.value.trim();
+
+      if (!name || !phone) {
+        alert('Por favor, preencha nome e telefone corretamente.');
+        return;
+      }
+
+      // Save address info to localStorage (or cookie) for persistence
+      const savedAddress = {
+        name,
+        phone,
+        address: pickupCheckbox.checked ? null : address,
+        bairro: pickupCheckbox.checked ? null : bairro,
+        pickup: pickupCheckbox.checked
+      };
+      localStorage.setItem('rancho_saved_address', JSON.stringify(savedAddress));
+
+      // If pickup is checked, send order to WhatsApp (same as finalize purchase)
+      if (pickupCheckbox.checked) {
+        if (cart.items.length === 0) {
+          alert('Seu carrinho está vazio.');
+          return;
+        }
+        // Compose message for pickup order
+        const orders = loadOrdersFromCookie();
+        const order = {
+          clientName: name,
+          clientPhone: phone,
+          clientAddress: null,
+          clientBairro: null,
+          pickup: true,
+          items: cart.items.map(i => ({ name: i.name, price: i.price, quantity: i.quantity || 1 })),
+          coupon: cart.coupon ? { code: cart.coupon.code, description: cart.coupon.description } : null,
+          total: cart.getTotal(),
+          date: new Date().toISOString()
+        };
+        orders.push(order);
+        saveOrdersToCookie(orders);
+
+        let message = `*Pedido Rancho do Bira - Nova Lima*%0A%0A*Cliente:* ${encodeURIComponent(name)}%0A*Telefone:* ${encodeURIComponent(phone)}%0A*Retirar na loja*%0A%0A`;
+        cart.items.forEach((item, index) => {
+          const qty = item.quantity || 1;
+          message += `*${index + 1}. ${qty} x ${item.name}*%0APreço unitário: R$ ${item.price.toFixed(2).replace('.', ',')}%0A%0A`;
+        });
+        if (cart.coupon) {
+          message += `*Cupom aplicado:* ${cart.coupon.description}%0A%0A`;
+        }
+        message += `*Total:* R$ ${cart.getTotal().toFixed(2).replace('.', ',')}`;
+        const phoneNumber = '5567992526860';
+        const url = `https://wa.me/${phoneNumber}?text=${message}`;
+
+        window.open(url, '_blank');
+        alert('Endereço salvo com sucesso!');
+        checkoutModal.classList.add('hidden');
+        cart.clear();
+        closeCartSidebar();
+        showSection('shopping');
+      } else {
+        alert('Endereço salvo com sucesso!');
+        checkoutModal.classList.add('hidden');
+      }
+    });
+
+    // Send button (form submit) handler - sends order
     checkoutForm.addEventListener('submit', (e) => {
       e.preventDefault();
+      if (pickupCheckbox.checked) {
+        // If pickup is checked, form submit should not proceed here, handled by save button
+        return;
+      }
       if (!addressStep) {
         const name = clientNameInput.value.trim();
         const phone = clientPhoneInput.value.trim();
@@ -1601,7 +1815,7 @@
         addressLabel.style.display = 'flex';
         addressError.classList.add('hidden');
         bairroError.classList.add('hidden');
-        checkoutSubmit.textContent = 'Finalizar Compra';
+        checkoutSendBtn.textContent = 'Finalizar Compra';
         addressStep = true;
         clientAddressInput.focus();
         return;
@@ -1636,7 +1850,8 @@
           clientPhone: phone,
           clientAddress: address,
           clientBairro: selectedBairro.name,
-          items: cart.items.map(i => ({ name: i.name, price: i.price })),
+          pickup: false,
+          items: cart.items.map(i => ({ name: i.name, price: i.price, quantity: i.quantity || 1 })),
           coupon: cart.coupon ? { code: cart.coupon.code, description: cart.coupon.description } : null,
           total: cart.getTotal(),
           date: new Date().toISOString()
@@ -1646,7 +1861,8 @@
 
         let message = `*Pedido Rancho do Bira - Nova Lima*%0A%0A*Cliente:* ${encodeURIComponent(name)}%0A*Telefone:* ${encodeURIComponent(phone)}%0A*Endereço:* ${encodeURIComponent(address)}%0A*Bairro:* ${encodeURIComponent(selectedBairro.name)}%0A%0A`;
         cart.items.forEach((item, index) => {
-          message += `*${index + 1}. ${item.name}*%0APreço: R$ ${item.price.toFixed(2).replace('.', ',')}%0A%0A`;
+          const qty = item.quantity || 1;
+          message += `*${index + 1}. ${qty} x ${item.name}*%0APreço unitário: R$ ${item.price.toFixed(2).replace('.', ',')}%0A%0A`;
         });
         if (cart.coupon) {
           message += `*Cupom aplicado:* ${cart.coupon.description}%0A%0A`;
@@ -1761,11 +1977,14 @@
         const date = new Date(order.date);
         const dateStr = date.toLocaleString('pt-BR', { dateStyle: 'short', timeStyle: 'short' });
         const productsHtml = order.items.map((item, i) => {
-          return `${i+1}. ${item.name} - R$ ${item.price.toFixed(2).replace('.', ',')}`;
+          const qty = item.quantity || 1;
+          return `${i+1}. ${qty} x ${item.name} - R$ ${(item.price * qty).toFixed(2).replace('.', ',')}`;
         }).join('<br>');
+        const addressInfo = order.pickup ? '<div class="order-products font-bold text-green-800">Retirada na loja</div>' : `<div class="order-products">${order.clientAddress}, ${order.clientBairro}</div>`;
         div.innerHTML = `
           <div class="order-header">Pedido de ${order.clientName}</div>
           <div class="order-date">${dateStr}</div>
+          ${addressInfo}
           <div class="order-products">${productsHtml}</div>
           <div class="order-total">Total: R$ ${order.total.toFixed(2).replace('.', ',')}</div>
         `;
@@ -1807,6 +2026,53 @@
     cart.updateUI();
     updateCouponUI();
     showSection('shopping');
+
+    // Image modal logic
+    const imageModal = document.getElementById('image-modal');
+    const imageModalImg = document.getElementById('image-modal-img');
+    const imageModalClose = document.getElementById('image-modal-close');
+
+    // Open modal with clicked image
+    function openImageModal(src, alt) {
+      imageModalImg.src = src;
+      imageModalImg.alt = alt;
+      imageModal.classList.add('open');
+      document.body.style.overflow = 'hidden';
+    }
+
+    // Close modal
+    function closeImageModal() {
+      imageModal.classList.remove('open');
+      imageModalImg.src = '';
+      imageModalImg.alt = '';
+      document.body.style.overflow = '';
+    }
+
+    // Attach click listeners to all product images
+    function attachImageClickListeners() {
+      document.querySelectorAll('article img').forEach(img => {
+        img.addEventListener('click', () => {
+          openImageModal(img.src, img.alt);
+        });
+      });
+    }
+    attachImageClickListeners();
+
+    imageModalClose.addEventListener('click', closeImageModal);
+
+    // Close modal on clicking outside image content
+    imageModal.addEventListener('click', (e) => {
+      if (e.target === imageModal) {
+        closeImageModal();
+      }
+    });
+
+    // Close modal on pressing Escape key
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape' && imageModal.classList.contains('open')) {
+        closeImageModal();
+      }
+    });
    })();
   </script>
  </body>
