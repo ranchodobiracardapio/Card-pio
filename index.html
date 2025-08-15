@@ -1774,17 +1774,18 @@
         orders.push(order);
         saveOrdersToCookie(orders);
 
-        let message = `*Pedido Rancho do Bira - Nova Lima*%0A%0A*Cliente:* ${encodeURIComponent(name)}%0A*Telefone:* ${encodeURIComponent(phone)}%0A*Retirar na loja*%0A%0A`;
-        cart.items.forEach((item, index) => {
+        let message = `*Rancho do Bira - Nova Lima*\n\n*Cliente:* ${name.toUpperCase()}\n*Telefone:* ${phone}\n*Retirar na loja*\n\n`;
+        cart.items.forEach((item) => {
           const qty = item.quantity || 1;
-          message += `*${index + 1}. ${qty} x ${item.name}*%0APreço unitário: R$ ${item.price.toFixed(2).replace('.', ',')}%0A%0A`;
+          message += `*${qty} x ${item.name}*\nPreço unitário: R$ ${item.price.toFixed(2).replace('.', ',')}\n\n`;
         });
         if (cart.coupon) {
-          message += `*Cupom aplicado:* ${cart.coupon.description}%0A%0A`;
+          message += `*Cupom aplicado:* ${cart.coupon.description}\n\n`;
         }
         message += `*Total:* R$ ${cart.getTotal().toFixed(2).replace('.', ',')}`;
+
         const phoneNumber = '5567992526860';
-        const url = `https://wa.me/${phoneNumber}?text=${message}`;
+        const url = `https://wa.me/${phoneNumber}?text=${encodeURIComponent(message)}`;
 
         window.open(url, '_blank');
         alert('Endereço salvo com sucesso!');
@@ -1859,17 +1860,18 @@
         orders.push(order);
         saveOrdersToCookie(orders);
 
-        let message = `*Pedido Rancho do Bira - Nova Lima*%0A%0A*Cliente:* ${encodeURIComponent(name)}%0A*Telefone:* ${encodeURIComponent(phone)}%0A*Endereço:* ${encodeURIComponent(address)}%0A*Bairro:* ${encodeURIComponent(selectedBairro.name)}%0A%0A`;
-        cart.items.forEach((item, index) => {
+        let message = `*Rancho do Bira - Nova Lima*\n\n*Cliente:* ${name.toUpperCase()}\n*Telefone:* ${phone}\n*Endereço:* ${address}\n*Bairro:* ${selectedBairro.name}\n\n`;
+        cart.items.forEach((item) => {
           const qty = item.quantity || 1;
-          message += `*${index + 1}. ${qty} x ${item.name}*%0APreço unitário: R$ ${item.price.toFixed(2).replace('.', ',')}%0A%0A`;
+          message += `*${qty} x ${item.name}*\nPreço unitário: R$ ${item.price.toFixed(2).replace('.', ',')}\n\n`;
         });
         if (cart.coupon) {
-          message += `*Cupom aplicado:* ${cart.coupon.description}%0A%0A`;
+          message += `*Cupom aplicado:* ${cart.coupon.description}\n\n`;
         }
         message += `*Total:* R$ ${cart.getTotal().toFixed(2).replace('.', ',')}`;
+
         const phoneNumber = '5567992526860';
-        const url = `https://wa.me/${phoneNumber}?text=${message}`;
+        const url = `https://wa.me/${phoneNumber}?text=${encodeURIComponent(message)}`;
 
         window.open(url, '_blank');
         checkoutModal.classList.add('hidden');
