@@ -12,6 +12,7 @@
   <style>
    body {
      font-family: "Inter", sans-serif;
+     background-color: #f3f4f6; /* Light gray background */
    }
    #cart-sidebar::-webkit-scrollbar {
      width: 8px;
@@ -270,7 +271,7 @@
      top: 0;
      right: 0;
      height: 100vh;
-     width: 22rem;
+     width: 18rem; /* Reduced width */
      box-shadow: 0 0 15px rgba(107,66,38,0.5);
      transform: translateX(100%);
      transition: transform 0.3s ease;
@@ -541,53 +542,6 @@
      pointer-events: none;
      box-shadow: 0 2px 6px rgba(0,0,0,0.15);
    }
-   /* Coupon area styles */
-   #coupon-area {
-     background-color: #f3ede7;
-     border-radius: 0.75rem;
-     padding: 0.75rem 1rem;
-     margin-bottom: 0.75rem;
-     box-shadow: 0 2px 6px rgba(107,66,38,0.15);
-   }
-   #coupon-area label {
-     font-weight: 700;
-     color: #5a3e1b;
-     user-select: none;
-     display: block;
-     margin-bottom: 0.5rem;
-   }
-   #coupon-list {
-     max-height: 150px;
-     overflow-y: auto;
-     border: 1px solid #7c5a3a;
-     border-radius: 0.5rem;
-     background: white;
-     padding: 0.5rem;
-     display: flex;
-     flex-direction: column;
-     gap: 0.5rem;
-   }
-   #coupon-list button {
-     width: 100%;
-     text-align: center;
-     padding: 0.5rem 0.75rem;
-     border-radius: 0.5rem;
-     border: none;
-     background-color: #a9745b;
-     color: white;
-     font-weight: 700;
-     cursor: pointer;
-     transition: background-color 0.2s ease;
-   }
-   #coupon-list button:hover {
-     background-color: #6b4226;
-   }
-   #coupon-applied {
-     margin-top: 0.5rem;
-     font-weight: 700;
-     color: #2f855a;
-     user-select: none;
-   }
    /* Bairro autocomplete styles */
    #bairro-autocomplete-list {
      position: absolute;
@@ -644,12 +598,15 @@
      box-shadow: 0 0 20px rgba(0,0,0,0.8);
      background: white;
      display: flex;
+     flex-direction: column;
      align-items: center;
      justify-content: center;
+     padding: 1.5rem;
+     gap: 1rem;
    }
    #image-modal-content img {
      max-width: 100%;
-     max-height: 100%;
+     max-height: 50vh;
      object-fit: contain;
      user-select: none;
      pointer-events: none;
@@ -676,9 +633,138 @@
    #image-modal-close:hover {
      background: rgba(0,0,0,0.9);
    }
+   #image-modal-description {
+     font-weight: 700;
+     color: #5a3e1b;
+     text-align: center;
+     font-size: 1.125rem;
+     user-select: none;
+   }
+   #image-modal-quantity-container {
+     display: flex;
+     align-items: center;
+     gap: 0.5rem;
+   }
+   #image-modal-quantity-label {
+     font-weight: 600;
+     color: #5a3e1b;
+     user-select: none;
+   }
+   #image-modal-quantity {
+     width: 60px;
+     padding: 0.25rem 0.5rem;
+     border: 1px solid #7c5a3a;
+     border-radius: 0.375rem;
+     text-align: center;
+     font-weight: 700;
+     color: #5a3e1b;
+   }
+   #image-modal-buttons {
+     display: flex;
+     gap: 1rem;
+     width: 100%;
+     justify-content: center;
+   }
+   #image-modal-buttons button {
+     flex: 1;
+     padding: 0.5rem 1rem;
+     font-weight: 700;
+     border-radius: 0.5rem;
+     cursor: pointer;
+     user-select: none;
+     transition: background-color 0.2s ease;
+     font-size: 1rem;
+   }
+   #image-modal-add {
+     background-color: #22c55e;
+     color: white;
+     border: none;
+   }
+   #image-modal-add:hover {
+     background-color: #16a34a;
+   }
+   #image-modal-buy {
+     background-color: #2563eb;
+     color: white;
+     border: none;
+   }
+   #image-modal-buy:hover {
+     background-color: #1e40af;
+   }
+   /* New styles for Porção cards horizontal layout and compact */
+   #products-porcoes {
+     max-width: 5xl;
+     margin: 0 auto;
+     padding: 0 1rem;
+   }
+   #products-porcoes .product-porcao-article {
+     flex: 0 0 auto;
+     width: auto;
+     min-width: 240px;
+     background: linear-gradient(to bottom, #f0fdf4, #ffffff);
+     border-radius: 1.25rem;
+     box-shadow: 0 2px 6px rgba(107,66,38,0.15);
+     margin: 0 0.5rem 0 0;
+     padding: 0.5rem 0.75rem;
+     display: flex;
+     align-items: center;
+     gap: 0.5rem;
+     text-align: left;
+   }
+   #products-porcoes .product-porcao-article img {
+     height: 60px;
+     width: 60px;
+     border-radius: 0.5rem;
+     cursor: pointer;
+     flex-shrink: 0;
+     object-fit: contain;
+     margin-bottom: 0;
+   }
+   #products-porcoes .product-porcao-info {
+     flex: 1;
+     display: flex;
+     flex-direction: column;
+     gap: 0.15rem;
+   }
+   #products-porcoes .product-porcao-info h3 {
+     font-size: 0.85rem;
+     font-weight: 700;
+     color: #5a3e1b;
+     margin: 0;
+     user-select: none;
+   }
+   #products-porcoes .product-porcao-info .price {
+     font-weight: 700;
+     color: #3b2f2f;
+     font-size: 0.85rem;
+   }
+   #products-porcoes .product-porcao-info button {
+     font-size: 0.75rem;
+     padding: 0.2rem 0.5rem;
+     border-radius: 9999px;
+     font-weight: 700;
+     user-select: none;
+     background-color: #22c55e;
+     color: white;
+     border: none;
+     cursor: pointer;
+     transition: background-color 0.2s ease;
+     display: inline-flex;
+     align-items: center;
+     justify-content: center;
+     width: fit-content;
+     min-width: 80px;
+   }
+   #products-porcoes .product-porcao-info button:hover {
+     background-color: #16a34a;
+   }
+   #products-porcoes .product-porcao-info button span {
+     font-weight: 400;
+     margin-left: 0.2rem;
+   }
   </style>
  </head>
- <body class="bg-white text-black min-h-screen flex flex-col justify-start relative overflow-x-hidden pb-16">
+ <body class="bg-gray-100 text-black min-h-screen flex flex-col justify-start relative overflow-x-hidden pb-16">
   <!-- Header -->
   <header id="page-header">
    <div class="w-14 h-14 rounded-full bg-white flex items-center justify-center shrink-0 overflow-hidden shadow-md">
@@ -727,7 +813,7 @@
    </section>
    <section class="products-container max-w-5xl mx-auto px-4" id="products-marmitas">
     <article class="bg-gradient-to-b from-yellow-100 to-white rounded-3xl p-2" id="marmita-p-article">
-     <img alt="Imagem ilustrativa de Marmita Pequena com arroz, feijão, carne e salada em prato rústico" class="rounded-2xl mb-1 object-contain" draggable="false" height="70" src="marmitap.png" width="70"/>
+     <img alt="Imagem ilustrativa de Marmita Pequena com arroz, feijão, carne e salada em prato rústico" class="rounded-2xl mb-1 object-contain product-image" draggable="false" height="70" src="marmitap.png" width="70" data-name="Marmita P" data-price="12" data-description="Marmita Pequena com arroz, feijão, carne e salada em prato rústico"/>
      <h3 class="font-extrabold select-none text-xs">
       Marmita P
      </h3>
@@ -739,7 +825,7 @@
      </button>
     </article>
     <article class="bg-gradient-to-b from-yellow-100 to-white rounded-3xl p-2" id="marmita-m-article">
-     <img alt="Imagem ilustrativa de Marmita Média com arroz, feijão, carne e salada em prato rústico" class="rounded-2xl mb-1 object-contain" draggable="false" height="70" src="marmitama.png" width="70"/>
+     <img alt="Imagem ilustrativa de Marmita Média com arroz, feijão, carne e salada em prato rústico" class="rounded-2xl mb-1 object-contain product-image" draggable="false" height="70" src="marmitama.png" width="70" data-name="Marmita M" data-price="15" data-description="Marmita Média com arroz, feijão, carne e salada em prato rústico"/>
      <h3 class="font-extrabold select-none text-xs">
       Marmita M
      </h3>
@@ -751,7 +837,7 @@
      </button>
     </article>
     <article class="bg-gradient-to-b from-yellow-100 to-white rounded-3xl p-2" id="marmita-g-article">
-     <img alt="Imagem ilustrativa de Marmita Grande com arroz, feijão, carne e salada em prato rústico" class="rounded-2xl mb-1 object-contain" draggable="false" height="70" src="marmitaga.jpg" width="70"/>
+     <img alt="Imagem ilustrativa de Marmita Grande com arroz, feijão, carne e salada em prato rústico" class="rounded-2xl mb-1 object-contain product-image" draggable="false" height="70" src="marmitaga.jpg" width="70" data-name="Marmita G" data-price="20" data-description="Marmita Grande com arroz, feijão, carne e salada em prato rústico"/>
      <h3 class="font-extrabold select-none text-xs">
       Marmita G
      </h3>
@@ -770,7 +856,7 @@
    </section>
    <section class="products-container max-w-5xl mx-auto px-4" id="products-bebidas">
     <article class="bg-gradient-to-b from-blue-100 to-white rounded-3xl p-2" id="coca-mini-article">
-     <img alt="Garrafa mini de Coca-Cola 269ml com rótulo vermelho clássico" class="rounded-2xl mb-1 object-contain" draggable="false" height="70" src="cocamini.png" width="70"/>
+     <img alt="Garrafa mini de Coca-Cola 269ml com rótulo vermelho clássico" class="rounded-2xl mb-1 object-contain product-image" draggable="false" height="70" src="cocamini.png" width="70" data-name="Coca-Cola Mini 269ml" data-price="5" data-description="Garrafa mini de Coca-Cola 269ml com rótulo vermelho clássico"/>
      <h3 class="font-extrabold select-none text-xs">
       Coca-Cola Mini 269ml
      </h3>
@@ -782,7 +868,7 @@
      </button>
     </article>
     <article class="bg-gradient-to-b from-blue-100 to-white rounded-3xl p-2" id="guarana-article">
-     <img alt="Garrafa de Guaraná 310ml com rótulo verde e vermelho" class="rounded-2xl mb-1 object-contain" draggable="false" height="70" src="guaranamini.png" width="70"/>
+     <img alt="Garrafa de Guaraná 310ml com rótulo verde e vermelho" class="rounded-2xl mb-1 object-contain product-image" draggable="false" height="70" src="guaranamini.png" width="70" data-name="Guaraná 310ml" data-price="4" data-description="Garrafa de Guaraná 310ml com rótulo verde e vermelho"/>
      <h3 class="font-extrabold select-none text-xs">
       Guaraná 310ml
      </h3>
@@ -794,7 +880,7 @@
      </button>
     </article>
     <article class="bg-gradient-to-b from-blue-100 to-white rounded-3xl p-2" id="refriko-article">
-     <img alt="Garrafa pet de Refriko 500ml com rótulo azul e branco" class="rounded-2xl mb-1 object-contain" draggable="false" height="70" src="refriko.png" width="70"/>
+     <img alt="Garrafa pet de Refriko 500ml com rótulo azul e branco" class="rounded-2xl mb-1 object-contain product-image" draggable="false" height="70" src="refriko.png" width="70" data-name="Refriko Pet 500ml" data-price="5" data-description="Garrafa pet de Refriko 500ml com rótulo azul e branco"/>
      <h3 class="font-extrabold select-none text-xs">
       Refriko Pet 500ml
      </h3>
@@ -806,7 +892,7 @@
      </button>
     </article>
     <article class="bg-gradient-to-b from-blue-100 to-white rounded-3xl p-2" id="coca-vidro-article">
-     <img alt="Garrafa vidro de Coca-Cola 1L com rótulo vermelho clássico" class="rounded-2xl mb-1 object-contain" draggable="false" height="70" src="cocal.png" width="70"/>
+     <img alt="Garrafa vidro de Coca-Cola 1L com rótulo vermelho clássico" class="rounded-2xl mb-1 object-contain product-image" draggable="false" height="70" src="cocal.png" width="70" data-name="Coca-Cola Vidro 1L" data-price="8" data-description="Garrafa vidro de Coca-Cola 1L com rótulo vermelho clássico"/>
      <h3 class="font-extrabold select-none text-xs">
       Coca-Cola Vidro 1L
      </h3>
@@ -818,7 +904,7 @@
      </button>
     </article>
     <article class="bg-gradient-to-b from-blue-100 to-white rounded-3xl p-2" id="coca-pet-article">
-     <img alt="Garrafa pet de Coca-Cola 2L com rótulo vermelho clássico" class="rounded-2xl mb-1 object-contain" draggable="false" height="70" src="coca2l.png" width="70"/>
+     <img alt="Garrafa pet de Coca-Cola 2L com rótulo vermelho clássico" class="rounded-2xl mb-1 object-contain product-image" draggable="false" height="70" src="coca2l.png" width="70" data-name="Coca-Cola Pet 2L" data-price="14" data-description="Garrafa pet de Coca-Cola 2L com rótulo vermelho clássico"/>
      <h3 class="font-extrabold select-none text-xs">
       Coca-Cola Pet 2L
      </h3>
@@ -830,7 +916,7 @@
      </button>
     </article>
     <article class="bg-gradient-to-b from-blue-100 to-white rounded-3xl p-2" id="tubaina-pet-article">
-     <img alt="Garrafa pet de Tubaína 2L com rótulo amarelo e vermelho" class="rounded-2xl mb-1 object-contain" draggable="false" height="70" src="tubaina2l.png" width="70"/>
+     <img alt="Garrafa pet de Tubaína 2L com rótulo amarelo e vermelho" class="rounded-2xl mb-1 object-contain product-image" draggable="false" height="70" src="tubaina2l.png" width="70" data-name="Tubaína Pet 2L" data-price="10" data-description="Garrafa pet de Tubaína 2L com rótulo amarelo e vermelho"/>
      <h3 class="font-extrabold select-none text-xs">
       Tubaína Pet 2L
      </h3>
@@ -848,53 +934,45 @@
     </h2>
    </section>
    <section class="products-container max-w-5xl mx-auto px-4" id="products-porcoes">
-    <article class="bg-gradient-to-b from-green-100 to-white rounded-3xl p-2" id="carne-assada-article">
-     <img alt="Porção de carne assada 100g em prato rústico com guarnição" class="rounded-2xl mb-1 object-contain" draggable="false" height="70" src="mcv.png" width="70"/>
-     <h3 class="font-extrabold select-none text-xs">
-      Carne Assada 100g
-     </h3>
-     <button class="add-to-cart" data-img="mcv.png" data-name="Carne Assada 100g" data-price="19" id="carne-assada-button" type="button">
-      R$19
-      <span>
+    <article class="product-porcao-article" id="carne-assada-article">
+     <img alt="Porção de carne assada 100g em prato rústico com guarnição" class="product-image" draggable="false" height="60" src="mcv.png" width="60" data-name="Carne Assada 100g" data-price="19" data-description="Porção de carne assada 100g em prato rústico com guarnição"/>
+     <div class="product-porcao-info">
+      <h3>Carne Assada 100g</h3>
+      <div class="price">R$19</div>
+      <button class="add-to-cart" data-img="mcv.png" data-name="Carne Assada 100g" data-price="19" id="carne-assada-button" type="button">
        Adicionar
-      </span>
-     </button>
+      </button>
+     </div>
     </article>
-    <article class="bg-gradient-to-b from-green-100 to-white rounded-3xl p-2" id="marmita-arroz-article">
-     <img alt="Porção de arroz em marmita rústica" class="rounded-2xl mb-1 object-contain" draggable="false" height="70" src="marr.jpeg" width="70"/>
-     <h3 class="font-extrabold select-none text-xs">
-      Marmita de Arroz
-     </h3>
-     <button class="add-to-cart" data-img="marrom.jpeg" data-name="Marmita de Arroz" data-price="9" id="marmita-arroz-button" type="button">
-      R$9
-      <span>
+    <article class="product-porcao-article" id="marmita-arroz-article">
+     <img alt="Porção de arroz em marmita rústica" class="product-image" draggable="false" height="60" src="marr.jpeg" width="60" data-name="Marmita de Arroz" data-price="9" data-description="Porção de arroz em marmita rústica"/>
+     <div class="product-porcao-info">
+      <h3>Marmita de Arroz</h3>
+      <div class="price">R$9</div>
+      <button class="add-to-cart" data-img="marrom.jpeg" data-name="Marmita de Arroz" data-price="9" id="marmita-arroz-button" type="button">
        Adicionar
-      </span>
-     </button>
+      </button>
+     </div>
     </article>
-    <article class="bg-gradient-to-b from-green-100 to-white rounded-3xl p-2" id="marmita-feijao-article">
-     <img alt="Porção de feijão em marmita rústica" class="rounded-2xl mb-1 object-contain" draggable="false" height="70" src="fei.jpeg" width="70"/>
-     <h3 class="font-extrabold select-none text-xs">
-      Marmita de Feijão
-     </h3>
-     <button class="add-to-cart" data-img="fei.jpeg" data-name="Marmita de Feijão" data-price="10" id="marmita-feijao-button" type="button">
-      R$10
-      <span>
+    <article class="product-porcao-article" id="marmita-feijao-article">
+     <img alt="Porção de feijão em marmita rústica" class="product-image" draggable="false" height="60" src="fei.jpeg" width="60" data-name="Marmita de Feijão" data-price="10" data-description="Porção de feijão em marmita rústica"/>
+     <div class="product-porcao-info">
+      <h3>Marmita de Feijão</h3>
+      <div class="price">R$10</div>
+      <button class="add-to-cart" data-img="fei.jpeg" data-name="Marmita de Feijão" data-price="10" id="marmita-feijao-button" type="button">
        Adicionar
-      </span>
-     </button>
+      </button>
+     </div>
     </article>
-    <article class="bg-gradient-to-b from-green-100 to-white rounded-3xl p-2" id="marmita-macarrao-article">
-     <img alt="Porção de macarrão em marmita rústica" class="rounded-2xl mb-1 object-contain" draggable="false" height="70" src="macca.jpeg" width="70"/>
-     <h3 class="font-extrabold select-none text-xs">
-      Marmita de Macarrão
-     </h3>
-     <button class="add-to-cart" data-img="macca.jpeg" data-name="Marmita de Macarrão" data-price="9" id="marmita-macarrao-button" type="button">
-      R$9
-      <span>
+    <article class="product-porcao-article" id="marmita-macarrao-article">
+     <img alt="Porção de macarrão em marmita rústica" class="product-image" draggable="false" height="60" src="macca.jpeg" width="60" data-name="Marmita de Macarrão" data-price="9" data-description="Porção de macarrão em marmita rústica"/>
+     <div class="product-porcao-info">
+      <h3>Marmita de Macarrão</h3>
+      <div class="price">R$9</div>
+      <button class="add-to-cart" data-img="macca.jpeg" data-name="Marmita de Macarrão" data-price="9" id="marmita-macarrao-button" type="button">
        Adicionar
-      </span>
-     </button>
+      </button>
+     </div>
     </article>
    </section>
   </section>
@@ -1002,7 +1080,7 @@
     </button>
    </div>
   </footer>
-  <aside aria-label="Carrinho de compras" class="fixed top-0 right-0 h-full w-88 bg-white shadow-lg translate-x-full transition-transform duration-300 flex flex-col" id="cart-sidebar" style="max-height: 100vh;">
+  <aside aria-label="Carrinho de compras" class="fixed top-0 right-0 h-full bg-white shadow-lg translate-x-full transition-transform duration-300 flex flex-col" id="cart-sidebar" style="max-height: 100vh; width: 18rem;">
    <header class="flex items-center justify-between p-3 border-b border-green-700 bg-[#fef9f4]">
     <h2 class="text-lg font-extrabold text-green-900 select-none">
      Seu Carrinho
@@ -1015,22 +1093,6 @@
     <p class="text-center text-green-700 mt-4 select-none">
      Seu carrinho está vazio.
     </p>
-   </div>
-   <!-- Coupon area -->
-   <div class="px-3" id="coupon-area">
-    <label class="select-none block font-bold mb-2">
-     Escolha um cupom:
-    </label>
-    <div aria-label="Lista de cupons disponíveis para aplicar" id="coupon-list" role="list">
-     <button aria-label="Cupom frete grátis até 5 reais" data-coupon="fretegratis" role="listitem" style="display:none;" type="button">
-      Frete Grátis até R$ 5
-     </button>
-     <button aria-label="Cupom 2% de desconto para novos clientes" data-coupon="desconto2" role="listitem" type="button">
-      2% de Desconto para Novos Clientes
-     </button>
-    </div>
-    <div aria-atomic="true" aria-live="polite" class="mt-2" id="coupon-applied">
-    </div>
    </div>
    <footer class="p-3 border-t border-green-700 bg-[#fef9f4] flex flex-col items-center">
     <div class="flex justify-between font-extrabold text-base mb-3 text-green-900 w-full">
@@ -1055,12 +1117,21 @@
    Adicionado ao Carrinho!
   </div>
   <!-- Image Modal -->
-  <div aria-label="Visualização ampliada da imagem do produto" aria-modal="true" id="image-modal" role="dialog">
+  <div aria-label="Visualização ampliada da imagem do produto com opções de quantidade e compra" aria-modal="true" id="image-modal" role="dialog">
    <div id="image-modal-content">
     <button aria-label="Fechar visualização da imagem" id="image-modal-close" type="button">
      ×
     </button>
     <img alt="" id="image-modal-img" src=""/>
+    <div id="image-modal-description"></div>
+    <div id="image-modal-quantity-container">
+     <label for="image-modal-quantity" id="image-modal-quantity-label">Quantidade:</label>
+     <input type="number" id="image-modal-quantity" min="1" value="1" />
+    </div>
+    <div id="image-modal-buttons">
+     <button id="image-modal-add" type="button">Adicionar ao Carrinho</button>
+     <button id="image-modal-buy" type="button">Comprar Agora</button>
+    </div>
    </div>
   </div>
   <script>
@@ -1262,34 +1333,17 @@
       { name: "Zona Rural", km: 16.2 }
     ];
 
-    const coupons = {
-      fretegratis: {
-        code: 'fretegratis',
-        description: 'Frete Grátis até R$ 5',
-        type: 'delivery_discount',
-        maxDiscount: 5,
-        applied: false
-      },
-      desconto2: {
-        code: 'desconto2',
-        description: '2% de Desconto para Novos Clientes',
-        type: 'cart_discount',
-        percent: 2,
-        applied: false
-      }
-    };
-
     const cart = {
       items: [],
       deliveryFeeItem: null,
       coupon: null,
-      addItem(name, price, img) {
+      addItem(name, price, img, quantity = 1) {
         // Check if item already exists (by name)
         const existingItem = this.items.find(i => i.name === name && i !== this.deliveryFeeItem);
         if (existingItem) {
-          existingItem.quantity = (existingItem.quantity || 1) + 1;
+          existingItem.quantity = (existingItem.quantity || 1) + quantity;
         } else {
-          this.items.push({ name, price, img, quantity: 1 });
+          this.items.push({ name, price, img, quantity });
         }
         this.updateUI();
       },
@@ -1298,7 +1352,6 @@
         this.deliveryFeeItem = null;
         this.coupon = null;
         this.updateUI();
-        updateCouponUI();
       },
       getSubtotal() {
         return this.items.reduce((sum, item) => {
@@ -1311,29 +1364,11 @@
         return 0;
       },
       getDiscountAmount() {
-        if (!this.coupon) return 0;
-        if (this.coupon.type === 'cart_discount') {
-          return (this.getSubtotal() * this.coupon.percent) / 100;
-        }
-        if (this.coupon.type === 'delivery_discount') {
-          return Math.min(this.getDeliveryFee(), this.coupon.maxDiscount);
-        }
-        return 0;
+        return 0; // Coupons removed, so no discount
       },
       getTotal() {
         let subtotal = this.getSubtotal();
         let deliveryFee = this.getDeliveryFee();
-        let discount = this.getDiscountAmount();
-
-        if (this.coupon) {
-          if (this.coupon.type === 'cart_discount') {
-            subtotal = subtotal - discount;
-            if (subtotal < 0) subtotal = 0;
-          } else if (this.coupon.type === 'delivery_discount') {
-            deliveryFee = deliveryFee - discount;
-            if (deliveryFee < 0) deliveryFee = 0;
-          }
-        }
         return subtotal + deliveryFee;
       },
       updateDeliveryFee(distanceKm) {
@@ -1355,34 +1390,6 @@
           this.items = this.items.filter(i => i !== this.deliveryFeeItem);
           this.deliveryFeeItem = null;
           this.updateUI();
-        }
-      },
-      applyCoupon(couponCode) {
-        const coupon = coupons[couponCode.toLowerCase()];
-        if (!coupon) {
-          alert('Cupom inválido.');
-          return false;
-        }
-        // Check conditions for desconto2 (2% discount) - only if no previous orders
-        if (coupon.code === 'desconto2') {
-          const orders = loadOrdersFromCookie();
-          if (orders.length > 0) {
-            alert('Cupom válido apenas para clientes sem pedidos anteriores.');
-            return false;
-          }
-        }
-        this.coupon = coupon;
-        coupon.applied = true;
-        this.updateUI();
-        updateCouponUI();
-        return true;
-      },
-      removeCoupon() {
-        if (this.coupon) {
-          this.coupon.applied = false;
-          this.coupon = null;
-          this.updateUI();
-          updateCouponUI();
         }
       },
       updateUI() {
@@ -1425,15 +1432,10 @@
               // Delivery fee item
               const itemDiv = document.createElement('div');
               itemDiv.className = 'flex justify-between items-center border-b border-green-200 pb-1 gap-2';
-              let displayPrice = item.price;
-              if (this.coupon && this.coupon.type === 'delivery_discount') {
-                const discount = Math.min(item.price, this.coupon.maxDiscount);
-                displayPrice = item.price - discount;
-              }
               itemDiv.innerHTML = `
                 <img src="${item.img}" alt="Imagem do produto ${item.name}" class="w-14 h-14 object-contain rounded-lg flex-shrink-0" />
                 <div class="flex-1 font-semibold text-green-900 select-none text-sm">${item.name}</div>
-                <div class="text-green-700 select-none text-sm">R$ ${displayPrice.toFixed(2).replace('.', ',')}</div>
+                <div class="text-green-700 select-none text-sm">R$ ${item.price.toFixed(2).replace('.', ',')}</div>
               `;
               container.appendChild(itemDiv);
             } else {
@@ -1450,48 +1452,10 @@
               container.appendChild(itemDiv);
             }
           });
-          // Show discount line if coupon applied
-          if (this.coupon) {
-            const discountDiv = document.createElement('div');
-            discountDiv.className = 'flex justify-between items-center border-b border-green-400 pb-1 gap-2 mt-1';
-            discountDiv.innerHTML = `
-              <div class="flex-1 font-semibold text-green-900 select-none text-sm">Desconto: ${this.coupon.description}</div>
-              <div class="text-green-700 select-none text-sm">- R$ ${this.getDiscountAmount().toFixed(2).replace('.', ',')}</div>
-            `;
-            container.appendChild(discountDiv);
-          }
         }
         document.getElementById('sidebar-cart-total').textContent = `R$ ${this.getTotal().toFixed(2).replace('.', ',')}`;
       }
     };
-
-    function updateCouponUI() {
-      const couponList = document.getElementById('coupon-list');
-      const couponAppliedDiv = document.getElementById('coupon-applied');
-      if (cart.coupon) {
-        couponList.querySelectorAll('button').forEach(btn => {
-          btn.disabled = btn.getAttribute('data-coupon') === cart.coupon.code;
-          btn.classList.toggle('opacity-50', btn.disabled);
-          btn.classList.toggle('cursor-not-allowed', btn.disabled);
-        });
-        couponAppliedDiv.textContent = `Cupom aplicado: ${cart.coupon.description} `;
-        // Add remove button
-        const removeBtn = document.createElement('button');
-        removeBtn.type = 'button';
-        removeBtn.textContent = 'Remover';
-        removeBtn.className = 'ml-2 text-red-600 font-bold underline cursor-pointer bg-transparent border-none p-0';
-        removeBtn.addEventListener('click', () => {
-          cart.removeCoupon();
-        });
-        couponAppliedDiv.appendChild(removeBtn);
-      } else {
-        couponList.querySelectorAll('button').forEach(btn => {
-          btn.disabled = false;
-          btn.classList.remove('opacity-50', 'cursor-not-allowed');
-        });
-        couponAppliedDiv.textContent = '';
-      }
-    }
 
     function attachAddToCartListeners() {
       document.querySelectorAll('.add-to-cart').forEach(button => {
@@ -1530,14 +1494,11 @@
       closeCartSidebar();
     });
 
-    // Coupon list buttons handlers
-    const couponList = document.getElementById('coupon-list');
-    couponList.querySelectorAll('button').forEach(btn => {
-      btn.addEventListener('click', () => {
-        const code = btn.getAttribute('data-coupon');
-        cart.applyCoupon(code);
-      });
-    });
+    // Remove coupon area from DOM
+    const couponArea = document.getElementById('coupon-area');
+    if (couponArea) {
+      couponArea.remove();
+    }
 
     // Checkout modal and form
     const checkoutModal = document.getElementById('checkout-modal');
@@ -1767,7 +1728,7 @@
           clientBairro: null,
           pickup: true,
           items: cart.items.map(i => ({ name: i.name, price: i.price, quantity: i.quantity || 1 })),
-          coupon: cart.coupon ? { code: cart.coupon.code, description: cart.coupon.description } : null,
+          coupon: null,
           total: cart.getTotal(),
           date: new Date().toISOString()
         };
@@ -1779,9 +1740,6 @@
           const qty = item.quantity || 1;
           message += `*${qty} x ${item.name}*\nPreço unitário: R$ ${item.price.toFixed(2).replace('.', ',')}\n\n`;
         });
-        if (cart.coupon) {
-          message += `*Cupom aplicado:* ${cart.coupon.description}\n\n`;
-        }
         message += `*Total:* R$ ${cart.getTotal().toFixed(2).replace('.', ',')}`;
 
         const phoneNumber = '5567992526860';
@@ -1853,7 +1811,7 @@
           clientBairro: selectedBairro.name,
           pickup: false,
           items: cart.items.map(i => ({ name: i.name, price: i.price, quantity: i.quantity || 1 })),
-          coupon: cart.coupon ? { code: cart.coupon.code, description: cart.coupon.description } : null,
+          coupon: null,
           total: cart.getTotal(),
           date: new Date().toISOString()
         };
@@ -1865,9 +1823,6 @@
           const qty = item.quantity || 1;
           message += `*${qty} x ${item.name}*\nPreço unitário: R$ ${item.price.toFixed(2).replace('.', ',')}\n\n`;
         });
-        if (cart.coupon) {
-          message += `*Cupom aplicado:* ${cart.coupon.description}\n\n`;
-        }
         message += `*Total:* R$ ${cart.getTotal().toFixed(2).replace('.', ',')}`;
 
         const phoneNumber = '5567992526860';
@@ -2026,18 +1981,26 @@
     setTimeout(rotateBanners, 4000);
 
     cart.updateUI();
-    updateCouponUI();
     showSection('shopping');
 
-    // Image modal logic
+    // Image modal logic with quantity and buy now
     const imageModal = document.getElementById('image-modal');
     const imageModalImg = document.getElementById('image-modal-img');
     const imageModalClose = document.getElementById('image-modal-close');
+    const imageModalDescription = document.getElementById('image-modal-description');
+    const imageModalQuantity = document.getElementById('image-modal-quantity');
+    const imageModalAdd = document.getElementById('image-modal-add');
+    const imageModalBuy = document.getElementById('image-modal-buy');
 
-    // Open modal with clicked image
-    function openImageModal(src, alt) {
+    let currentProduct = null;
+
+    // Open modal with clicked image and product info
+    function openImageModal(src, alt, name, price, description) {
+      currentProduct = { src, alt, name, price, description };
       imageModalImg.src = src;
       imageModalImg.alt = alt;
+      imageModalDescription.textContent = description || name;
+      imageModalQuantity.value = 1;
       imageModal.classList.add('open');
       document.body.style.overflow = 'hidden';
     }
@@ -2047,14 +2010,21 @@
       imageModal.classList.remove('open');
       imageModalImg.src = '';
       imageModalImg.alt = '';
+      imageModalDescription.textContent = '';
+      currentProduct = null;
       document.body.style.overflow = '';
     }
 
     // Attach click listeners to all product images
     function attachImageClickListeners() {
-      document.querySelectorAll('article img').forEach(img => {
+      document.querySelectorAll('.product-image').forEach(img => {
         img.addEventListener('click', () => {
-          openImageModal(img.src, img.alt);
+          const src = img.src;
+          const alt = img.alt;
+          const name = img.getAttribute('data-name');
+          const price = parseFloat(img.getAttribute('data-price'));
+          const description = img.getAttribute('data-description');
+          openImageModal(src, alt, name, price, description);
         });
       });
     }
@@ -2074,6 +2044,35 @@
       if (e.key === 'Escape' && imageModal.classList.contains('open')) {
         closeImageModal();
       }
+    });
+
+    // Add to cart button in modal
+    imageModalAdd.addEventListener('click', () => {
+      if (!currentProduct) return;
+      let quantity = parseInt(imageModalQuantity.value);
+      if (isNaN(quantity) || quantity < 1) quantity = 1;
+      cart.addItem(currentProduct.name, currentProduct.price, currentProduct.src, quantity);
+      showAddToCartSplash();
+      closeImageModal();
+    });
+
+    // Buy now button in modal
+    imageModalBuy.addEventListener('click', () => {
+      if (!currentProduct) return;
+      let quantity = parseInt(imageModalQuantity.value);
+      if (isNaN(quantity) || quantity < 1) quantity = 1;
+
+      // Compose message for WhatsApp
+      const name = currentProduct.name;
+      const price = currentProduct.price;
+      const totalPrice = (price * quantity).toFixed(2).replace('.', ',');
+      let message = `*Rancho do Bira - Nova Lima*\n\n*Pedido Imediato*\n\n*${quantity} x ${name}*\nPreço unitário: R$ ${price.toFixed(2).replace('.', ',')}\n\n*Total:* R$ ${totalPrice}`;
+
+      const phoneNumber = '5567992526860';
+      const url = `https://wa.me/${phoneNumber}?text=${encodeURIComponent(message)}`;
+
+      window.open(url, '_blank');
+      closeImageModal();
     });
    })();
   </script>
